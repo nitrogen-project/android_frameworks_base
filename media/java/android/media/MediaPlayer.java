@@ -1676,7 +1676,6 @@ public class MediaPlayer extends PlayerBase
     public void release() {
         baseRelease();
         stayAwake(false);
-        updateSurfaceScreenOn();
         mOnPreparedListener = null;
         mOnBufferingUpdateListener = null;
         mOnCompletionListener = null;
