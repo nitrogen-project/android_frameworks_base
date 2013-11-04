@@ -36,4 +36,9 @@
   <java-symbol type="string" name="system_error_vendorprint" />
 
   <java-symbol type="bool" name="config_show_cmIMESwitcher"/>
+
+  <!-- ADB notification -->
+  <java-symbol type="string" name="adb_net_active_notification_title" />
+  <java-symbol type="string" name="adb_both_active_notification_title" />
+  <java-symbol type="string" name="adb_active_generic_notification_message" />
 </resources>
