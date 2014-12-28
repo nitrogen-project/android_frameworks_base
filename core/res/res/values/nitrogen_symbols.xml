@@ -68,4 +68,6 @@
 
   <!-- Hardware key binding -->
   <java-symbol type="integer" name="config_deviceHardwareKeys" />
+
+  <java-symbol type="bool" name="config_enableScreenrecordChord" />
 </resources>
