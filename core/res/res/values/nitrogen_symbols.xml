@@ -34,4 +34,10 @@
 
   <!-- Config.xml entries -->
   <java-symbol type="bool" name="config_show_cmIMESwitcher"/>
+
+  <!-- Config Power Menu -->
+  <java-symbol type="drawable" name="ic_lock_power_screenshot" />
+  <java-symbol type="string" name="powermenu_screenshot" />
+  <java-symbol type="drawable" name="ic_settings_powermenu" />
+
 </resources>
