@@ -496,7 +496,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     new ArrayList[ConnectivityManager.MAX_NETWORK_TYPE + 1];
         }
 
-        public void addSupportedType(int type) {
+        public synchronized void addSupportedType(int type) {
             if (mTypeLists[type] != null) {
                 throw new IllegalStateException(
                         "legacy list for type " + type + "already initialized");
@@ -504,11 +504,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
             mTypeLists[type] = new ArrayList<NetworkAgentInfo>();
         }
 
-        public boolean isTypeSupported(int type) {
+        public synchronized boolean isTypeSupported(int type) {
             return isNetworkTypeValid(type) && mTypeLists[type] != null;
         }
 
-        public NetworkAgentInfo getNetworkForType(int type) {
+        public synchronized NetworkAgentInfo getNetworkForType(int type) {
             if (isTypeSupported(type) && !mTypeLists[type].isEmpty()) {
                 return mTypeLists[type].get(0);
             } else {
@@ -526,7 +526,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         /** Adds the given network to the specified legacy type list. */
-        public void add(int type, NetworkAgentInfo nai) {
+        public synchronized void add(int type, NetworkAgentInfo nai) {
             if (!isTypeSupported(type)) {
                 return;  // Invalid network type.
             }
@@ -548,7 +548,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         /** Removes the given network from the specified legacy type list. */
-        public void remove(int type, NetworkAgentInfo nai, boolean wasDefault) {
+        public synchronized void remove(int type, NetworkAgentInfo nai, boolean wasDefault) {
             ArrayList<NetworkAgentInfo> list = mTypeLists[type];
             if (list == null || list.isEmpty()) {
                 return;
@@ -577,7 +577,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         /** Removes the given network from all legacy type lists. */
-        public void remove(NetworkAgentInfo nai, boolean wasDefault) {
+        public synchronized void remove(NetworkAgentInfo nai, boolean wasDefault) {
             if (VDBG) log("Removing agent " + nai + " wasDefault=" + wasDefault);
             for (int type = 0; type < mTypeLists.length; type++) {
                 remove(type, nai, wasDefault);
@@ -586,7 +586,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         // send out another legacy broadcast - currently only used for suspend/unsuspend
         // toggle
-        public void update(NetworkAgentInfo nai) {
+        public synchronized void update(NetworkAgentInfo nai) {
             final boolean isDefault = isDefaultNetwork(nai);
             final DetailedState state = nai.networkInfo.getDetailedState();
             for (int type = 0; type < mTypeLists.length; type++) {
