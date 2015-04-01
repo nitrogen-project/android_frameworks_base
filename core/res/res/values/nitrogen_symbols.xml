@@ -43,4 +43,6 @@
   <java-symbol type="string" name="powermenu_screenshot" />
   <java-symbol type="drawable" name="ic_settings_powermenu" />
 
+  <!-- Automatic brightness enhancements -->
+  <java-symbol type="integer" name="config_autoBrightnessBrighteningLightFastDebounce"/>
 </resources>
