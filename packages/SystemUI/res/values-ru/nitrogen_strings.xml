@@ -78,4 +78,6 @@
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">Снимок экрана</string>
     <string name="quick_settings_region_screenshot_label">Снимок области</string>
+
+    <string name="recents_free_ram">Свободной памяти</string>
 </resources>

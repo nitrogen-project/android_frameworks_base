@@ -4328,6 +4328,12 @@ public final class Settings {
          */
         public static final String WAKELOCK_BLOCKING_LIST = "wakelock_blocking_list";
 
+	/**
+         * show the membar in recents
+         *  @hide
+         */
+        public static final String SYSTEMUI_RECENTS_MEM_DISPLAY = "systemui_recents_mem_display";
+
         /**
          * Force show navbar on the bottom of device
          * @hide
