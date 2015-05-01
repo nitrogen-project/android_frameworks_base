@@ -37,6 +37,7 @@ interface IDreamManager {
     boolean isDreaming();
     @UnsupportedAppUsage
     boolean isDreamingOrInPreview();
+    boolean isDozing();
     void finishSelf(in IBinder token, boolean immediate);
     void startDozing(in IBinder token, int screenState, int screenBrightness);
     void stopDozing(in IBinder token);

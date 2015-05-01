@@ -93,4 +93,9 @@ public abstract class DreamManagerInternal {
          */
         void onKeepDreamingWhenUndockedChanged(boolean keepDreaming);
     }
+
+    /**
+     * Called by the power manager to determine whether the dream has gone to doze mode.
+     */
+    public abstract boolean isDozing();
 }
