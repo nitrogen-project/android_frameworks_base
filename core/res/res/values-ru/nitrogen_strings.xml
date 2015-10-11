@@ -36,4 +36,7 @@
     <string name="reboot_confirm" product="default">Ваш телефон будет перезагружен.</string>
     <!-- Reboot Progress Dialog. This is shown if the user chooses to reboot the phone. -->
     <string name="reboot_progress">Перезагрузка\u2026</string>
+
+    <!-- kill app long press back -->
+    <string name="app_killed_message">Приложение остановлено</string>
 </resources>
