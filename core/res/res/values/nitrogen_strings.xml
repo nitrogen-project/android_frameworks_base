@@ -30,4 +30,8 @@
     <string name="reboot_confirm" product="default">Your phone will reboot.</string>
     <!-- Reboot Progress Dialog. This is shown if the user chooses to reboot the phone. -->
     <string name="reboot_progress">Rebooting\u2026</string>
+
+    <!-- kill app long press back -->
+    <string name="app_killed_message">Application killed </string>
+
 </resources>
