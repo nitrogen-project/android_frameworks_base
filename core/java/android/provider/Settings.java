@@ -3850,6 +3850,12 @@ public final class Settings {
         public static final String VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
 
         /**
+         * Whether to show media art on lockscreen
+         * @hide
+         */
+        public static final String LOCKSCREEN_MEDIA_METADATA = "lockscreen_media_metadata";
+
+        /**
          * Volume key controls ringtone or media sound stream
          * @hide
          */
