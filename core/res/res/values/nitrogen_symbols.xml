@@ -32,4 +32,6 @@
   <java-symbol type="string" name="app_killed_message" />
   <java-symbol type="integer" name="config_backKillTimeout" />
 
+  <!-- Config.xml entries -->
+  <java-symbol type="bool" name="config_show_cmIMESwitcher"/>
 </resources>
