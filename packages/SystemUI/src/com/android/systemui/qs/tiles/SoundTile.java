@@ -27,13 +27,11 @@ import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.MetricsProto.MetricsEvent;
 import com.android.systemui.R;
 import com.android.systemui.qs.QSTile;
-import com.android.systemui.statusbar.policy.ZenModeController;
 
 public class SoundTile extends QSTile<QSTile.State> {
 
     private static final Intent SOUND_SETTINGS = new Intent("android.settings.SOUND_SETTINGS");
 
-    private final ZenModeController mZenController;
     private final AudioManager mAudioManager;
 
     private boolean mListening = false;
@@ -43,7 +41,6 @@ public class SoundTile extends QSTile<QSTile.State> {
 
     public SoundTile(Host host) {
         super(host);
-        mZenController = host.getZenModeController();
         mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         mReceiver = new BroadcastReceiver() {
             @Override
@@ -92,11 +89,10 @@ public class SoundTile extends QSTile<QSTile.State> {
                 break;
             case AudioManager.RINGER_MODE_VIBRATE:
                 newState = AudioManager.RINGER_MODE_SILENT;
-                mZenController.setZen(Global.ZEN_MODE_ALARMS, null, TAG);
+                mAudioManager.setRingerModeInternal(newState);
                 break;
             case AudioManager.RINGER_MODE_SILENT:
                 newState = AudioManager.RINGER_MODE_NORMAL;
-                mZenController.setZen(Global.ZEN_MODE_OFF, null, TAG);
                 mAudioManager.setRingerModeInternal(newState);
                 break;
             default:
@@ -127,9 +123,9 @@ public class SoundTile extends QSTile<QSTile.State> {
                 break;
             case AudioManager.RINGER_MODE_SILENT:
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_ringer_silent);
-                state.label = mContext.getString(R.string.quick_settings_sound_dnd);
+                state.label = mContext.getString(R.string.quick_settings_sound_silent);
                 state.contentDescription =  mContext.getString(
-                        R.string.quick_settings_sound_dnd);
+                        R.string.quick_settings_sound_silent);
                 break;
             default:
                 break;
