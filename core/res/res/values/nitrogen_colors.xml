@@ -30,4 +30,6 @@
     <color name="immersive_cling_text_color">@android:color/white</color>
     <color name="immersive_cling_button_text_color">@android:color/white</color>
 
+    <!-- App permission tint -->
+    <color name="app_permission_icon_tint">@android:color/black</color>
 </resources>
