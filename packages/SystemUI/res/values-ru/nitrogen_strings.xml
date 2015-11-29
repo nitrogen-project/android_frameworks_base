@@ -104,4 +104,9 @@
     <string name="accessibility_quick_settings_hwkeys_on">Кнопки вкл.</string>
     <string name="accessibility_quick_settings_hwkeys_off">Кнопки выкл.</string>
     <string name="quick_settings_hwkeys_label">Аппарат. кнопки</string>
+
+    <!-- Music QS Tile -->
+    <string name="quick_settings_music_label">Музыка</string>
+    <string name="quick_settings_music_play">Воспр.</string>
+    <string name="quick_settings_music_pause">Пауза</string>
 </resources>

@@ -105,7 +105,7 @@
 
     <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->
     <string name="quick_settings_tiles_stock" translatable="false">
-        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,location,hotspot,inversion,saver,work,cast,night,sound,reboot,volume,caffeine,nfc,navigation_bar,expanded_desktop,lte,sync,screenshot,lockscreen,hwkeys
+        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,location,hotspot,inversion,saver,work,cast,night,sound,reboot,volume,caffeine,nfc,navigation_bar,expanded_desktop,lte,sync,screenshot,lockscreen,hwkeys,music
     </string>
 
     <!-- The tiles to display after reset in QuickSettings -->

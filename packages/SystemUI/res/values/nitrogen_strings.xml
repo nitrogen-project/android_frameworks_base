@@ -174,4 +174,9 @@
     <string name="accessibility_quick_settings_hwkeys_on">HW keys on</string>
     <string name="accessibility_quick_settings_hwkeys_off">HW keys off</string>
     <string name="quick_settings_hwkeys_label">HW keys</string>
+
+    <!-- Music QS Tile -->
+    <string name="quick_settings_music_label">Music</string>
+    <string name="quick_settings_music_play">Play</string>
+    <string name="quick_settings_music_pause">Pause</string>
 </resources>
