@@ -77,4 +77,7 @@
     <!-- Screen record notification error title -->
     <string name="screenrecord_notif_error">Невозможно записать экран</string>
     <string name="notification_channel_screenrecord">Запись экрана</string>
+
+    <!-- Screenrecord Tile -->
+    <string name="quick_settings_screenrecord">Запись экрана</string>
 </resources>
