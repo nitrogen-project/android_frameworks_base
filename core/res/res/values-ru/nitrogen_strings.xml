@@ -40,4 +40,9 @@
 
     <!-- Pocket Lock -->
     <string name="pocket_lock_message_long_press">Удерживайте кнопку питания для отключения</string>
+
+    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_fakePackageSignature">Подмена подписи приложения</string>
+    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_fakePackageSignature">Разрешать работу в качестве другого приложения. Вредоносное приложение может получить доступ к вашим данным. Используйте на ваш страх и риск.</string>
 </resources>
