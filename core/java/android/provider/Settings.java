@@ -3992,6 +3992,13 @@ public final class Settings {
         public static final String POWERMENU_POWER = "powermenu_power";
 
         /**
+         * whether to enable or disable vibration on succesful fingerprint auth
+         *
+         * @hide
+         */
+        public static final String FINGERPRINT_SUCCESS_VIB = "fingerprint_success_vib";
+
+        /**
          * Whether to display the torch option in the power menu
          *
          * @hide
