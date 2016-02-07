@@ -45,4 +45,11 @@
 
     <!-- Powermenu Torch -->
     <string name="global_action_torch">Фонарик</string>
+
+    <!-- Battery style -->
+    <string name="battery_style_text">Текстовая</string>
+    <string name="battery_style_default">По умолчанию</string>
+    <string name="battery_style_meter_horizontal">Горизонтальная</string>
+    <string name="battery_style_circle">Круговая</string>
+    <string name="battery_style_droid">Робот</string>
 </resources>

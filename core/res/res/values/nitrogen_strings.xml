@@ -39,4 +39,10 @@
 
     <!-- Powermenu Torch -->
     <string name="global_action_torch">Flashlight</string>
+
+    <string name="battery_style_text">Text only</string>
+    <string name="battery_style_default">Default</string>
+    <string name="battery_style_meter_horizontal">Horizontal bar</string>
+    <string name="battery_style_circle">Circle</string>
+    <string name="battery_style_droid">Droid</string>
 </resources>
