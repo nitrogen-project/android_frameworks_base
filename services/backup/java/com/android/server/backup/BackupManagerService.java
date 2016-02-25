@@ -8625,6 +8625,11 @@ if (MORE_DEBUG) Slog.v(TAG, "   + got " + nRead + "; now wanting " + (size - soF
                     Slog.e(TAG, "Transport failed during restore");
                     EventLog.writeEvent(EventLogTags.RESTORE_TRANSPORT_FAILURE);
                     status = BackupTransport.TRANSPORT_ERROR;
+                } catch (RuntimeException e) {
+                    // The transport threw a serious runtime exception. Give up this package.
+                    Slog.e(TAG, "Transport failed during restore with runtime exception", e);
+                    EventLog.writeEvent(EventLogTags.RESTORE_TRANSPORT_FAILURE);
+                    status = BackupTransport.TRANSPORT_ERROR;
                 } finally {
                     // Close the transport pipes and *our* end of the engine pipe,
                     // but leave the engine thread's end open so that it properly
@@ -8663,6 +8668,10 @@ if (MORE_DEBUG) Slog.v(TAG, "   + got " + nRead + "; now wanting " + (size - soF
                         } catch (RemoteException e) {
                             // transport itself is dead; make sure we handle this as a
                             // fatal error
+                            status = BackupTransport.TRANSPORT_ERROR;
+                        } catch (RuntimeException e) {
+                            Slog.e(TAG, "Transport failed during restore with runtime exception",
+                                    e);
                             status = BackupTransport.TRANSPORT_ERROR;
                         }
 
