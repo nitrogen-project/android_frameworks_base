@@ -226,6 +226,10 @@ public class PowerUI extends SystemUI {
                             Settings.Global.CHARGING_SOUNDS_ENABLED, 1) == 1) {
                         playPowerNotificationSound();
                     }
+                    if (Settings.Global.getInt(cr,
+                            Settings.Global.CHARGING_VIBRATION_ENABLED, 1) == 1) {
+                        playPowerNotificationVibration();
+                    }
                 }
             } else {
                 Slog.w(TAG, "unknown intent: " + intent);
@@ -244,12 +248,12 @@ public class PowerUI extends SystemUI {
                 powerRingtone.play();
             }
         }
-        if (Settings.System.getInt(cr,
-                Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) == 1) {
-            Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-            if (vibrator != null) {
-                vibrator.vibrate(75);
-            }
+    }
+
+    void playPowerNotificationVibration() {
+        Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator != null) {
+            vibrator.vibrate(75);
         }
     }
 
