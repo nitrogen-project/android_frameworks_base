@@ -4104,6 +4104,12 @@ public final class Settings {
         public static final String FORCE_EXPANDED_NOTIFICATIONS = "force_expanded_notifications";
 
         /**
+         * Heads up timeout configuration
+         * @hide
+         */
+        public static final String HEADS_UP_TIMEOUT = "heads_up_timeout";
+
+        /**
          * Number of rows used for the Quick Settings (portrait)
          *
          * @hide
