@@ -117,6 +117,7 @@ import android.util.IntArray;
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
+import android.util.BoostFramework;
 import android.view.Display;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -258,6 +259,10 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
     T mWindowContainerController;
     private final RecentTasks mRecentTasks;
 
+    public BoostFramework mPerf = null;
+    public boolean mIsAnimationBoostEnabled = false;
+    public int aBoostTimeOut = 0;
+    public int aBoostParamVal[];
     /**
      * The back history of all previous (and possibly still
      * running) activities.  It contains #TaskRecord objects.
@@ -473,6 +478,14 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
         mRecentTasks = recentTasks;
         mTaskPositioner = mStackId == FREEFORM_WORKSPACE_STACK_ID
                 ? new LaunchingTaskPositioner() : null;
+        mIsAnimationBoostEnabled = mService.mContext.getResources().getBoolean(
+                   com.android.internal.R.bool.config_enablePerfBoostForAnimation);
+        if (mIsAnimationBoostEnabled) {
+           aBoostTimeOut = mService.mContext.getResources().getInteger(
+                   com.android.internal.R.integer.animationboost_timeout_param);
+           aBoostParamVal = mService.mContext.getResources().getIntArray(
+                   com.android.internal.R.array.animationboost_param_value);
+        }
         final ActivityStackSupervisor.ActivityDisplay display = mActivityContainer.mActivityDisplay;
         mTmpRect2.setEmpty();
         mWindowContainerController = createStackWindowController(display.mDisplayId, onTop,
@@ -2456,6 +2469,9 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
         // that the previous one will be hidden soon.  This way it can know
         // to ignore it when computing the desired screen orientation.
         boolean anim = true;
+        if (mIsAnimationBoostEnabled == true && mPerf == null) {
+            mPerf = new BoostFramework();
+        }
         if (prev != null) {
             if (prev.finishing) {
                 if (DEBUG_TRANSITION) Slog.v(TAG_TRANSITION,
@@ -2464,9 +2480,12 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
                     anim = false;
                     mWindowManager.prepareAppTransition(TRANSIT_NONE, false);
                 } else {
-                    mWindowManager.prepareAppTransition(prev.getTask() == next.getTask()
+                    mWindowManager.prepareAppTransition(prevTask == nextTask
                             ? TRANSIT_ACTIVITY_CLOSE
                             : TRANSIT_TASK_CLOSE, false);
+                    if(prevTask != nextTask && mPerf != null) {
+                       mPerf.perfLockAcquire(aBoostTimeOut, aBoostParamVal);
+                    }
                 }
                 prev.setVisibility(false);
             } else {
@@ -2476,11 +2495,14 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
                     anim = false;
                     mWindowManager.prepareAppTransition(TRANSIT_NONE, false);
                 } else {
-                    mWindowManager.prepareAppTransition(prev.getTask() == next.getTask()
+                    mWindowManager.prepareAppTransition(prevTask == nextTask
                             ? TRANSIT_ACTIVITY_OPEN
                             : next.mLaunchTaskBehind
                                     ? TRANSIT_TASK_OPEN_BEHIND
                                     : TRANSIT_TASK_OPEN, false);
+                    if(prevTask != nextTask && mPerf != null) {
+                        mPerf.perfLockAcquire(aBoostTimeOut, aBoostParamVal);
+                    }
                 }
             }
         } else {
