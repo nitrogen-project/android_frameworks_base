@@ -96,4 +96,16 @@
   <java-symbol type="drawable" name="weather_sunny" />
   <java-symbol type="drawable" name="weather_thunderstorms" />
   <java-symbol type="drawable" name="weather_windy" />
+
+  <!-- True if the notification's should dynamically tint the app icon and text -->
+  <java-symbol type="bool" name="config_allowNotificationIconTextTinting" />
+
+  <!-- Notification icon tint -->
+  <java-symbol type="color" name="notification_icon_default_color" />
+
+  <!-- Notification text tint -->
+  <java-symbol type="color" name="notification_text_default_color" />
+
+  <!-- Ambient notification icon tint -->
+  <java-symbol type="color" name="notification_ambient_icon_default_color" />
 </resources>
