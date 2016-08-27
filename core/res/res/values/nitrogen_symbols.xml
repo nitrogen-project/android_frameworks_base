@@ -68,10 +68,7 @@
   <java-symbol type="string" name="config_rat_3g" />
   <java-symbol type="string" name="config_rat_4g" />
 
-  <!-- Doze invert -->
-  <java-symbol type="bool" name="config_invert_colors_on_doze" />
   <!-- Notification icon/text dynamic tint -->
-  <java-symbol type="bool" name="config_allowNotificationIconTextTinting" />
   <java-symbol type="color" name="notification_text_default_color" />
   <java-symbol type="color" name="sender_text_color" />
 
