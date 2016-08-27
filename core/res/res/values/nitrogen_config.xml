@@ -84,4 +84,6 @@
     </string-array>
 
     <bool name="config_canForceDozeNotifications">true</bool>
+
+    <bool name="config_allowNotificationIconTextTinting">true</bool>
 </resources>
