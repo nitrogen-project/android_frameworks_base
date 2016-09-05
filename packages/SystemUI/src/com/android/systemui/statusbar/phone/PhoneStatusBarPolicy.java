@@ -25,14 +25,17 @@ import android.bluetooth.BluetoothAssignedNumbers;
 import android.bluetooth.BluetoothHeadset;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.database.ContentObserver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.UserInfo;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.telecom.TelecomManager;
 import android.util.Log;
@@ -92,6 +95,7 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
     private boolean mVolumeVisible;
     private boolean mCurrentUserSetup;
     private Float mBluetoothBatteryLevel = null;
+    private boolean mShowBluetoothBattery;
 
     private int mZen;
 
@@ -165,6 +169,12 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         // bluetooth status
         updateBluetooth();
 
+        //Bluetooth icon
+        mBTIconObserver.onChange(true);
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.BLUETOOTH_SHOW_BATTERY),
+                false, mBTIconObserver);
+
         // Alarm clock
         mIconController.setIcon(mSlotAlarmClock, R.drawable.stat_sys_alarm, null);
         mIconController.setIconVisibility(mSlotAlarmClock, false);
@@ -200,6 +210,20 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         mIconController.setIconVisibility(mSlotDataSaver, false);
         mDataSaver.addListener(this);
     }
+
+    private ContentObserver mBTIconObserver = new ContentObserver(null) {
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            mShowBluetoothBattery = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.BLUETOOTH_SHOW_BATTERY, 0) == 1;
+            updateBluetooth();
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            onChange(selfChange, null);
+        }
+    };
 
     public void setStatusBarKeyguardViewManager(
             StatusBarKeyguardViewManager statusBarKeyguardViewManager) {
@@ -338,9 +362,9 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         if (mBluetooth != null) {
             bluetoothEnabled = mBluetooth.isBluetoothEnabled();
             if (mBluetooth.isBluetoothConnected()) {
-                if (mBluetoothBatteryLevel == null) {
+                if (mBluetoothBatteryLevel == null && !mShowBluetoothBattery) {
                     iconId = R.drawable.stat_sys_data_bluetooth_connected;
-                } else {
+                } else if (mBluetoothBatteryLevel != null && mShowBluetoothBattery) {
                     if (mBluetoothBatteryLevel<=0.15f) {
                         iconId = R.drawable.stat_sys_data_bluetooth_connected_battery_1;
                     } else if (mBluetoothBatteryLevel<=0.375f) {
@@ -362,6 +386,7 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         mIconController.setIcon(mSlotBluetooth, iconId, contentDescription);
         mIconController.setIconVisibility(mSlotBluetooth, bluetoothEnabled);
     }
+
 
     private final void updateTTY(Intent intent) {
         int currentTtyMode = intent.getIntExtra(TelecomManager.EXTRA_CURRENT_TTY_MODE,
