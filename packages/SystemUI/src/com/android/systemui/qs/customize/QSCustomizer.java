@@ -184,7 +184,7 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
 
     private void reset() {
         ArrayList<String> tiles = new ArrayList<>();
-        String defTiles = mContext.getString(R.string.quick_settings_tiles_default);
+        String defTiles = mContext.getString(R.string.quick_settings_tiles_reset);
         for (String tile : defTiles.split(",")) {
             tiles.add(tile);
         }

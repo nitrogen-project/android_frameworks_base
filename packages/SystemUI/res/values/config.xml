@@ -103,6 +103,11 @@
         wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,location
     </string>
 
+    <!-- The tiles to display after reset in QuickSettings -->
+    <string name="quick_settings_tiles_reset" translatable="false">
+        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,location
+    </string>
+
     <!-- The tiles to display in QuickSettings -->
     <string name="quick_settings_tiles" translatable="false">default</string>
 
