@@ -807,6 +807,12 @@ public class UsbDeviceManager {
                     || ("0".equals(SystemProperties.get("persist.charging.notify")))) return;
             int id = 0;
             Resources r = mContext.getResources();
+
+            if (Settings.System.getInt(mContext.getContentResolver(),
+	                  Settings.System.MTP_DIRTY_HACK, 1) == 1) {
+                mUsbDataUnlocked = true;
+            }
+
             if (mConnected) {
                 if (!mUsbDataUnlocked) {
                     if (mSourcePower) {
