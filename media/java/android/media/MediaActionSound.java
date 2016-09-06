@@ -19,6 +19,7 @@ package android.media;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.util.Log;
+import android.os.SystemProperties;
 
 /**
  * <p>A class for producing sounds that match those produced by various actions
@@ -98,6 +99,8 @@ public class MediaActionSound {
     private static final int STATE_LOADING                = 1;
     private static final int STATE_LOADING_PLAY_REQUESTED = 2;
     private static final int STATE_LOADED                 = 3;
+
+    private static final String PROP_CAMERA_SOUND = "persist.sys.camera-sound";
 
     private class SoundState {
         public final int name;
@@ -203,6 +206,7 @@ public class MediaActionSound {
      * @see #STOP_VIDEO_RECORDING
      */
     public void play(int soundName) {
+     if (SystemProperties.getBoolean(PROP_CAMERA_SOUND, true)) {
         if (soundName < 0 || soundName >= SOUND_FILES.length) {
             throw new RuntimeException("Unknown sound requested: " + soundName);
         }
@@ -228,6 +232,7 @@ public class MediaActionSound {
                 break;
             }
         }
+     }
     }
 
     private SoundPool.OnLoadCompleteListener mLoadCompleteListener =
