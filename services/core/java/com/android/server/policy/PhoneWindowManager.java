@@ -496,6 +496,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     boolean mUseTvRouting;
 
     int mBackKillTimeout;
+    int mCustomBackKillTimeout;
     int mDeviceHardwareKeys;
 
     int mPointerLocationMode = 0; // guarded by mLock
@@ -896,6 +897,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Global.getUriFor(
                     Settings.Global.POLICY_CONTROL), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.KILL_APP_LONGPRESS_TIMEOUT), false, this,
                     UserHandle.USER_ALL);
             updateSettings();
         }
@@ -2121,6 +2125,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (mImmersiveModeConfirmation != null) {
                 mImmersiveModeConfirmation.loadSetting(mCurrentUserId);
             }
+
+            mCustomBackKillTimeout = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                    Settings.Secure.KILL_APP_LONGPRESS_TIMEOUT, mBackKillTimeout, UserHandle.USER_CURRENT);
         }
         synchronized (mWindowManagerFuncs.getWindowManagerLock()) {
             PolicyControl.reloadFromSetting(mContext);
@@ -3447,7 +3454,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (Settings.Secure.getIntForUser(mContext.getContentResolver(),
                     Settings.Secure.KILL_APP_LONGPRESS_BACK, 1, UserHandle.USER_CURRENT) == 1) {
                 if (down && repeatCount == 0) {
-                    mHandler.postDelayed(mBackLongPress, mBackKillTimeout);
+                    mHandler.postDelayed(mBackLongPress, mCustomBackKillTimeout);
                 }
             }
         } else if (keyCode == KeyEvent.KEYCODE_BRIGHTNESS_UP
