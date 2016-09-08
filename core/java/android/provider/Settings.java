@@ -3715,6 +3715,13 @@ public final class Settings {
         public static final String MTP_DIRTY_HACK = "mtp_dirty_hack";
 
         /**
+         * Which applications to enable heads up notifications for
+         *
+         * @hide
+         */
+        public static final String HEADS_UP_WHITELIST_VALUES = "heads_up_whitelist_values";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
