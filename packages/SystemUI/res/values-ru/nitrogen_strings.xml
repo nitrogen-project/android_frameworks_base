@@ -20,4 +20,7 @@
     <!-- Notification which notifies user flashlight is enabled -->
     <string name="quick_settings_tile_flashlight_not_title">Фонарик включен</string>
     <string name="quick_settings_tile_flashlight_not_summary">Нажмите для выключения</string>
+
+    <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">Скриншот удалён</string>
 </resources>
