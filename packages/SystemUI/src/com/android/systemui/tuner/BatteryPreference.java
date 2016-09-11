@@ -64,7 +64,7 @@ public class BatteryPreference extends DropDownPreference implements TunerServic
             mBlacklist = StatusBarIconController.getIconBlacklist(newValue);
             mBatteryEnabled = !mBlacklist.contains(mBattery);
         }
-        if (!mHasSetValue) {
+        /*if (!mHasSetValue) {
             // Because of the complicated tri-state it can end up looping and setting state back to
             // what the user didn't choose.  To avoid this, just set the state once and rely on the
             // preference to handle updates.
@@ -76,7 +76,7 @@ public class BatteryPreference extends DropDownPreference implements TunerServic
             } else {
                 setValue(DISABLED);
             }
-        }
+        }*/
     }
 
     @Override
