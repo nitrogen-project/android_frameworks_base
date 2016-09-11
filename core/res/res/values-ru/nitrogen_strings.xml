@@ -52,4 +52,6 @@
     <string name="battery_style_meter_horizontal">Горизонтальная</string>
     <string name="battery_style_circle">Круговая</string>
     <string name="battery_style_droid">Робот</string>
+
+    <string name="default_string">По умолчанию</string>
 </resources>

@@ -45,4 +45,6 @@
     <string name="battery_style_meter_horizontal">Horizontal bar</string>
     <string name="battery_style_circle">Circle</string>
     <string name="battery_style_droid">Droid</string>
+
+    <string name="default_string">Default</string>
 </resources>
