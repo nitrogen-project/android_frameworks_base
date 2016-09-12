@@ -976,6 +976,10 @@ public abstract class BaseStatusBar extends SystemUI implements
             mLayoutDirection = ld;
             refreshLayout(ld);
         }
+
+        if (mAssistManager != null) {
+            mAssistManager.onConfigurationChanged();
+        }
     }
 
     protected void onDensityOrFontScaleChanged() {
