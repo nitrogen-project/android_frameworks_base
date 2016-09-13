@@ -3803,6 +3803,12 @@ public final class Settings {
         public static final String ENABLE_SUGGESTIONS = "enable_suggestions";
 
         /**
+         * Remove tile summaries in settings
+         * @hide
+         */
+        public static final String SHOW_TILE_SUMMARY = "show_tile_summary";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
