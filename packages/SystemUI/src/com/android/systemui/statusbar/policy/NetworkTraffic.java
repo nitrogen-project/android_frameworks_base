@@ -64,6 +64,7 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
     private long lastUpdateTime;
     private int txtSize;
     private int txtImgPadding;
+    private boolean mHideArrow;
     private int mAutoHideThreshold;
     private int mTintColor;
     private int mVisibleState = -1;
@@ -101,11 +102,11 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
                 mTrafficVisible = false;
             } else {
                 // Get information for uplink ready so the line return can be added
-                String output = formatOutput(timeDelta, txData, symbol)+ "\u25b2";
+                String output = formatOutput(timeDelta, txData, symbol) + (mHideArrow ? "" : "\u25b2");
                 // Ensure text size is where it needs to be
                 output += "\n";
                 // Add information for downlink if it's called for
-                output += formatOutput(timeDelta, rxData, symbol) + "\u25bc";
+                output += formatOutput(timeDelta, rxData, symbol) + (mHideArrow ? "" : "\u25bc");
 
                 // Update view if there's anything new to show
                 if (! output.contentEquals(getText())) {
@@ -164,6 +165,9 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
                     this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD), false,
+                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.NETWORK_TRAFFIC_HIDEARROW), false,
                     this, UserHandle.USER_ALL);
         }
 
@@ -279,6 +283,9 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
         mAutoHideThreshold = Settings.System.getIntForUser(resolver,
                 Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD, 1,
                 UserHandle.USER_CURRENT);
+        mHideArrow = Settings.System.getIntForUser(resolver,
+                Settings.System.NETWORK_TRAFFIC_HIDEARROW, 0,
+                UserHandle.USER_CURRENT) == 1;
     }
 
     private void clearHandlerCallbacks() {
