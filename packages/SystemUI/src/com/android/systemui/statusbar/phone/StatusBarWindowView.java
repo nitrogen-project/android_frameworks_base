@@ -40,8 +40,8 @@ import android.os.IPowerManager;
 import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.ServiceManager;
-import android.provider.Settings;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ActionMode;
@@ -97,6 +97,7 @@ public class StatusBarWindowView extends FrameLayout {
     private int mStatusBarHeaderHeight;
 
     private boolean mDoubleTapToSleepEnabled;
+    private boolean mDoubleTapToSleepLockScreen;
     private GestureDetector mDoubleTapGesture;
     private Handler mHandler = new Handler();
     private SettingsObserver mSettingsObserver;
@@ -279,11 +280,20 @@ public class StatusBarWindowView extends FrameLayout {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         boolean intercept = false;
+        final int h = getMeasuredHeight();
         if (mDoubleTapToSleepEnabled
                 && ev.getY() < mStatusBarHeaderHeight) {
             if (DEBUG) Log.w(TAG, "logging double tap gesture");
             mDoubleTapGesture.onTouchEvent(ev);
         }
+
+        if (mDoubleTapToSleepLockScreen && mService.getBarState() == StatusBarState.KEYGUARD
+                && (ev.getY() < (h / 3) ||
+                ev.getY() > (h - mStatusBarHeaderHeight))) {
+            if (DEBUG) Log.w(TAG, "logging lock screen double tap gesture");
+                mDoubleTapGesture.onTouchEvent(ev);
+        }
+
         if (mNotificationPanel.isFullyExpanded()
                 && mStackScrollLayout.getVisibility() == View.VISIBLE
                 && mService.getBarState() == StatusBarState.KEYGUARD
@@ -723,6 +733,8 @@ public class StatusBarWindowView extends FrameLayout {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.DOUBLE_TAP_SLEEP_GESTURE), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_LOCK_SCREEN), false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -745,6 +757,8 @@ public class StatusBarWindowView extends FrameLayout {
             ContentResolver resolver = mContext.getContentResolver();
             mDoubleTapToSleepEnabled = Settings.System.getIntForUser(
                     resolver, Settings.System.DOUBLE_TAP_SLEEP_GESTURE, 0, UserHandle.USER_CURRENT) == 1;
+            mDoubleTapToSleepLockScreen = Settings.System.getIntForUser(
+                    resolver, Settings.System.DOUBLE_TAP_SLEEP_LOCK_SCREEN, 0, UserHandle.USER_CURRENT) == 1;
         }
     }
 }
