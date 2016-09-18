@@ -23,4 +23,10 @@
 
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Скриншот удалён</string>
+
+    <!-- QuickSettings: Sound [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_sound_label">Звук</string>
+    <string name="quick_settings_sound_ring">Звонок</string>
+    <string name="quick_settings_sound_vibrate">Вибрация</string>
+    <string name="quick_settings_sound_dnd">Не беспокоить</string>
 </resources>
