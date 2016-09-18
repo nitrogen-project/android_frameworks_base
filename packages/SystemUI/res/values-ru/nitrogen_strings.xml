@@ -23,4 +23,10 @@
     <string name="qs_lte_label">LTE</string>
     <string name="lte_on">LTE ВКЛ</string>
     <string name="lte_off">LTE ВЫКЛ.</string>
+
+    <!-- QuickSettings: Sound [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_sound_label">Звук</string>
+    <string name="quick_settings_sound_ring">Звонок</string>
+    <string name="quick_settings_sound_vibrate">Вибрация</string>
+    <string name="quick_settings_sound_dnd">Не беспокоить</string>
 </resources>
