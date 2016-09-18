@@ -466,15 +466,13 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
     };
 
     private class TileItemDecoration extends ItemDecoration {
-        private final ColorDrawable mDrawable;
+        private final ColorDrawable mDrawable = new ColorDrawable();
 
         private TileItemDecoration(Context context) {
-            TypedArray ta =
-                    context.obtainStyledAttributes(new int[]{android.R.attr.colorSecondary});
-            mDrawable = new ColorDrawable(ta.getColor(0, 0));
-            ta.recycle();
+            // Set drawable color
+            mDrawable.setColor(mContext.getResources().getColor(
+                R.color.qs_edit_item_decoration_bg));
         }
-
 
         @Override
         public void onDraw(Canvas c, RecyclerView parent, State state) {
@@ -494,6 +492,9 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
                         .getLayoutParams();
                 final int top = child.getTop() + params.topMargin +
                         Math.round(ViewCompat.getTranslationY(child));
+                // Set drawable color
+                mDrawable.setColor(mContext.getResources().getColor(
+                        R.color.qs_edit_item_decoration_bg));
                 // Draw full width, in case there aren't tiles all the way across.
                 mDrawable.setBounds(0, top, width, bottom);
                 mDrawable.draw(c);
