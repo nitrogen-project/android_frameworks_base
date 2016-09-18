@@ -15,11 +15,5 @@
     limitations under the License.
 -->
 
-<set xmlns:android="http://schemas.android.com/apk/res/android"
-     android:interpolator="@anim/decelerate_slider"
-     android:zAdjustment="top">
-    <translate
-        android:duration="@android:integer/config_longAnimTime"
-        android:fromYDelta="100.0%"
-        android:toYDelta="0.0%"/>
-</set>
+<decelerateInterpolator xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:factor="1.2"/>
