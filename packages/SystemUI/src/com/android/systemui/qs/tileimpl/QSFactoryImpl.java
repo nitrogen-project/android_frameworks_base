@@ -47,6 +47,7 @@ import com.android.systemui.qs.tiles.QuickAccessWalletTile;
 import com.android.systemui.qs.tiles.ReduceBrightColorsTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.ScreenRecordTile;
+import com.android.systemui.qs.tiles.SoundTile;
 import com.android.systemui.qs.tiles.UiModeNightTile;
 import com.android.systemui.qs.tiles.UserTile;
 import com.android.systemui.qs.tiles.WifiTile;
@@ -84,6 +85,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<GarbageMonitor.MemoryTile> mMemoryTileProvider;
     private final Provider<UiModeNightTile> mUiModeNightTileProvider;
     private final Provider<ScreenRecordTile> mScreenRecordTileProvider;
+    private final Provider<SoundTile> mSoundTileProvider;
     private final Provider<ReduceBrightColorsTile> mReduceBrightColorsTileProvider;
     private final Provider<CameraToggleTile> mCameraToggleTileProvider;
     private final Provider<MicrophoneToggleTile> mMicrophoneToggleTileProvider;
@@ -119,6 +121,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<GarbageMonitor.MemoryTile> memoryTileProvider,
             Provider<UiModeNightTile> uiModeNightTileProvider,
             Provider<ScreenRecordTile> screenRecordTileProvider,
+            Provider<SoundTile> soundTileProvider,
             Provider<ReduceBrightColorsTile> reduceBrightColorsTileProvider,
             Provider<CameraToggleTile> cameraToggleTileProvider,
             Provider<MicrophoneToggleTile> microphoneToggleTileProvider,
@@ -149,6 +152,7 @@ public class QSFactoryImpl implements QSFactory {
         mMemoryTileProvider = memoryTileProvider;
         mUiModeNightTileProvider = uiModeNightTileProvider;
         mScreenRecordTileProvider = screenRecordTileProvider;
+        mSoundTileProvider = soundTileProvider;
         mReduceBrightColorsTileProvider = reduceBrightColorsTileProvider;
         mCameraToggleTileProvider = cameraToggleTileProvider;
         mMicrophoneToggleTileProvider = microphoneToggleTileProvider;
@@ -209,6 +213,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mUiModeNightTileProvider.get();
             case "screenrecord":
                 return mScreenRecordTileProvider.get();
+            case "sound":
+                return mSoundTileProvider.get();
             case "reduce_brightness":
                 return mReduceBrightColorsTileProvider.get();
             case "cameratoggle":
