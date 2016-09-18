@@ -48,4 +48,7 @@
 
     <!-- Caffeine Tile -->
     <string name="quick_settings_caffeine_label">Кофеин</string>
+
+    <!-- Navbar tuner -->
+    <string name="navbar_tuner_title">Редактирование панели навигации</string>
 </resources>

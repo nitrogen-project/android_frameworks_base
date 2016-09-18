@@ -265,6 +265,22 @@
             </intent-filter>
         </activity-alias>
 
+        <activity android:name=".tuner.NavbarActivity"
+                  android:theme="@android:style/Theme.Material.Settings"
+                  android:label="@string/navbar_tuner_title"
+                  android:process=":tuner"
+                  android:parentActivityName="com.nitrogen.settings.fragments.NavigationBarSettings"
+                  android:exported="true">
+        </activity>
+
+        <activity android:name=".tuner.NightModeFragmentActivity"
+                  android:theme="@style/ExTunerSettings"
+                  android:label="@string/night_mode"
+                  android:process=":tuner"
+                  android:parentActivityName="com.android.settings.DisplaySettings"
+                  android:exported="true">
+        </activity>
+
         <!-- Service used by secondary users to register themselves with the system user. -->
         <service android:name=".recents.RecentsSystemUserService"
             android:exported="false"
