@@ -486,6 +486,9 @@ public final class PowerManagerService extends SystemService
     // True if we are currently in device idle mode.
     private boolean mDeviceIdleMode;
 
+    // overrule and disable brightness for buttons
+    private boolean mHasHwKeysEnabled = false;
+
     // True if we are currently in light device idle mode.
     private boolean mLightDeviceIdleMode;
 
@@ -691,6 +694,9 @@ public final class PowerManagerService extends SystemService
             resolver.registerContentObserver(Settings.Global.getUriFor(
                     Settings.Global.WAKE_WHEN_PLUGGED_OR_UNPLUGGED),
                     false, mSettingsObserver, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.ENABLE_HW_KEYS),
+                    false, mSettingsObserver, UserHandle.USER_ALL);
             IVrManager vrManager =
                     (IVrManager) getBinderService(VrManagerService.VR_MANAGER_BINDER_SERVICE);
             try {
@@ -832,6 +838,10 @@ public final class PowerManagerService extends SystemService
         mKeyboardBrightness = Settings.System.getIntForUser(resolver,
                 Settings.System.KEYBOARD_BRIGHTNESS, mKeyboardBrightnessSettingDefault,
                 UserHandle.USER_CURRENT);
+
+        mHasHwKeysEnabled = Settings.System.getIntForUser(resolver,
+                Settings.System.ENABLE_HW_KEYS, 1,
+                UserHandle.USER_CURRENT) != 0;
 
         mDirty |= DIRTY_SETTINGS;
     }
@@ -1681,12 +1691,17 @@ public final class PowerManagerService extends SystemService
                         mUserActivitySummary = USER_ACTIVITY_SCREEN_BRIGHT;
                         if (mWakefulness == WAKEFULNESS_AWAKE) {
                             int buttonBrightness, keyboardBrightness;
-                            if (mButtonBrightnessOverrideFromWindowManager >= 0) {
-                                buttonBrightness = mButtonBrightnessOverrideFromWindowManager;
-                                keyboardBrightness = mButtonBrightnessOverrideFromWindowManager;
+                            if (!mHasHwKeysEnabled) {
+                                buttonBrightness = 0;
+                                keyboardBrightness = 0;
                             } else {
-                                buttonBrightness = mButtonBrightness;
-                                keyboardBrightness = mKeyboardBrightness;
+                        	if (mButtonBrightnessOverrideFromWindowManager >= 0) {
+                            	    buttonBrightness = mButtonBrightnessOverrideFromWindowManager;
+                            	    keyboardBrightness = mButtonBrightnessOverrideFromWindowManager;
+                        	} else {
+                            	    buttonBrightness = mButtonBrightness;
+                            	    keyboardBrightness = mKeyboardBrightness;
+                        	}
                             }
 
                             mKeyboardLight.setBrightness(mKeyboardVisible ?
