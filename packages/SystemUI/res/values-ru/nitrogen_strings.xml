@@ -94,4 +94,7 @@
     <string name="accessibility_quick_settings_hwkeys_on">Кнопки вкл.</string>
     <string name="accessibility_quick_settings_hwkeys_off">Кнопки выкл.</string>
     <string name="quick_settings_hwkeys_label">Аппарат. кнопки</string>
+
+    <!-- Volume QS Tile -->
+    <string name="quick_settings_volume_panel_label">Панель громкости</string>
 </resources>
