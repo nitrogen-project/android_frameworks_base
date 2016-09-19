@@ -298,6 +298,13 @@ final class DefaultPermissionGrantPolicy {
                 grantRuntimePermissionsLPw(deskclockpackage, STORAGE_PERMISSIONS, userId);
             }
 
+            // LockClock
+            PackageParser.Package lockClock = getDefaultProviderAuthorityPackageLPr(
+                    "com.cyanogenmod.lockclock", userId);
+            if (lockClock != null) {
+            grantRuntimePermissionsLPw(lockClock, LOCATION_PERMISSIONS, userId);
+            }
+
             // Media provider
             PackageParser.Package mediaStorePackage = getDefaultProviderAuthorityPackageLPr(
                     MediaStore.AUTHORITY, userId);
