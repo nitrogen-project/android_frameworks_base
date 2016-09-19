@@ -42,4 +42,7 @@
     <!-- Reboot/Recovery QS Tile -->
     <string name="quick_settings_reboot_label">Перезагрузка</string>
     <string name="quick_settings_reboot_recovery_label">В рекавери</string>
+
+    <!-- Volume QS Tile -->
+    <string name="quick_settings_volume_panel_label">Панель громкости</string>
 </resources>
