@@ -3333,9 +3333,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
                 // If an incoming call is ringing, HOME is totally disabled.
                 // (The user is already on the InCallUI at this point,
-                // and his ONLY options are to answer or reject the call.)
+                // and his ONLY options are to answer or reject the call as long
+                // it is not a call in background)
+                final boolean isCallInBackground = isScreenOn() && !isKeyguardShowingAndNotOccluded();
                 TelecomManager telecomManager = getTelecommService();
-                if (telecomManager != null && telecomManager.isRinging()) {
+                if (telecomManager != null && telecomManager.isRinging()
+                        && !isCallInBackground) {
                     Log.i(TAG, "Ignoring HOME; there's a ringing incoming call.");
                     return -1;
                 }
