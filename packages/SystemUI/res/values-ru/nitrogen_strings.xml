@@ -51,4 +51,6 @@
 
     <!-- Navbar tuner -->
     <string name="navbar_tuner_title">Редактирование панели навигации</string>
+
+    <string name="statusbar_items_title">Редактирование иконок</string>
 </resources>

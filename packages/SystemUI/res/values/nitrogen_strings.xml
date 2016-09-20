@@ -68,4 +68,6 @@
 
     <!-- Navbar tuner -->
     <string name="navbar_tuner_title">Navbar tuner</string>
+
+    <string name="statusbar_items_title">Statusbar</string>
 </resources>
