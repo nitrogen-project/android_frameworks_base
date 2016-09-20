@@ -3914,12 +3914,6 @@ public final class Settings {
         public static final String STATUS_BAR_CLOCK_DATE_FORMAT = "statusbar_clock_date_format";
 
         /**
-         * Use EdgeGesture Service for system gestures in PhoneWindowManager
-         * @hide
-         */
-        public static final String USE_EDGE_SERVICE_FOR_GESTURES = "edge_service_for_gestures";
-
-        /**
          *  Enable statusbar double tap gesture on to put device to sleep
          * @hide
          */
