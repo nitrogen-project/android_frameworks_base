@@ -84,7 +84,7 @@ private static final Intent MOBILE_NETWORK_SETTINGS = new Intent(Intent.ACTION_M
 
     @Override
     public Intent getLongClickIntent() {
-        return MOBILE_NETWORK_SETTINGS;
+        return null;
     }
 
     @Override
@@ -95,8 +95,12 @@ private static final Intent MOBILE_NETWORK_SETTINGS = new Intent(Intent.ACTION_M
             mDataController.setMobileDataEnabled(true);
          } else {
             mDataController.setMobileDataEnabled(false);
-            showDetail(true);
 	}
+    }
+
+    @Override
+    protected void handleLongClick() {
+	showDetail(true);
     }
 
     @Override
@@ -263,7 +267,7 @@ private static final Intent MOBILE_NETWORK_SETTINGS = new Intent(Intent.ACTION_M
 
         @Override
         public Intent getSettingsIntent() {
-            return CELLULAR_SETTINGS;
+            return MOBILE_NETWORK_SETTINGS;
         }
 
         @Override
