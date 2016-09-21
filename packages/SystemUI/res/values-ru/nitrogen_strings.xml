@@ -45,4 +45,7 @@
 
     <!-- Volume QS Tile -->
     <string name="quick_settings_volume_panel_label">Панель громкости</string>
+
+    <!-- Caffeine Tile -->
+    <string name="quick_settings_caffeine_label">Кофеин</string>
 </resources>
