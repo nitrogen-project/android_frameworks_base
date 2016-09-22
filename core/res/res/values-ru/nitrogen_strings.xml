@@ -43,4 +43,6 @@
     <!-- screenshot in the power menu -->
     <string name="powermenu_screenshot">Снимок экрана</string>
 
+    <!-- Powermenu Torch -->
+    <string name="global_action_torch">Фонарик</string>
 </resources>

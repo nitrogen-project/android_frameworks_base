@@ -2112,6 +2112,7 @@
          "power" = Power off
          "reboot" = Reboot
          "screenshot" = Take screenshot
+         "torch" = Toggle torch
          "settings" = An action to launch settings
          "lockdown" = An action to lock it down
          "airplane" = Airplane mode toggle
@@ -2123,6 +2124,7 @@
         <item>power</item>
         <item>reboot</item>
         <item>screenshot</item>
+        <item>torch</item>
         <item>airplane</item>
         <item>settings</item>
         <item>lockdown</item>
