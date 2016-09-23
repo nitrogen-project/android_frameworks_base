@@ -53,4 +53,11 @@
     <string name="navbar_tuner_title">Редактирование панели навигации</string>
 
     <string name="statusbar_items_title">Редактирование иконок</string>
+
+    <string name="sysui_qs_fancy_anim_title">Анимация для маленьких плиток</string>
+    <string name="sysui_qs_move_whole_rows_title">Анимация через ряд</string>
+
+    <!--- Small tiles count -->
+    <string name="sysui_qqs_count_title">Число маленьких плиток</string>
+    <string name="sysui_qqs_count_5_default">5 (по умолчанию)</string>
 </resources>

@@ -26,6 +26,7 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.provider.Settings.System;
 import android.support.v14.preference.PreferenceFragment;
+import android.support.v7.preference.ListPreference;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.Preference.OnPreferenceChangeListener;
@@ -33,19 +34,26 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.android.systemui.tuner.TunerService;
+import com.android.systemui.tuner.TunerService.Tunable;
+
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.MetricsProto.MetricsEvent;
 import com.android.systemui.R;
 
-public class TunerFragment extends PreferenceFragment {
+public class TunerFragment extends PreferenceFragment implements 
+		Preference.OnPreferenceChangeListener {
 
     private static final String TAG = "TunerFragment";
 
     public static final String SETTING_SEEN_TUNER_WARNING = "seen_tuner_warning";
+    private static final String KEY_SYSUI_QQS_COUNT = "sysui_qqs_count_key";
+    public static final String NUM_QUICK_TILES = "sysui_qqs_count";
 
     private static final String WARNING_TAG = "tuner_warning";
 
     private static final int MENU_REMOVE = Menu.FIRST + 1;
+    private ListPreference mSysuiQqsCount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,6 +78,14 @@ public class TunerFragment extends PreferenceFragment {
                 new TunerWarningFragment().show(getFragmentManager(), WARNING_TAG);
             }
         }
+
+        mSysuiQqsCount = (ListPreference) findPreference(KEY_SYSUI_QQS_COUNT);
+            if (mSysuiQqsCount != null) {
+               mSysuiQqsCount.setOnPreferenceChangeListener(this);
+               int SysuiQqsCount = TunerService.get(getContext()).getValue(NUM_QUICK_TILES, 5);
+               mSysuiQqsCount.setValue(Integer.toString(SysuiQqsCount));
+               mSysuiQqsCount.setSummary(mSysuiQqsCount.getEntry());
+            }
     }
 
     @Override
@@ -86,6 +102,22 @@ public class TunerFragment extends PreferenceFragment {
 
         MetricsLogger.visibility(getContext(), MetricsEvent.TUNER, false);
     }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference == mSysuiQqsCount) {
+            String SysuiQqsCount = (String) newValue;
+            int SysuiQqsCountValue = Integer.parseInt(SysuiQqsCount);
+            TunerService.get(getContext()).setValue(NUM_QUICK_TILES, SysuiQqsCountValue);
+            int SysuiQqsCountIndex = mSysuiQqsCount
+                    .findIndexOfValue(SysuiQqsCount);
+            mSysuiQqsCount
+                    .setSummary(mSysuiQqsCount.getEntries()[SysuiQqsCountIndex]);
+            return true;
+          }
+
+         return false;
+     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

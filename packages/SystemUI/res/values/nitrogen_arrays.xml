@@ -21,4 +21,21 @@
         <item>drawable/stat_sys_data_fully_connected_hp</item>
     </string-array>
 
+    <!--- Small tiles count -->
+    <string-array name="sysui_qqs_count_entries">
+        <item>@string/sysui_qqs_count_3</item>
+        <item>@string/sysui_qqs_count_4</item>
+        <item>@string/sysui_qqs_count_5_default</item>
+        <item>@string/sysui_qqs_count_6</item>
+        <item>@string/sysui_qqs_count_7</item>
+    </string-array>
+
+    <string-array name="sysui_qqs_count_values">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+
 </resources>

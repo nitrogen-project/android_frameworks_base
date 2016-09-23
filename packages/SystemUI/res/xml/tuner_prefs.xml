@@ -19,6 +19,23 @@
     android:title="@string/system_ui_tuner">
 
     <com.android.systemui.tuner.TunerSwitch
+        android:key="sysui_qs_fancy_anim"
+        android:title="@string/sysui_qs_fancy_anim_title"
+        sysui:defValue="true" />
+
+    <com.android.systemui.tuner.TunerSwitch
+        android:key="sysui_qs_move_whole_rows"
+        android:title="@string/sysui_qs_move_whole_rows_title"
+        sysui:defValue="true" />
+
+    <ListPreference
+        android:dialogTitle="@string/sysui_qqs_count_title"
+        android:entries="@array/sysui_qqs_count_entries"
+        android:entryValues="@array/sysui_qqs_count_values"
+        android:key="sysui_qqs_count_key"
+        android:title="@string/sysui_qqs_count_title" />
+
+    <com.android.systemui.tuner.TunerSwitch
         android:key="qs_show_brightness"
         android:title="@string/show_brightness"
         sysui:defValue="true" />

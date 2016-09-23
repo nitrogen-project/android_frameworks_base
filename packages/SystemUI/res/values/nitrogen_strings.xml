@@ -70,4 +70,15 @@
     <string name="navbar_tuner_title">Navbar tuner</string>
 
     <string name="statusbar_items_title">Statusbar</string>
+
+    <string name="sysui_qs_fancy_anim_title">Fancy animation</string>
+    <string name="sysui_qs_move_whole_rows_title">Move whole rows</string>
+
+    <!--- Small tiles count -->
+    <string name="sysui_qqs_count_title">Small quick tiles count</string>
+    <string name="sysui_qqs_count_3">3</string>
+    <string name="sysui_qqs_count_4">4</string>
+    <string name="sysui_qqs_count_5_default">5 (default)</string>
+    <string name="sysui_qqs_count_6">6</string>
+    <string name="sysui_qqs_count_7">7</string>
 </resources>
