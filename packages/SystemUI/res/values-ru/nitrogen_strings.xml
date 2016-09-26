@@ -84,4 +84,6 @@
     <!-- Lockscreen QS Tile -->
     <string name="quick_settings_lockscreen_label">Экран блокировки</string>
     <string name="quick_settings_lockscreen_label_enforced">Экран блокировки принудительно</string>
+
+    <string name="quick_settings_usb_tether_label">USB-модем</string>
 </resources>
