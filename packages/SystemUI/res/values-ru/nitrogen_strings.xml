@@ -36,4 +36,9 @@
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">Снимок экрана</string>
     <string name="quick_settings_region_screenshot_label">Снимок области</string>
+
+    <!-- ADB network tile -->
+    <string name="quick_settings_adb_network">Отладка по сети</string>
+    <string name="quick_settings_network_adb_disabled_label">Отладка выкл.</string>
+    <string name="quick_settings_network_adb_enabled_label">Отладка по сети</string>
 </resources>
