@@ -87,4 +87,9 @@
 
     <!-- SysUI Tuner: Button that controls inversion of layout of navigation bar [CHAR LIMIT=60] -->
     <string name="nav_bar_layout_inverse">Инвертированная разметка</string>
+
+    <!-- Expanded desktop tile -->
+    <string name="quick_settings_expanded_desktop_label">Расширенный экран</string>
+    <string name="quick_settings_expanded_desktop">Расширенный</string>
+    <string name="quick_settings_expanded_desktop_off">Нормальный</string>
 </resources>

@@ -106,4 +106,9 @@
 
     <!-- SysUI Tuner: Button that controls inversion of layout of navigation bar [CHAR LIMIT=60] -->
     <string name="nav_bar_layout_inverse">Invert layout</string>
+
+    <!-- Expanded Desktop QS Tile -->
+    <string name="quick_settings_expanded_desktop_label">Expanded desktop</string>
+    <string name="quick_settings_expanded_desktop">Expanded</string>
+    <string name="quick_settings_expanded_desktop_off">Normal</string>
 </resources>
