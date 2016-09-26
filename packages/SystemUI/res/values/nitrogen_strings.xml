@@ -81,4 +81,9 @@
     <string name="sysui_qqs_count_5_default">5 (default)</string>
     <string name="sysui_qqs_count_6">6</string>
     <string name="sysui_qqs_count_7">7</string>
+
+    <string name="quick_settings_expanded_desktop_label">Expanded desktop</string>
+    <string name="quick_settings_expanded_desktop">Expanded</string>
+    <string name="quick_settings_expanded_desktop_off">Normal</string>
+
 </resources>

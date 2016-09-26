@@ -60,4 +60,8 @@
     <!--- Small tiles count -->
     <string name="sysui_qqs_count_title">Число маленьких плиток</string>
     <string name="sysui_qqs_count_5_default">5 (по умолчанию)</string>
+
+    <string name="quick_settings_expanded_desktop_label">Расширенный экран</string>
+    <string name="quick_settings_expanded_desktop">Расширенный</string>
+    <string name="quick_settings_expanded_desktop_off">Обычный</string>
 </resources>
