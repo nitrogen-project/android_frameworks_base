@@ -105,4 +105,9 @@
     <!-- Caffeine tile -->
     <string name="caffeine_info_title">Подсказка</string>
     <string name="caffeine_info_message">Плитка Кофеин не позволяет экрану устройства выключиться.\n\nВыключение экрана вручную, отключает плитку.</string>
+
+    <!-- Expanded desktop tile -->
+    <string name="quick_settings_expanded_desktop_label">Расширенный экран</string>
+    <string name="quick_settings_expanded_desktop">Расширенный</string>
+    <string name="quick_settings_expanded_desktop_off">Нормальный</string>
 </resources>
