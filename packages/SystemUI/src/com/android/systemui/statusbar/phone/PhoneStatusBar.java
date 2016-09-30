@@ -37,6 +37,7 @@ import android.content.pm.IPackageManager;
 import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.content.res.Configuration;
+import android.content.ContentResolver;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
@@ -58,6 +59,7 @@ import android.media.session.MediaController;
 import android.media.session.MediaSession;
 import android.media.session.MediaSessionManager;
 import android.media.session.PlaybackState;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -112,6 +114,7 @@ import com.android.systemui.DemoMode;
 import com.android.systemui.EventLogConstants;
 import com.android.systemui.EventLogTags;
 import com.android.systemui.Interpolators;
+import com.android.systemui.nitrogen.UserContentObserver;
 import com.android.systemui.Prefs;
 import com.android.systemui.R;
 import com.android.systemui.SystemUIFactory;
@@ -473,6 +476,46 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
     };
 
+   class SettingsObserver extends UserContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        protected void observe() {
+            super.observe();
+
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_ROTATION),
+                    false, this, UserHandle.USER_ALL);
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_ROTATION))
+                    || uri.equals(Settings.System.getUriFor(
+                    Settings.System.ACCELEROMETER_ROTATION))) {
+                mStatusBarWindowManager.updateKeyguardScreenRotation();
+            }
+            update();
+        }
+
+        @Override
+        protected void unobserve() {
+            super.unobserve();
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.unregisterContentObserver(this);
+        }
+
+         @Override
+         public void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+         }
+    }
+
     private int mInteractingWindows;
     private boolean mAutohideSuspended;
     private int mStatusBarMode;
@@ -725,6 +768,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         mScreenPinningRequest = new ScreenPinningRequest(mContext);
         mFalsingManager = FalsingManager.getInstance(mContext);
+
+        SettingsObserver observer = new SettingsObserver(mHandler);
+        observer.observe();
     }
 
     protected void createIconController() {
