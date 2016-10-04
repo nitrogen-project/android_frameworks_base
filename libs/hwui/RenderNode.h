@@ -232,7 +232,7 @@ public:
     // the frameNumber to appropriately batch/synchronize these transactions.
     // There is no other filtering/batching to ensure that only the "final"
     // state called once per frame.
-    class ANDROID_API PositionListener {
+    class ANDROID_API PositionListener : public std::enable_shared_from_this<PositionListener> {
     public:
         virtual ~PositionListener() {}
         // Called when the RenderNode's position changes
@@ -366,7 +366,7 @@ private:
     // mDisplayList, not mStagingDisplayList.
     uint32_t mParentCount;
 
-    std::unique_ptr<PositionListener> mPositionListener;
+    std::shared_ptr<PositionListener> mPositionListener;
 }; // class RenderNode
 
 } /* namespace uirenderer */

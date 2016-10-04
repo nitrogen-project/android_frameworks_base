@@ -574,7 +574,8 @@ static void android_view_RenderNode_requestPositionUpdates(JNIEnv* env, jobject,
             }
 
             auto functor = std::bind(
-                std::mem_fn(&SurfaceViewPositionUpdater::doUpdatePosition), this,
+                std::mem_fn(&SurfaceViewPositionUpdater::doUpdatePosition),
+                std::static_pointer_cast<SurfaceViewPositionUpdater>(shared_from_this()),
                 (jlong) info.canvasContext.getFrameNumber(),
                 (jint) bounds.left, (jint) bounds.top,
                 (jint) bounds.right, (jint) bounds.bottom);
@@ -587,7 +588,8 @@ static void android_view_RenderNode_requestPositionUpdates(JNIEnv* env, jobject,
 
             if (info) {
                 auto functor = std::bind(
-                    std::mem_fn(&SurfaceViewPositionUpdater::doNotifyPositionLost), this,
+                    std::mem_fn(&SurfaceViewPositionUpdater::doNotifyPositionLost),
+                    std::static_pointer_cast<SurfaceViewPositionUpdater>(shared_from_this()),
                     (jlong) info->canvasContext.getFrameNumber());
 
                 info->canvasContext.enqueueFrameWork(std::move(functor));
