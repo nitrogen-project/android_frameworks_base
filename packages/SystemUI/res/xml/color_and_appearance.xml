@@ -18,11 +18,6 @@
     xmlns:sysui="http://schemas.android.com/apk/res-auto"
     android:title="@string/color_and_appearance">
 
-    <Preference
-        android:key="night_mode"
-        android:title="@string/night_mode"
-        android:fragment="com.android.systemui.tuner.NightModeFragment" />
-
     <com.android.systemui.tuner.CalibratePreference
         android:key="calibrate"
         android:title="@string/calibrate_display" />

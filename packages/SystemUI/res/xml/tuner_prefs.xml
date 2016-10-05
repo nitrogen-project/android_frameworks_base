@@ -18,11 +18,6 @@
     xmlns:sysui="http://schemas.android.com/apk/res-auto"
     android:title="@string/system_ui_tuner">
 
-    <Preference
-        android:key="color_transform"
-        android:title="@string/color_and_appearance"
-        android:fragment="com.android.systemui.tuner.ColorAndAppearanceFragment" />
-
     <PreferenceScreen
         android:key="volume_and_do_not_disturb"
         android:title="@string/volume_and_do_not_disturb">

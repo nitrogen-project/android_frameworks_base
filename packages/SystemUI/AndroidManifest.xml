@@ -281,6 +281,14 @@
                   android:exported="true">
         </activity>
 
+        <activity android:name=".tuner.ColorActivity"
+                  android:theme="@style/ExTunerSettings"
+                  android:label="@string/color_and_appearance"
+                  android:process=":tuner"
+                  android:parentActivityName="com.android.settings.DisplaySettings"
+                  android:exported="true">
+        </activity>
+
         <activity android:name=".tuner.StatusbarItemsActivity"
                   android:theme="@style/ExTunerSettings"
                   android:label="@string/statusbar_items_title"

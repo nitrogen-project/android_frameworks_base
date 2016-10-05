@@ -59,10 +59,6 @@ public class ColorAndAppearanceFragment extends PreferenceFragment {
         MetricsLogger.visibility(getContext(), MetricsEvent.TUNER_COLOR_AND_APPEARANCE, true);
         // TODO: Figure out better title model for Tuner, to avoid any more of this.
         getActivity().setTitle(R.string.color_and_appearance);
-
-        Preference nightMode = findPreference(KEY_NIGHT_MODE);
-        nightMode.setSummary(mNightModeController.isEnabled()
-                ? R.string.night_mode_on : R.string.night_mode_off);
     }
 
     @Override
