@@ -54,13 +54,6 @@
 
     <string name="statusbar_items_title">Редактирование иконок</string>
 
-    <string name="sysui_qs_fancy_anim_title">Анимация для маленьких плиток</string>
-    <string name="sysui_qs_move_whole_rows_title">Анимация через ряд</string>
-
-    <!--- Small tiles count -->
-    <string name="sysui_qqs_count_title">Число маленьких плиток</string>
-    <string name="sysui_qqs_count_5_default">5 (по умолчанию)</string>
-
     <string name="quick_settings_expanded_desktop_label">Расширенный экран</string>
     <string name="quick_settings_expanded_desktop">Расширенный</string>
     <string name="quick_settings_expanded_desktop_off">Обычный</string>
