@@ -289,6 +289,14 @@
                   android:exported="true">
         </activity>
 
+        <activity android:name=".tuner.PowerActivity"
+                  android:theme="@style/ExTunerSettings"
+                  android:label="@string/tuner_full_importance_settings"
+                  android:process=":tuner"
+                  android:parentActivityName="com.nitrogen.settings.fragments.NotificationSettings"
+                  android:exported="true">
+        </activity>
+
         <activity android:name=".tuner.StatusbarItemsActivity"
                   android:theme="@style/ExTunerSettings"
                   android:label="@string/statusbar_items_title"
