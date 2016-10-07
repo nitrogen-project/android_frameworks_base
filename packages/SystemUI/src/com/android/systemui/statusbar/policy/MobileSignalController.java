@@ -57,6 +57,12 @@ public class MobileSignalController extends SignalController<
     // @VisibleForDemoMode
     final SparseArray<MobileIconGroup> mNetworkToIconLookup;
 
+    private boolean mLastShowSpn;
+    private String mLastSpn;
+    private String mLastDataSpn;
+    private boolean mLastShowPlmn;
+    private String mLastPlmn;
+
     // Since some pieces of the phone state are interdependent we store it locally,
     // this could potentially become part of MobileState for simplification/complication
     // of code.
@@ -342,27 +348,64 @@ public class MobileSignalController extends SignalController<
         }
     }
 
+    private String getNetworkClassString(ServiceState state) {
+        if (state != null && (state.getDataRegState() == ServiceState.STATE_IN_SERVICE ||
+                state.getVoiceRegState() == ServiceState.STATE_IN_SERVICE)) {
+            int voiceNetType = state.getVoiceNetworkType();
+            int dataNetType =  state.getDataNetworkType();
+            int chosenNetType =
+                    ((dataNetType == TelephonyManager.NETWORK_TYPE_UNKNOWN)
+                    ? voiceNetType : dataNetType);
+            return networkClassToString(TelephonyManager.getNetworkClass(chosenNetType));
+        } else {
+            return "";
+        }
+    }
+
+    private String networkClassToString (int networkClass) {
+        final int[] classIds = { 0, // TelephonyManager.NETWORK_CLASS_UNKNOWN
+            com.android.internal.R.string.config_rat_2g,
+            com.android.internal.R.string.config_rat_3g,
+            com.android.internal.R.string.config_rat_4g };
+        String classString = null;
+        if (networkClass < classIds.length) {
+            classString = mContext.getResources().getString(classIds[networkClass]);
+        }
+        return (classString == null) ? "" : classString;
+    }
+
     /**
      * Updates the network's name based on incoming spn and plmn.
      */
     void updateNetworkName(boolean showSpn, String spn, String dataSpn,
             boolean showPlmn, String plmn) {
+        mLastShowSpn = showSpn;
+        mLastSpn = spn;
+        mLastDataSpn = dataSpn;
+        mLastShowPlmn = showPlmn;
+        mLastPlmn = plmn;
         if (CHATTY) {
             Log.d("CarrierLabel", "updateNetworkName showSpn=" + showSpn
                     + " spn=" + spn + " dataSpn=" + dataSpn
                     + " showPlmn=" + showPlmn + " plmn=" + plmn);
         }
+        String networkClass = getNetworkClassString(mServiceState);
         StringBuilder str = new StringBuilder();
         StringBuilder strData = new StringBuilder();
         if (showPlmn && plmn != null) {
             str.append(plmn);
             strData.append(plmn);
+            if (mConfig.showRat) {
+                str.append(" ").append(networkClass);
+                strData.append(" ").append(networkClass);
+            }
         }
         if (showSpn && spn != null) {
             if (str.length() != 0) {
                 str.append(mNetworkNameSeparator);
             }
             str.append(spn);
+            if (mConfig.showRat) str.append(" ").append(networkClass);
         }
         if (str.length() != 0) {
             mCurrentState.networkName = str.toString();
@@ -374,6 +417,7 @@ public class MobileSignalController extends SignalController<
                 strData.append(mNetworkNameSeparator);
             }
             strData.append(dataSpn);
+            if (mConfig.showRat) strData.append(" ").append(networkClass);
         }
         if (strData.length() != 0) {
             mCurrentState.networkNameData = strData.toString();
@@ -478,6 +522,7 @@ public class MobileSignalController extends SignalController<
                     mServiceState.isUsingCarrierAggregation()) {
                 mDataNetType = TelephonyManager.NETWORK_TYPE_LTE_CA;
             }
+            updateNetworkName(mLastShowSpn, mLastSpn, mLastDataSpn, mLastShowPlmn, mLastPlmn);
             updateTelephony();
         }
 
