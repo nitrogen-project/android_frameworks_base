@@ -35,6 +35,7 @@ public class ClockController {
     private int mAmPmStyle;
     private int mClockDateStyle;
     private int mClockDateDisplay;
+    private int mClockDatePosition;
     private int mIconTint = DEFAULT_ICON_TINT;
     private final Rect mTintArea = new Rect();
 
@@ -59,6 +60,9 @@ public class ClockController {
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CLOCK_DATE_FORMAT),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUSBAR_CLOCK_DATE_POSITION),
                     false, this, UserHandle.USER_ALL);
             updateSettings();
         }
@@ -114,6 +118,7 @@ public class ClockController {
         mActiveClock.setAmPmStyle(mAmPmStyle);
         mActiveClock.setClockDateDisplay(mClockDateDisplay);
         mActiveClock.setClockDateStyle(mClockDateStyle);
+        mActiveClock.setClockDatePosition(mClockDatePosition);
 
         setClockAndDateStatus();
         setTextColor(mIconTint);
@@ -134,6 +139,8 @@ public class ClockController {
         mClockDateStyle = Settings.System.getIntForUser(resolver,
                 Settings.System.STATUS_BAR_CLOCK_DATE_STYLE, Clock.CLOCK_DATE_STYLE_REGULAR,
                 UserHandle.USER_CURRENT);
+        mClockDatePosition = Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.STATUSBAR_CLOCK_DATE_POSITION, 0);
         updateActiveClock();
     }
 
