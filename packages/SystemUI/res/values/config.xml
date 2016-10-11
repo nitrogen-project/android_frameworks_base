@@ -108,6 +108,11 @@
         wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,location
     </string>
 
+    <!-- The extra tiles to display in QuickSettings -->
+    <string name="quick_settings_tiles_extra" translatable="false">
+        hotspot,inversion,saver,work,cast,night,sound,reboot,volume,caffeine,nfc,expanded_desktop
+    </string>
+
     <!-- The tiles to display in QuickSettings -->
     <string name="quick_settings_tiles" translatable="false">default</string>
 
