@@ -50,4 +50,9 @@
     <string name="quick_settings_expanded_desktop_label">Расширенный экран</string>
     <string name="quick_settings_expanded_desktop">Расширенный</string>
     <string name="quick_settings_expanded_desktop_off">Обычный</string>
+
+    <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE ВКЛ</string>
+    <string name="lte_off">LTE ВЫКЛ.</string>
 </resources>
