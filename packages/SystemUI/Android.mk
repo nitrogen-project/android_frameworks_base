@@ -70,3 +70,5 @@ include $(BUILD_PACKAGE)
 ifeq ($(EXCLUDE_SYSTEMUI_TESTS),)
     include $(call all-makefiles-under,$(LOCAL_PATH))
 endif
+
+include $(call all-makefiles-under, $(LOCAL_PATH))
