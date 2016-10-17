@@ -4108,24 +4108,10 @@ public final class Settings {
         public static final String DOUBLE_TAP_SLEEP_GESTURE = "double_tap_sleep_gesture";
 
         /**
-         *  Enable navigation bar double tap gesture on to put device to sleep
-         * @hide
-         */
-        public static final String DOUBLE_TAP_SLEEP_NAVBAR = "double_tap_sleep_navbar";
-
-        /**
          * volume answer
          * @hide
          */
         public static final String ANSWER_VOLUME_BUTTON_BEHAVIOR_ANSWER = "call_volume_answer";
-
-        /**
-         * Whether user can enable/disable navigation bar.
-         * <p>
-         * Type: int (0 for false, 1 for true)
-         * @hide
-         */
-        public static final String NAVIGATION_BAR_ENABLED = "navigation_bar_enabled";
 
         /**
          * Quick Settings Smart Pulldown
@@ -4459,8 +4445,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(POINTER_SPEED);
             PRIVATE_SETTINGS.add(LOCK_TO_APP_ENABLED);
             PRIVATE_SETTINGS.add(EGG_MODE);
-            // New private settings.
-            PRIVATE_SETTINGS.add(NAVIGATION_BAR_ENABLED);
         }
 
         /**

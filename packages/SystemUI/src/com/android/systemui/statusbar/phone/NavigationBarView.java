@@ -30,14 +30,11 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
-import android.os.PowerManager;
-import android.provider.Settings;
 import android.os.RemoteException;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Display;
-import android.view.GestureDetector;
 import android.view.IDockedStackListener.Stub;
 import android.view.MotionEvent;
 import android.view.Surface;
@@ -101,8 +98,6 @@ public class NavigationBarView extends LinearLayout {
 
     private final SparseArray<ButtonDispatcher> mButtonDisatchers = new SparseArray<>();
     private Configuration mConfiguration;
-
-    private GestureDetector mDoubleTapGesture;
 
     private class NavTransitionListener implements TransitionListener {
         private boolean mBackTransitioning;
@@ -198,16 +193,6 @@ public class NavigationBarView extends LinearLayout {
 
         mBarTransitions = new NavigationBarTransitions(this);
 
-        mDoubleTapGesture = new GestureDetector(mContext,
-                new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onDoubleTap(MotionEvent e) {
-                PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
-                if (pm != null) pm.goToSleep(e.getEventTime());
-                return true;
-            }
-        });
-
         mButtonDisatchers.put(R.id.back, new ButtonDispatcher(R.id.back));
         mButtonDisatchers.put(R.id.home, new ButtonDispatcher(R.id.home));
         mButtonDisatchers.put(R.id.recent_apps, new ButtonDispatcher(R.id.recent_apps));
@@ -230,19 +215,12 @@ public class NavigationBarView extends LinearLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.DOUBLE_TAP_SLEEP_NAVBAR, 0) == 1)
-            mDoubleTapGesture.onTouchEvent(event);
-
         if (mGestureHelper.onTouchEvent(event)) {
             return true;
         }
-
         if (mDeadZone != null && event.getAction() == MotionEvent.ACTION_OUTSIDE) {
             mDeadZone.poke(event);
         }
-
         return super.onTouchEvent(event);
     }
 
