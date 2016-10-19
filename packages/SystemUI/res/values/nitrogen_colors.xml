@@ -26,4 +26,7 @@
     <!-- Nav bar tuner colors -->
     <color name="navbar_tuner_background_color">@android:color/white</color>
     <color name="navbar_tuner_text_color">@*android:color/material_deep_teal_500</color>
+
+    <!-- carrier label color -->
+    <color name="status_bar_carrier_color">#FFFFFFFF</color>
 </resources>
