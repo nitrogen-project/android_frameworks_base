@@ -101,6 +101,7 @@ public class KeyguardStatusBarView extends RelativeLayout
         mCarrierLabel = (TextView) findViewById(R.id.keyguard_carrier_text);
         loadDimens();
         updateUserSwitcher();
+        updateVisibilities();
         LinearLayout batteryContainer = (LinearLayout) findViewById(R.id.battery_container);
         mBatteryViewManager = new BatteryViewManager(mContext, batteryContainer, null, null);
     }
