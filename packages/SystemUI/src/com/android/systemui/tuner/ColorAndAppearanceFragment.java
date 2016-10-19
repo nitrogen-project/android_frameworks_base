@@ -123,6 +123,7 @@ public class ColorAndAppearanceFragment extends PreferenceFragment {
                 customValues = NightModeController.toString(NightModeController.IDENTITY_MATRIX);
             }
             mValues = NightModeController.toValues(customValues);
+            getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         @Override

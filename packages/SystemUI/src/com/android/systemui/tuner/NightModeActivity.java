@@ -22,27 +22,27 @@ import android.support.v14.preference.PreferenceFragment;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceScreen;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.android.settingslib.drawer.SettingsDrawerActivity;
 import com.android.systemui.R;
 
-public class TunerActivity extends SettingsDrawerActivity implements
+public class NightModeActivity extends SettingsDrawerActivity implements
         PreferenceFragment.OnPreferenceStartFragmentCallback,
         PreferenceFragment.OnPreferenceStartScreenCallback {
 
-    private static final String TAG_TUNER = "tuner";
+    private static final String TAG_NIGHTMODE = "nightmode";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getFragmentManager().findFragmentByTag(TAG_TUNER) == null) {
+        if (getFragmentManager().findFragmentByTag(TAG_NIGHTMODE) == null) {
             final String action = getIntent().getAction();
-            boolean showDemoMode = action != null && action.equals(
-                    "com.android.settings.action.DEMO_MODE");
-            final PreferenceFragment fragment = showDemoMode ? new DemoModeFragment()
-                    : new TunerFragment();
+            final Fragment fragment;
+            fragment = new NightModeFragment();
+
             getFragmentManager().beginTransaction().replace(R.id.content_frame,
-                    fragment, TAG_TUNER).commit();
+                    fragment, TAG_NIGHTMODE).commit();
         }
     }
 
@@ -51,6 +51,16 @@ public class TunerActivity extends SettingsDrawerActivity implements
         if (!getFragmentManager().popBackStackImmediate()) {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -65,7 +75,7 @@ public class TunerActivity extends SettingsDrawerActivity implements
             transaction.commit();
             return true;
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            Log.d("TunerActivity", "Problem launching fragment", e);
+            Log.d("NightModeActivity", "Problem launching fragment", e);
             return false;
         }
     }
@@ -93,3 +103,4 @@ public class TunerActivity extends SettingsDrawerActivity implements
     }
 
 }
+

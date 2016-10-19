@@ -110,7 +110,7 @@
 
     <!-- The extra tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_extra" translatable="false">
-        hotspot,inversion,saver,work,cast,night,sound,reboot,volume,caffeine,nfc,expanded_desktop,lte,navigation_bar
+        hotspot,inversion,saver,work,cast,night,sound,reboot,volume,caffeine,nfc,expanded_desktop,lte,navigation_bar,nightmode
     </string>
 
     <!-- The tiles to display in QuickSettings -->
