@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.graphics.PorterDuff.Mode;
@@ -177,6 +178,11 @@ public class KeyguardStatusView extends GridLayout implements
                 getResources().getDimensionPixelSize(R.dimen.widget_label_font_size));
     }
 
+    private int getLockClockFont() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCK_CLOCK_FONTS, 4);
+    }
+
     public void refreshTime() {
         mDateView.setFormat24Hour(Patterns.dateView);
         mDateView.setFormat12Hour(Patterns.dateView);
@@ -192,7 +198,7 @@ public class KeyguardStatusView extends GridLayout implements
 
         refreshTime();
         refreshAlarmStatus(nextAlarm);
-        updateWeatherSettings(false);
+        updateSettings(false);
     }
 
     void refreshAlarmStatus(AlarmManager.AlarmClockInfo nextAlarm) {
@@ -233,7 +239,7 @@ public class KeyguardStatusView extends GridLayout implements
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         KeyguardUpdateMonitor.getInstance(mContext).registerCallback(mInfoCallback);
-        updateWeatherSettings(false);
+        updateSettings(false);
         mWeatherController.addCallback(this);
     }
 
@@ -277,7 +283,7 @@ public class KeyguardStatusView extends GridLayout implements
             mWeatherConditionText.setText(null);
             mWeatherTimestamp.setText(null);
             mWeatherView.setVisibility(View.GONE);
-            updateWeatherSettings(true);
+            updateSettings(true);
         } else {
             mWeatherCity.setText(info.city);
             mWeatherWind.setText(info.wind);
@@ -287,7 +293,7 @@ public class KeyguardStatusView extends GridLayout implements
             mWeatherConditionText.setText(info.condition);
             mWeatherTimestamp.setText(getCurrentDate());
             mWeatherView.setVisibility(mShowWeather ? View.VISIBLE : View.GONE);
-            updateWeatherSettings(false);
+            updateSettings(false);
         }
     }
 
@@ -301,7 +307,7 @@ public class KeyguardStatusView extends GridLayout implements
         return sb.toString();
     }
 
-    private void updateWeatherSettings(boolean forceHide) {
+    private void updateSettings(boolean forceHide) {
         final ContentResolver resolver = getContext().getContentResolver();
         final Resources res = getContext().getResources();
         View weatherPanel = findViewById(R.id.weather_panel);
@@ -368,6 +374,66 @@ public class KeyguardStatusView extends GridLayout implements
         mWeatherHumidity.setTextColor(secondaryTextColor);
         mWeatherWind.setTextColor(secondaryTextColor);
         mWeatherTimestamp.setTextColor(secondaryTextColor);
+
+        boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
+        int lockClockFont = isPrimary ? getLockClockFont() : 0;
+
+        switch (lockClockFont) {
+            case 0:
+                mClockView.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+                break;
+            case 1:
+                mClockView.setTypeface(Typeface.create("sans-serif", Typeface.BOLD));
+                break;
+            case 2:
+                mClockView.setTypeface(Typeface.create("sans-serif", Typeface.ITALIC));
+                break;
+            case 3:
+                mClockView.setTypeface(Typeface.create("sans-serif", Typeface.BOLD_ITALIC));
+                break;
+            case 4:
+                mClockView.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+                break;
+            case 5:
+                mClockView.setTypeface(Typeface.create("sans-serif-light", Typeface.ITALIC));
+                break;
+            case 6:
+                mClockView.setTypeface(Typeface.create("sans-serif-thin", Typeface.NORMAL));
+                break;
+            case 7:
+                mClockView.setTypeface(Typeface.create("sans-serif-thin", Typeface.ITALIC));
+                break;
+            case 8:
+                mClockView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+                break;
+            case 9:
+                mClockView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
+                break;
+            case 10:
+                mClockView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.ITALIC));
+                break;
+            case 11:
+                mClockView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD_ITALIC));
+                break;
+            case 12:
+                mClockView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+                break;
+            case 13:
+                mClockView.setTypeface(Typeface.create("sans-serif-medium", Typeface.ITALIC));
+                break;
+            case 14:
+                mClockView.setTypeface(Typeface.create("sans-serif-black", Typeface.NORMAL));
+                break;
+            case 15:
+                mClockView.setTypeface(Typeface.create("sans-serif-black", Typeface.ITALIC));
+                break;
+            case 16:
+                mClockView.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.NORMAL));
+                break;
+            case 17:
+                mClockView.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.ITALIC));
+                break;
+        }
 
         if (mIconNameValue != iconNameValue) {
             mIconNameValue = iconNameValue;
