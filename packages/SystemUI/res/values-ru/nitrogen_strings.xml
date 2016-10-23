@@ -57,4 +57,6 @@
     <string name="qs_lte_label">LTE</string>
     <string name="lte_on">LTE ВКЛ</string>
     <string name="lte_off">LTE ВЫКЛ.</string>
+
+    <string name="quick_settings_sync_label">Синхронизация</string>
 </resources>
