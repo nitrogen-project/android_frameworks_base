@@ -59,4 +59,6 @@
     <string name="lte_off">LTE ВЫКЛ.</string>
 
     <string name="quick_settings_sync_label">Синхронизация</string>
+
+    <string name="statusbar_items_title">Редактирование иконок</string>
 </resources>
