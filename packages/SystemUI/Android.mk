@@ -32,7 +32,9 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     framework-protos \
     SystemUI-proto-tags \
     trail-drawing \
-    rebound
+    rebound \
+    android-support-v7-palette \
+    android-support-v4
 
 LOCAL_JAVA_LIBRARIES := telephony-common org.dirtyunicorns.utils
 
@@ -70,3 +72,4 @@ ifeq ($(EXCLUDE_SYSTEMUI_TESTS),)
 endif
 
 include $(call all-makefiles-under, $(LOCAL_PATH))
+
