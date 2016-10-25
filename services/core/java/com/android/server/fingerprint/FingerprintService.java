@@ -1070,7 +1070,12 @@ public class FingerprintService extends SystemService implements IHwBinder.Death
                 public void run() {
                     ClientMonitor client = mCurrentClient;
                     if (client instanceof EnrollClient && client.getToken() == token) {
-                        client.stop(client.getToken() == token);
+                        final boolean notifyClient = mContext.getResources().getBoolean(
+                                com.android.internal.R.bool.config_notifyClientOnFingerprintCancelSuccess);
+                        final int stopResult = client.stop(client.getToken() == token);
+                        if (notifyClient && (stopResult == 0)) {
+                            handleError(mHalDeviceId, FingerprintManager.FINGERPRINT_ERROR_CANCELED, 0 /*vendorCode */);
+                        }
                     }
                 }
             });
