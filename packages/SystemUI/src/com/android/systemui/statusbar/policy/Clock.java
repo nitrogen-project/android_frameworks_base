@@ -262,7 +262,7 @@ public class Clock extends TextView implements DemoMode {
                     formatted.delete(0, dateStringLen);
                 } else {
                     if (mClockDateDisplay == CLOCK_DATE_DISPLAY_SMALL) {
-                        CharacterStyle style = new RelativeSizeSpan(0.7f);
+                        CharacterStyle style = new RelativeSizeSpan(0.8f);
                         formatted.setSpan(style, timeStringOffset,
                                           timeStringOffset + dateStringLen,
                                           Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
@@ -289,20 +289,6 @@ public class Clock extends TextView implements DemoMode {
             }
         }
 
-        if (mClockDateDisplay != CLOCK_DATE_DISPLAY_NORMAL) {
-            if (dateString != null) {
-                int dateStringLen = dateString.length();
-                if (mClockDateDisplay == CLOCK_DATE_DISPLAY_GONE) {
-                    formatted.delete(0, dateStringLen);
-                } else {
-                    if (mClockDateDisplay == CLOCK_DATE_DISPLAY_SMALL) {
-                        CharacterStyle style = new RelativeSizeSpan(0.7f);
-                        formatted.setSpan(style, 0, dateStringLen,
-                                          Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-                    }
-                }
-            }
-        }
         return formatted;
     }
 
