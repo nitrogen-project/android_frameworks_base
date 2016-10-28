@@ -18,11 +18,13 @@ package com.android.systemui.omni;
 
 import android.animation.ArgbEvaluator;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -32,6 +34,10 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.BatteryManager;
 import android.os.Bundle;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.PowerManager;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.View;
@@ -65,6 +71,9 @@ public abstract class AbstractBatteryView extends View implements BatteryControl
     protected int mTextSize;
     protected boolean mChargeColorEnable = true;
     protected int mTextWidth;
+    private Handler mHandler = new Handler();
+    private SettingsObserver mSettingsObserver;
+    private boolean mBatterySaverWarningColor;
 
     protected class BatteryTracker extends BroadcastReceiver {
         public static final int UNKNOWN_LEVEL = -1;
@@ -109,6 +118,8 @@ public abstract class AbstractBatteryView extends View implements BatteryControl
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
 
+        mSettingsObserver.observe();
+
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_BATTERY_CHANGED);
         final Intent sticky = getContext().registerReceiver(mTracker, filter);
@@ -125,6 +136,8 @@ public abstract class AbstractBatteryView extends View implements BatteryControl
     @Override
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+
+        mSettingsObserver.unobserve();
 
         getContext().unregisterReceiver(mTracker);
         if (mAttached) {
@@ -181,6 +194,7 @@ public abstract class AbstractBatteryView extends View implements BatteryControl
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         mTextSize = getResources().getDimensionPixelSize(R.dimen.omni_battery_level_text_size);
         mTextPaint.setTextSize(mTextSize);
+        mSettingsObserver = new SettingsObserver(mHandler);
     }
 
     public void setBatteryController(BatteryController batteryController) {
@@ -235,8 +249,8 @@ public abstract class AbstractBatteryView extends View implements BatteryControl
     }
 
     protected int getColorForLevel(int percent) {
-        // If we are in power save mode, always use the normal color.
-        if (mPowerSaveEnabled) {
+        // If we are in power save mode and battery saver color enabled, always use the normal color.
+        if (mPowerSaveEnabled && mBatterySaverWarningColor) {
             return mColors[mColors.length-1];
         }
         int thresh, color = 0;
@@ -331,5 +345,41 @@ public abstract class AbstractBatteryView extends View implements BatteryControl
         mTextPaint.getTextBounds(text, 0, text.length(), bounds);
         mTextWidth = bounds.width();
         requestLayout();
+    }
+
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BATTERY_SAVER_MODE_COLOR),
+                    false, this, UserHandle.USER_ALL);
+            update();
+        }
+
+        void unobserve() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.unregisterContentObserver(this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            update();
+        }
+
+        public void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+            mBatterySaverWarningColor = Settings.System.getIntForUser(
+                resolver, Settings.System.BATTERY_SAVER_MODE_COLOR, 1,
+                UserHandle.USER_CURRENT) == 1;
+        }
     }
 }
