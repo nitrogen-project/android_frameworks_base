@@ -8141,6 +8141,12 @@ public final class Settings {
         public static final String CHARGING_SOUNDS_ENABLED = "charging_sounds_enabled";
 
         /**
+         * Whether to vibrate for charging events.
+         * @hide
+         */
+        public static final String POWER_NOTIFICATIONS_VIBRATE = "power_notifications_vibrate";
+
+        /**
          * Whether we keep the device on while the device is plugged in.
          * Supported values are:
          * <ul>
