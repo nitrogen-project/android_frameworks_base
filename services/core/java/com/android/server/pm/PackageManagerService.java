@@ -19881,13 +19881,13 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
                 && PackageManager.APPLY_DEFAULT_TO_DEVICE_PROTECTED_STORAGE) {
             final int storageTarget = pkg.applicationInfo.isDefaultToDeviceProtectedStorage()
                     ? StorageManager.FLAG_STORAGE_DE : StorageManager.FLAG_STORAGE_CE;
-            try {
-                mInstaller.migrateAppData(pkg.volumeUuid, pkg.packageName, userId,
-                        storageTarget);
-            } catch (InstallerException e) {
-                logCriticalInfo(Log.WARN,
-                        "Failed to migrate " + pkg.packageName + ": " + e.getMessage());
-            }
+//            try {
+//                mInstaller.migrateAppData(pkg.volumeUuid, pkg.packageName, userId,
+//                        storageTarget);
+//            } catch (InstallerException e) {
+//                logCriticalInfo(Log.WARN,
+//                        "Failed to migrate " + pkg.packageName + ": " + e.getMessage());
+//            }
             return true;
         } else {
             return false;
