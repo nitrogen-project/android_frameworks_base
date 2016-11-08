@@ -25,12 +25,16 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.Handler;
 import android.os.HardwarePropertiesManager;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.os.UserHandle;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -80,6 +84,9 @@ public class PowerUI extends SystemUI {
     // by using the same instance (method references are not guaranteed to be the same object
     // each time they are created).
     private final Runnable mUpdateTempCallback = this::updateTemperatureWarning;
+
+    // For filtering ACTION_POWER_DISCONNECTED on boot
+    private boolean mIgnoredFirstPowerBroadcast;
 
     public void start() {
         mPowerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
@@ -177,6 +184,8 @@ public class PowerUI extends SystemUI {
             filter.addAction(Intent.ACTION_SCREEN_OFF);
             filter.addAction(Intent.ACTION_SCREEN_ON);
             filter.addAction(Intent.ACTION_USER_SWITCHED);
+            filter.addAction(Intent.ACTION_POWER_CONNECTED);
+            filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
             mContext.registerReceiver(this, filter, null, mHandler);
         }
 
@@ -196,6 +205,10 @@ public class PowerUI extends SystemUI {
 
                 final boolean plugged = mPlugType != 0;
                 final boolean oldPlugged = oldPlugType != 0;
+
+                if (!mIgnoredFirstPowerBroadcast && plugged) {
+                    mIgnoredFirstPowerBroadcast = true;
+                }
 
                 int oldBucket = findBatteryLevelBucket(oldBatteryLevel);
                 int bucket = findBatteryLevelBucket(mBatteryLevel);
@@ -245,6 +258,20 @@ public class PowerUI extends SystemUI {
                 mScreenOffTime = -1;
             } else if (Intent.ACTION_USER_SWITCHED.equals(action)) {
                 mWarnings.userSwitched();
+            } else if (Intent.ACTION_POWER_CONNECTED.equals(action)
+                    || Intent.ACTION_POWER_DISCONNECTED.equals(action)) {
+                if (mIgnoredFirstPowerBroadcast) {
+                    if (Settings.Global.getInt(mContext.getContentResolver(),
+                            Settings.Global.CHARGING_SOUNDS_ENABLED, 1) == 1) {
+                        playPowerNotificationSound();
+                    }
+                    if (Settings.Global.getInt(mContext.getContentResolver(),
+                            Settings.Global.POWER_NOTIFICATIONS_VIBRATE, 1) == 1) {
+                        playPowerNotificationVibro();
+                    }
+                } else {
+                    mIgnoredFirstPowerBroadcast = true;
+                }
             } else {
                 Slog.w(TAG, "unknown intent: " + intent);
             }
@@ -365,6 +392,25 @@ public class PowerUI extends SystemUI {
 
     private void setNextLogTime() {
         mNextLogTime = System.currentTimeMillis() + TEMPERATURE_LOGGING_INTERVAL;
+    }
+
+    private void playPowerNotificationSound() {
+        String soundPath = Settings.Global.getString(mContext.getContentResolver(),
+                Settings.Global.WIRELESS_CHARGING_STARTED_SOUND);
+
+        if (soundPath != null && !soundPath.equals("silent")) {
+            Ringtone powerRingtone = RingtoneManager.getRingtone(mContext, Uri.parse(soundPath));
+            if (powerRingtone != null) {
+                powerRingtone.play();
+            }
+        }
+    }
+
+    private void playPowerNotificationVibro() {
+        Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator != null) {
+            vibrator.vibrate(250);
+        }
     }
 
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
