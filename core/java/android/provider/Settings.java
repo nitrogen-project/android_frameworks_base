@@ -4364,6 +4364,12 @@ public final class Settings {
         public static final String WAKELOCK_BLOCKING_LIST = "wakelock_blocking_list";
 
         /**
+         * Force show navbar on the bottom of device
+         * @hide
+         */
+        public static final String FORCE_NAVBAR_BOTTOM = "force_navbar_bottom";
+
+        /**
          * Override and forcefully disable the fullscreen keyboard
          * @hide
          */

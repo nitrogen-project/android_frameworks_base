@@ -1001,6 +1001,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.NAVIGATION_BAR_WIDTH), false, this,
                     UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.System.FORCE_NAVBAR_BOTTOM), false, this,
+                    UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -4757,9 +4760,15 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     private int navigationBarPosition(int displayWidth, int displayHeight, int displayRotation) {
+        boolean mForceNavbarBottom = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.FORCE_NAVBAR_BOTTOM, 0, UserHandle.USER_CURRENT) == 1;
         if (mNavigationBarCanMove && displayWidth > displayHeight) {
+            if (displayRotation == Surface.ROTATION_270 && mForceNavbarBottom) {
+                return NAV_BAR_LEFT;
+            } else {
                 return NAV_BAR_RIGHT;
             }
+        }
         return NAV_BAR_BOTTOM;
     }
 
