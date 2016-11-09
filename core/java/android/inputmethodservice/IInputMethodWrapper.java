@@ -135,7 +135,7 @@ class IInputMethodWrapper extends IInputMethod.Stub
         }
 
         boolean formalText = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.FORMAL_TEXT_INPUT, 0, UserHandle.USER_CURRENT_OR_SELF) == 1;
+                Settings.System.FORMAL_TEXT_INPUT, 1, UserHandle.USER_CURRENT_OR_SELF) == 1;
 
         switch (msg.what) {
             case DO_DUMP: {
