@@ -7385,12 +7385,6 @@ public final class Settings {
         public static final String VR_DISPLAY_MODE = "vr_display_mode";
 
         /**
-         * Whether the device should color invert notifications when doze if enabled.
-         * @hide
-         */
-        public static final String DOZE_NOTIFICATION_INVERT_ENABLED = "doze_notification_invert_enabled";
-
-        /**
          * Lower the display persistence while the system is in VR mode.
          *
          * @see PackageManager#FEATURE_VR_MODE_HIGH_PERFORMANCE
@@ -7502,12 +7496,6 @@ public final class Settings {
          * @hide
          */
         public static final String QS_DATA_ADVANCED = "qs_data_advanced";
-
-        /**
-         * Whether the device should tint notification title.
-         * @hide
-         */
-        public static final String NOTIFICATION_TITLE_TINT = "notification_title_tint";
 
         /**
          * This are the settings to be backed up.
