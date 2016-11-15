@@ -91,9 +91,6 @@ import android.os.IBinder;
 import android.os.Messenger;
 import android.os.RemoteException;
 
-import static android.view.WindowManager.TAKE_SCREENSHOT_FULLSCREEN;
-import static android.view.WindowManager.TAKE_SCREENSHOT_SELECTED_REGION;
-
 /**
  * Helper to show the global actions dialog.  Each item is an {@link Action} that
  * may show depending on whether the keyguard is showing, and whether the device
@@ -122,8 +119,6 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
     private final Object mScreenshotLock = new Object();
     private ServiceConnection mScreenshotConnection = null;
-    private int mScreenshotFullscreen = TAKE_SCREENSHOT_FULLSCREEN;
-    private int mScreenshotSelectedRegion = TAKE_SCREENSHOT_SELECTED_REGION;
 
     private final Context mContext;
     private final WindowManagerFuncs mWindowManagerFuncs;
@@ -305,7 +300,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
             } else if (GLOBAL_ACTION_KEY_SCREENSHOT.equals(actionKey)) {
                 if (Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.POWERMENU_SCREENSHOT, 1) == 1) {
-                    mItems.add(ScreenshotAction());
+                    mItems.add(new ScreenshotAction());
                 }
             } else if (GLOBAL_ACTION_KEY_TORCH.equals(actionKey)) {
                 if (Settings.System.getInt(mContext.getContentResolver(),
@@ -446,27 +441,35 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         }
     }
 
-    private Action ScreenshotAction() {
-        return new SinglePressAction(com.android.internal.R.drawable.ic_lock_power_screenshot,
-                R.string.powermenu_screenshot) {
+    private final class ScreenshotAction extends SinglePressAction implements LongPressAction {
 
-            public void onPress() {
-                if (Settings.System.getInt(mContext.getContentResolver(),
-                      Settings.System.SCREENSHOT_TYPE, 0) == 1) {
-                   takeScreenshot(mScreenshotSelectedRegion);
-                } else {
-                   takeScreenshot(mScreenshotFullscreen);
-                }
-            }
+        private ScreenshotAction() {
+            super(com.android.internal.R.drawable.ic_lock_power_screenshot,
+                    R.string.powermenu_screenshot);
+        }
 
-            public boolean showDuringKeyguard() {
-                return true;
-            }
+        @Override
+        public void onPress() {
+            takeScreenshot(false);
+        }
 
-            public boolean showBeforeProvisioning() {
-                return false;
-            }
-        };
+
+        @Override
+        public boolean onLongPress() {
+            mHandler.sendEmptyMessage(MESSAGE_DISMISS);
+            takeScreenshot(true /* partial */);
+            return true;
+        }
+
+        @Override
+        public boolean showDuringKeyguard() {
+            return true;
+        }
+
+        @Override
+        public boolean showBeforeProvisioning() {
+            return true;
+        }
     }
 
     private Action getTorchToggleAction() {
@@ -708,32 +711,6 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         }
     }
 
-    class ScreenshotRunnable implements Runnable {
-        private int mScreenshotFullscreen = TAKE_SCREENSHOT_FULLSCREEN;
-        private int mScreenshotSelectedRegion = TAKE_SCREENSHOT_SELECTED_REGION;
-
-        public void setScreenshotType(int screenshotType) {
-            if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SCREENSHOT_TYPE, 0) == 1) {
-            mScreenshotSelectedRegion = screenshotType;
-            } else {
-            mScreenshotFullscreen = screenshotType;
-            }
-        }
-
-        @Override
-        public void run() {
-        if (Settings.System.getInt(mContext.getContentResolver(),
-              Settings.System.SCREENSHOT_TYPE, 0) == 1) {
-           takeScreenshot(mScreenshotSelectedRegion);
-        } else {
-           takeScreenshot(mScreenshotFullscreen);
-           }
-        }
-    }
-
-    private final ScreenshotRunnable mScreenshotRunnable = new ScreenshotRunnable();
-
     final Runnable mScreenshotTimeout = new Runnable() {
         @Override public void run() {
             synchronized (mScreenshotLock) {
@@ -745,7 +722,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         }
     };
 
-    private void takeScreenshot(final int screenshotType) {
+    private void takeScreenshot(final boolean partial) {
         synchronized (mScreenshotLock) {
             if (mScreenshotConnection != null) {
                 return;
@@ -762,7 +739,9 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                             return;
                         }
                         Messenger messenger = new Messenger(service);
-                        Message msg = Message.obtain(null, screenshotType);
+                        Message msg = Message.obtain(null, 1);
+                        msg.what = partial ? WindowManager.TAKE_SCREENSHOT_SELECTED_REGION
+                                : WindowManager.TAKE_SCREENSHOT_FULLSCREEN;
                         final ServiceConnection myConn = this;
                         Handler h = new Handler(mHandler.getLooper()) {
                             @Override
@@ -779,18 +758,18 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                         msg.replyTo = new Messenger(h);
                         msg.arg1 = msg.arg2 = 0;
 
-                        // Needs delay or else we'll be taking a screenshot of the dialog each time
+                        /* wait for the dialog box to close */
                         try {
-                            Thread.sleep(1000);
+                            Thread.sleep(250);
                         } catch (InterruptedException ie) {
                             // Do nothing
                         }
 
-                        // Take the screenshot
+                        /* take the screenshot */
                         try {
                             messenger.send(msg);
                         } catch (RemoteException e) {
-                            // Do nothing here
+                            // Do nothing
                         }
                     }
                 }
