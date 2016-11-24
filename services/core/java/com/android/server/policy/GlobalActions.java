@@ -760,7 +760,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
                         /* wait for the dialog box to close */
                         try {
-                            Thread.sleep(250);
+                            Thread.sleep(1000);
                         } catch (InterruptedException ie) {
                             // Do nothing
                         }
