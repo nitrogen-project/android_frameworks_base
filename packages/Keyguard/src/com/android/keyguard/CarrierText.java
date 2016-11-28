@@ -429,7 +429,7 @@ public class CarrierText extends TextView {
             com.android.internal.R.string.config_rat_3g,
             com.android.internal.R.string.config_rat_4g };
         String classString = null;
-        if (networkClass < classIds.length) {
+        if (networkClass >= 0 && networkClass < classIds.length) {
             classString = getContext().getResources().getString(classIds[networkClass]);
         }
         return (classString == null) ? "" : classString;
