@@ -424,12 +424,13 @@ public class CarrierText extends TextView {
     }
 
     private String networkClassToString (int networkClass) {
-        final int[] classIds = { 0, // TelephonyManager.NETWORK_CLASS_UNKNOWN
+        final int[] classIds = {
+            com.android.internal.R.string.config_rat_unknown, // TelephonyManager.NETWORK_CLASS_UNKNOWN
             com.android.internal.R.string.config_rat_2g,
             com.android.internal.R.string.config_rat_3g,
             com.android.internal.R.string.config_rat_4g };
         String classString = null;
-        if (networkClass < classIds.length) {
+        if (networkClass >= 0 && networkClass < classIds.length) {
             classString = getContext().getResources().getString(classIds[networkClass]);
         }
         return (classString == null) ? "" : classString;
