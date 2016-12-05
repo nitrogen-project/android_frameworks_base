@@ -223,17 +223,27 @@
     <!-- Doze: should notifications be used as a pulse signal? -->
     <bool name="doze_pulse_on_notifications">true</bool>
 
-    <!-- Doze: when to pulse after a buzzworthy notification arrives -->
-    <string name="doze_pulse_schedule" translatable="false">10s,30s,60s</string>
-
-    <!-- Doze: maximum number of times the notification pulse schedule can be reset -->
-    <integer name="doze_pulse_schedule_resets">2</integer>
-
     <!-- Doze: duration to avoid false pickup gestures triggered by notification vibrations -->
     <integer name="doze_pickup_vibration_threshold">2000</integer>
 
-    <!-- Doze: can we assume the pickup sensor includes a proximity check? -->
+    <!-- Doze: can we assume the pickup sensor includes a proximity check?
+         This is ignored if doze_pickup_subtype_performs_proximity_check is not empty.
+         @deprecated: use doze_pickup_subtype_performs_proximity_check instead.-->
     <bool name="doze_pickup_performs_proximity_check">false</bool>
+
+    <!-- Doze: a list of pickup sensor subtypes that perform a proximity check before they trigger.
+               If not empty, either * or !* must appear to specify the default.
+               If empty, falls back to doze_pickup_performs_proximity_check.
+
+               Examples: 1,2,3,!* -> subtypes 1,2 and 3 perform the check, all others don't.
+                         !1,!2,*  -> subtypes 1 and 2 don't perform the check, all others do.
+                         !8,*     -> subtype 8 does not perform the check, all others do
+                         1,1,*    -> illegal, every item may only appear once
+                         1,!1,*   -> illegal, no contradictions allowed
+                         1,2      -> illegal, need either * or !*
+                         1,,4a3   -> illegal, no empty or non-numeric terms allowed
+    -->
+    <string name="doze_pickup_subtype_performs_proximity_check"></string>
 
     <!-- Doze: pulse parameter - how long does it take to fade in? -->
     <integer name="doze_pulse_duration_in">900</integer>
@@ -242,7 +252,7 @@
     <integer name="doze_pulse_duration_in_pickup">130</integer>
 
     <!-- Doze: pulse parameter - once faded in, how long does it stay visible? -->
-    <integer name="doze_pulse_duration_visible">3000</integer>
+    <integer name="doze_pulse_duration_visible">6000</integer>
 
     <!-- Doze: pulse parameter - how long does it take to fade out? -->
     <integer name="doze_pulse_duration_out">600</integer>
