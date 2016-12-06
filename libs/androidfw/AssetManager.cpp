@@ -35,6 +35,9 @@
 #include <utils/threads.h>
 #include <utils/Timers.h>
 #include <utils/Trace.h>
+#ifndef _WIN32
+#include <sys/file.h>
+#endif
 
 #include <assert.h>
 #include <dirent.h>
