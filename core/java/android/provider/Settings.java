@@ -4310,6 +4310,18 @@ public final class Settings {
         public static final String STATUS_BAR_SHOW_CARRIER = "status_bar_show_carrier";
 
         /**
+         * show clear all recents button
+         * @hide
+         */
+        public static final String SHOW_CLEAR_ALL_RECENTS = "show_clear_all_recents";
+
+        /**
+         * location of the clear all rectents button
+         * @hide
+         */
+        public static final String  RECENTS_CLEAR_ALL_LOCATION = "recents_clear_all_location";
+
+        /**
          * This preference enables showing the power menu on LockScreen.
          * @hide
          */
