@@ -382,4 +382,7 @@ public abstract class AbstractBatteryView extends View implements BatteryControl
                 UserHandle.USER_CURRENT) == 1;
         }
     }
+
+    protected void loadDimens() {
+    }
 }
