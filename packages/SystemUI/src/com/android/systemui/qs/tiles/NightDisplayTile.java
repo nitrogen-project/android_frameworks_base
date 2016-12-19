@@ -69,6 +69,9 @@ public class NightDisplayTile extends QSTile<QSTile.BooleanState>
             if (activated) {
                 updateBrightnessModeValues();
             }
+            if (customVal == 3) {
+                return;
+            }
             try {
                 IPowerManager power = IPowerManager.Stub.asInterface(
                         ServiceManager.getService("power"));
@@ -135,6 +138,8 @@ public class NightDisplayTile extends QSTile<QSTile.BooleanState>
                 autoVal = -1f;
                 manualVal = 0;
                 break;
+            case 3:
+                break;
             default:
                 autoVal = -0.33f;
                 manualVal = 40;
@@ -142,20 +147,12 @@ public class NightDisplayTile extends QSTile<QSTile.BooleanState>
         }
     }
 
-    public boolean isAutoNightTileEnabled() {
-        return Settings.Secure.getInt(mContext.getContentResolver(),
-            Settings.Secure.QS_NIGHT_BRIGHTNESS_TOGGLE, 0) == 1;
-    }
-
     @Override
     protected void handleClick() {
         final boolean activated = !mState.value;
         MetricsLogger.action(mContext, getMetricsCategory(), activated);
         mController.setActivated(activated);
-        boolean autoNightTile = isAutoNightTileEnabled();
-        if (autoNightTile) {
-            setBrightness(activated);
-        }
+        setBrightness(activated);
     }
 
     @Override
