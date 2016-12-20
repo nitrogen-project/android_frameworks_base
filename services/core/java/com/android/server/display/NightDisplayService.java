@@ -273,6 +273,8 @@ public final class NightDisplayService extends SystemService
         if (mIsActivated == null || mIsActivated != activated) {
             Slog.i(TAG, activated ? "Turning on night display" : "Turning off night display");
 
+            Boolean isReboot = mIsActivated;
+
             if (mAutoMode != null) {
                 mAutoMode.onActivated(activated);
             }
@@ -327,7 +329,9 @@ public final class NightDisplayService extends SystemService
                 }
             });
             mColorMatrixAnimator.start();
-            setBrightness(mIsActivated);
+            if (isReboot != null) {
+                setBrightness(mIsActivated);
+            }
         }
     }
 
