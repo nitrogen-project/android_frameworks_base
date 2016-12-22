@@ -40,12 +40,6 @@
     <!-- Powermenu Torch -->
     <string name="global_action_torch">Flashlight</string>
 
-    <string name="battery_style_text">Text only</string>
-    <string name="battery_style_default">Default</string>
-    <string name="battery_style_meter_horizontal">Horizontal bar</string>
-    <string name="battery_style_circle">Circle</string>
-    <string name="battery_style_droid">Droid</string>
-
     <string name="default_string">Default</string>
 
     <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->

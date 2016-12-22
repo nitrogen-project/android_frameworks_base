@@ -73,21 +73,17 @@ public class BatteryMeterView extends ImageView implements
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if (mBatteryController != null) {
-            mBatteryController.addStateChangedCallback(this);
-            mDrawable.startListening();
-            TunerService.get(getContext()).addTunable(this, StatusBarIconController.ICON_BLACKLIST);
-        }
+        mBatteryController.addStateChangedCallback(this);
+        mDrawable.startListening();
+        TunerService.get(getContext()).addTunable(this, StatusBarIconController.ICON_BLACKLIST);
     }
 
     @Override
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if (mBatteryController != null) {
-            mBatteryController.removeStateChangedCallback(this);
-            mDrawable.stopListening();
-            TunerService.get(getContext()).removeTunable(this);
-        }
+        mBatteryController.removeStateChangedCallback(this);
+        mDrawable.stopListening();
+        TunerService.get(getContext()).removeTunable(this);
     }
 
     @Override

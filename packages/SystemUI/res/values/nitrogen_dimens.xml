@@ -12,8 +12,6 @@
      limitations under the License.
 -->
 <resources>
-    <dimen name="omni_battery_level_text_size_small">12sp</dimen>
-    <dimen name="omni_battery_level_text_size">14sp</dimen>
     <!-- carrier label text height -->
     <dimen name="status_bar_carrier_height">14dp</dimen>
     <dimen name="lockscreen_icon_side_padding">10dp</dimen>

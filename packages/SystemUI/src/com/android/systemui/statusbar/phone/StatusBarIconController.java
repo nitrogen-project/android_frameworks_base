@@ -43,8 +43,6 @@ import com.android.systemui.FontSizeUtils;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
 import com.android.systemui.SystemUIFactory;
-import com.android.systemui.omni.AbstractBatteryView;
-import com.android.systemui.omni.BatteryViewManager;
 import com.android.systemui.statusbar.NotificationData;
 import com.android.systemui.statusbar.SignalClusterView;
 import com.android.systemui.statusbar.StatusBarIconView;
@@ -85,11 +83,9 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     private NetworkTraffic mNetworkTraffic;
     private TextView mCarrierLabel;
 
-    //private BatteryMeterView mBatteryMeterView;
-    //private BatteryMeterView mBatteryMeterViewKeyguard;
-    private AbstractBatteryView mCurrentBatteryView;
+    private BatteryMeterView mBatteryMeterView;
+    private BatteryMeterView mBatteryMeterViewKeyguard;
 
-    private BatteryViewManager mBatteryViewManager;
     private ClockController mClockController;
     private View mCenterClockLayout;
 
@@ -145,10 +141,10 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         notificationIconArea.addView(mNotificationIconAreaInner);
 
         mStatusIconsKeyguard = (LinearLayout) keyguardStatusBar.findViewById(R.id.statusIcons);
-        //mBatteryMeterViewKeyguard = (BatteryMeterView) keyguardStatusBar.findViewById(R.id.battery);
-        //mBatteryMeterView = (BatteryMeterView) statusBar.findViewById(R.id.battery);
+        mBatteryMeterViewKeyguard = (BatteryMeterView) keyguardStatusBar.findViewById(R.id.battery);
+        mBatteryMeterView = (BatteryMeterView) statusBar.findViewById(R.id.battery);
         mBatteryViewManager = phoneStatusBar.getBatteryViewManager();
-        //scaleBatteryMeterViews(context);
+        scaleBatteryMeterViews(context);
         mNetworkTraffic = (NetworkTraffic) statusBar.findViewById(R.id.networkTraffic);
         mCarrierLabel = (TextView) statusBar.findViewById(R.id.statusbar_carrier_text);
         mDarkModeIconColorSingleTone = context.getColor(R.color.dark_mode_icon_color_single_tone);
@@ -184,8 +180,8 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 (int) (batteryWidth * iconScaleFactor), (int) (batteryHeight * iconScaleFactor));
         scaledLayoutParams.setMarginsRelative(0, 0, 0, marginBottom);
 
-        //mBatteryMeterView.setLayoutParams(scaledLayoutParams);
-        //mBatteryMeterViewKeyguard.setLayoutParams(scaledLayoutParams);
+        mBatteryMeterView.setLayoutParams(scaledLayoutParams);
+        mBatteryMeterViewKeyguard.setLayoutParams(scaledLayoutParams);
     }
 
     @Override
@@ -527,11 +523,6 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         if (area.isEmpty()) {
             return true;
         }
-
-        if (view == null) {
-            return true;
-        }
-
         sTmpRect.set(area);
         view.getLocationOnScreen(sTmpInt2);
         int left = sTmpInt2[0];
@@ -551,11 +542,11 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
             v.setImageTintList(ColorStateList.valueOf(getTint(mTintArea, v, mIconTint)));
         }
         mSignalCluster.setIconTint(mIconTint, mDarkIntensity, mTintArea);
-        mBatteryViewManager.setDarkIntensity(
-                isInArea(mTintArea, mCurrentBatteryView) ? mDarkIntensity : 0);
         mNetworkTraffic.setDarkIntensity(mDarkIntensity);
         mCarrierLabel.setTextColor(getTint(mTintArea, mCarrierLabel, mIconTint));
         mClockController.setTextColor(mIconTint);
+        mBatteryMeterView.setDarkIntensity(
+                isInArea(mTintArea, mBatteryMeterView) ? mDarkIntensity : 0);
     }
 
     public void appTransitionPending() {
@@ -622,8 +613,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                     ViewGroup.LayoutParams.WRAP_CONTENT, mIconSize);
             child.setLayoutParams(lp);
         }
-        mBatteryViewManager.onDensityOrFontScaleChanged();
-        //scaleBatteryMeterViews(mContext);
+        scaleBatteryMeterViews(mContext);
     }
 
     private void updateCarrier() {
