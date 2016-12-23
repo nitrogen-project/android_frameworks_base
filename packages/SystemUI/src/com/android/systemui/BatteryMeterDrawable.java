@@ -60,6 +60,8 @@ public class BatteryMeterDrawable extends Drawable implements
             Settings.Secure.STATUS_BAR_CHARGE_COLOR;
     private static final String FORCE_CHARGE_BATTERY_TEXT =
             Settings.Secure.FORCE_CHARGE_BATTERY_TEXT;
+    private static final String BATTERY_SAVER_MODE_COLOR =
+            Settings.System.BATTERY_SAVER_MODE_COLOR;
 
     private static final boolean SINGLE_DIGIT_PERCENT = false;
 
@@ -86,6 +88,7 @@ public class BatteryMeterDrawable extends Drawable implements
     private float mTextHeight, mWarningTextHeight;
     private int mIconTint = Color.WHITE;
     private float mOldDarkIntensity = 0f;
+    private boolean mBatterySaverWarningColor;
 
     private int mHeight;
     private int mWidth;
@@ -173,6 +176,7 @@ public class BatteryMeterDrawable extends Drawable implements
         colors.recycle();
         updateShowPercent();
         updateForceChargeBatteryText();
+        updateBatterySaverWarningColor();
         mWarningString = context.getString(R.string.battery_meter_very_low_overlay_symbol);
         mCriticalLevel = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_criticalBatteryWarningLevel);
@@ -251,9 +255,13 @@ public class BatteryMeterDrawable extends Drawable implements
         mContext.getContentResolver().registerContentObserver(
                 Settings.Secure.getUriFor(FORCE_CHARGE_BATTERY_TEXT),
                 false, mSettingObserver);
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(BATTERY_SAVER_MODE_COLOR),
+                false, mSettingObserver);
         updateShowPercent();
         updateChargeColor();
         updateForceChargeBatteryText();
+        updateBatterySaverWarningColor();
         mBatteryController.addStateChangedCallback(this);
     }
 
@@ -355,6 +363,11 @@ public class BatteryMeterDrawable extends Drawable implements
                 FORCE_CHARGE_BATTERY_TEXT, 0) == 1 ? true : false;
     }
 
+    private void updateBatterySaverWarningColor() {
+        mBatterySaverWarningColor = Settings.System.getInt(mContext.getContentResolver(),
+                BATTERY_SAVER_MODE_COLOR, 1) == 1 ? true : false;
+    }
+
     private int getColorForLevel(int percent) {
         return getColorForLevel(percent, false);
     }
@@ -379,8 +392,8 @@ public class BatteryMeterDrawable extends Drawable implements
             int chargeColor = mChargeColor;
             return chargeColor;
         } else {
-            // If we are in power save mode, always use the normal color.
-            if (mPowerSaveEnabled) {
+            // If we are in power save mode and battery saver color enabled, always use the normal color.
+            if (mPowerSaveEnabled && mBatterySaverWarningColor) {
                 return mColors[mColors.length - 1];
             }
             int thresh = 0;
@@ -687,6 +700,7 @@ public class BatteryMeterDrawable extends Drawable implements
 
         mTextAndBoltPaint.setColor(getColorForLevel(level));
         updateForceChargeBatteryText();
+        updateBatterySaverWarningColor();
         // Make sure we don't draw the charge indicator if not plugged in
         final Drawable d = mBatteryDrawable.findDrawableByLayerId(R.id.battery_charge_indicator);
         if (d instanceof BitmapDrawable) {
