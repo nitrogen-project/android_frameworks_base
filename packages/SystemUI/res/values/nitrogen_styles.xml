@@ -42,4 +42,5 @@
     <style name="BatteryMeterViewDrawable.Circle">
         <item name="blendMode">overlay</item>
     </style>
+    <style name="BatteryMeterViewDrawable.CircleFull"/>
 </resources>
