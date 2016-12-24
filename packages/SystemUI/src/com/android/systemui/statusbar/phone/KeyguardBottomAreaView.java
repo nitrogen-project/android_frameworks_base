@@ -625,10 +625,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     }
 
     private boolean canLaunchVoiceAssist() {
-        if (mAssistManager == null) {
-            return false;
-        }
-        return mAssistManager.canVoiceAssistBeLaunchedFromKeyguard();
+        return false;
     }
 
     private void launchPhone() {
