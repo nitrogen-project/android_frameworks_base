@@ -3847,10 +3847,10 @@ public final class Settings {
         public static final String KEY_MENU_ACTION = "key_menu_action";
 
           /**
-          * Whether to show the negociated charger current in the lockscreen
+          * Whether to show the battery info on the lockscreen while charging
           * @hide
           */
-         public static final String LOCKSCREEN_CHARGING_CURRENT = "lockscreen_charging_current";
+         public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
  
         /**
          * Action to perform when the menu key is long-pressed.
