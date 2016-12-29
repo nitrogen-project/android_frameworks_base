@@ -128,4 +128,16 @@
     <string name="battery_circle_empty" translatable="false">M 12 12 C 12 12 12 12 12 12 C 12 12 12 12 12 12 C 12 12 12 12 12 12 C 12 12 12 12 12 12 Z</string>
 
     <string name="recents_free_ram">FREE RAM</string>
+
+    <!-- QS Lockscreen Tile -->
+    <string name="quick_settings_lockscreen_label">Lock screen</string>
+    <string name="quick_settings_lockscreen_label_enforced">Lock screen enforced</string>
+    <!-- Content description of the lock screen tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_lock_screen_off">Lock screen off.</string>
+    <!-- Content description of the lock screen tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_lock_screen_on">Lock screen on.</string>
+    <!-- Announcement made when lock screen changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_lock_screen_changed_off">Lock screen turned off.</string>
+    <!-- Announcement made when lock screen changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_lock_screen_changed_on">Lock screen turned on.</string>
 </resources>
