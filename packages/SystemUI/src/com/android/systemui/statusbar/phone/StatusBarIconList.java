@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.android.systemui.statusbar.policy.NetworkTrafficSB;
+
 /** A class holding the list of all the system icons that could be shown in the status bar. */
 public class StatusBarIconList {
     private final ArrayList<Slot> mSlots = new ArrayList<>();
@@ -38,6 +40,9 @@ public class StatusBarIconList {
         for (int i = 0; i < N; i++) {
             mSlots.add(new Slot(slots[i], null));
         }
+
+        // Network traffic slot
+        mSlots.add(0, new Slot(NetworkTrafficSB.SLOT, StatusBarIconHolder.fromNetworkTraffic()));
     }
 
     /** Returns the list of current slots. */
@@ -120,9 +125,9 @@ public class StatusBarIconList {
                 return i;
             }
         }
-        // Auto insert new items at the beginning.
-        mSlots.add(0, new Slot(slot, null));
-        return 0;
+        // Auto insert new items behind network traffic
+        mSlots.add(1, new Slot(slot, null));
+        return 1;
     }
 
 
