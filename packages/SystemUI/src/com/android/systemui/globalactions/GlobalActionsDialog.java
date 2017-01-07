@@ -608,7 +608,8 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         CurrentUserProvider currentUser = new CurrentUserProvider();
 
         // make sure emergency affordance action is first, if needed
-        if (mEmergencyAffordanceManager.needsEmergencyAffordance()) {
+        if (mEmergencyAffordanceManager.needsEmergencyAffordance() && mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_showEmergencyButtonInPowerMenu)) {
             addIfShouldShowAction(tempActions, new EmergencyAffordanceAction());
             addedKeys.add(GLOBAL_ACTION_KEY_EMERGENCY);
         }
