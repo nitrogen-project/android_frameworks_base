@@ -70,4 +70,7 @@
   <java-symbol type="integer" name="config_deviceHardwareKeys" />
 
   <java-symbol type="bool" name="config_enableScreenrecordChord" />
+
+  <!-- Emergency button in power menu -->
+  <java-symbol type="bool" name="config_showEmergencyButtonInPowerMenu" />
 </resources>
