@@ -564,5 +564,13 @@
                 <action android:name="android.intent.action.SHOW_KEYBOARD_SHORTCUTS" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".DaylightHeaderDefault"
+                  android:label="Default" >
+            <intent-filter>
+                <action android:name="org.omnirom.DaylightHeaderPack" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>

@@ -30,4 +30,7 @@
 
     <!-- Membar spacing -->
     <dimen name="recents_membar_spacing">12dp</dimen>
+
+    <dimen name="qs_panel_top_offset_normal">80dp</dimen>
+    <dimen name="qs_panel_top_offset_header">110dp</dimen>
 </resources>
