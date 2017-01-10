@@ -86,4 +86,7 @@
 
   <!-- Dynamic Navbar -->
   <java-symbol type="color" name="input_method_navigation_guard_dynamic" />
+
+  <!-- Doze mode -->
+  <java-symbol type="bool" name="config_doze_enabled_by_default" />
 </resources>
