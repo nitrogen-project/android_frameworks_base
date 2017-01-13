@@ -401,18 +401,18 @@ public final class NightDisplayService extends SystemService
                                     UserHandle.USER_CURRENT);
         switch (customVal) {
             case 1:
-                autoVal = 0f;
-                manualVal = 100;
-                break;
-            case 2:
                 autoVal = -1f;
                 manualVal = 0;
                 break;
-            case 3:
-                break;
-            default:
+            case 2:
                 autoVal = -0.33f;
                 manualVal = 40;
+                break;
+            case 3:
+                autoVal = 0f;
+                manualVal = 100;
+                break;
+            default:
                 break;
         }
     }
