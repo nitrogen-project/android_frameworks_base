@@ -20,6 +20,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.nfc.NfcAdapter;
 import com.android.internal.logging.MetricsProto.MetricsEvent;
 
@@ -74,6 +75,11 @@ public class NfcTile extends QSTile<QSTile.BooleanState> {
         Intent intent = new Intent("android.settings.NFC_SETTINGS");
         intent.addCategory(Intent.CATEGORY_DEFAULT);
         mHost.startActivityDismissingKeyguard(intent);
+    }
+
+    @Override
+    public boolean isAvailable() {
+        return mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_NFC);
     }
 
     protected void toggleState() {
