@@ -1152,7 +1152,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     QSContainer qsContainer = (QSContainer) v.findViewById(
                             R.id.quick_settings_container);
                     qsContainer.setHost(qsh);
-                    mBrightnessMirrorController.onDensityOrFontScaleChanged();
                     mQSPanel = qsContainer.getQsPanel();
                     mQSPanel.setBrightnessMirror(mBrightnessMirrorController);
                     mKeyguardStatusBar.setQSPanel(mQSPanel);
