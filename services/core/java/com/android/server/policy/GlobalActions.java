@@ -256,7 +256,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
             @Override
             protected void changeStateFromPress(boolean buttonOn) {
-                //if (!mHasTelephony) return;
+                if (!mHasTelephony) return;
 
                 // In ECM mode airplane state cannot be changed
                 if (!(Boolean.parseBoolean(
