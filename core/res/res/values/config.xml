@@ -1031,6 +1031,8 @@
             7 - Action Sleep
             8 - Last app
             9 - Toggle split screen
+           10 - Task one-handed-mode left
+           11 - Task one-handed-mode right
          This needs to match the constants in
          policy/src/com/android/internal/policy/impl/PhoneWindowManager.java
     -->
@@ -1047,6 +1049,8 @@
             7 - Action Sleep
             8 - Last app
             9 - Toggle split screen
+           10 - Task one-handed-mode left
+           11 - Task one-handed-mode right
          This needs to match the constants in
          policy/src/com/android/internal/policy/impl/PhoneWindowManager.java
     -->
@@ -1063,6 +1067,8 @@
             7 - Action Sleep
             8 - Last app
             9 - Toggle split screen
+           10 - Task one-handed-mode left
+           11 - Task one-handed-mode right
          This needs to match the constants in
          policy/src/com/android/internal/policy/impl/PhoneWindowManager.java
     -->
