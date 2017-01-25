@@ -582,8 +582,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_LAYOUT_COLUMNS),
                     false, this, UserHandle.USER_ALL);
-             resolver.registerContentObserver(Settings.System.getUriFor(
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_LAYOUT_COLUMNS_LANDSCAPE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_TILE_TITLE_VISIBILITY),
                     false, this, UserHandle.USER_ALL);
             update();
         }
@@ -635,10 +638,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mBrightnessControl = Settings.System.getIntForUser(
                     resolver, Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
                     UserHandle.USER_CURRENT) == 1;
-
-            if (mNotificationPanel != null) {
-                mNotificationPanel.updateSettings();
-            }
 
             if (mHeader != null) {
                 mHeader.updateSettings();
@@ -875,8 +874,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         // in session state
 
         addNavigationBar();
-
-        mObserver.observe();
 
         // Lastly, call to the icon policy to install/update all the icons.
         mIconPolicy = new PhoneStatusBarPolicy(mContext, mIconController, mCastController,
