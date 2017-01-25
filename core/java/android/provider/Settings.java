@@ -4119,34 +4119,6 @@ public final class Settings {
         public static final String HEADS_UP_NOTIFICATION_SNOOZE = "heads_up_notification_snooze";
 
         /**
-         * Number of rows used for the Quick Settings (portrait)
-         *
-         * @hide
-         */
-        public static final String QS_ROWS_PORTRAIT = "qs_rows_portrait";
-
-        /**
-         * Number of columns used for the Quick Settings (portrait)
-         *
-         * @hide
-         */
-        public static final String QS_COLUMNS_PORTRAIT = "qs_columns_portrait";
-
-        /**
-         * Number of rows used for the Quick Settings (landscape)
-         *
-         * @hide
-         */
-        public static final String QS_ROWS_LANDSCAPE = "qs_rows_landscape";
-
-        /**
-         * Number of columns used for the Quick Settings (landscape)
-         *
-         * @hide
-         */
-        public static final String QS_COLUMNS_LANDSCAPE = "qs_columns_landscape";
-
-        /**
          * whether to enable torch on lockscreen
          * @hide
          */
