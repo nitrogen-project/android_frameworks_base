@@ -633,6 +633,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     resolver, Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
                     UserHandle.USER_CURRENT) == 1;
 
+            if (mNotificationPanel != null) {
+                mNotificationPanel.updateSettings();
+            }
+
             if (mHeader != null) {
                 mHeader.updateSettings();
             }

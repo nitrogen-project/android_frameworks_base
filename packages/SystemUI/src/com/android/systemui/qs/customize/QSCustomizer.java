@@ -99,6 +99,13 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
         if (menuItem != null) {
             mColumnsSubMenu = menuItem.getSubMenu();
         }
+
+        int qsTitlesValue = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QS_TILE_TITLE_VISIBILITY, 1,
+                UserHandle.USER_CURRENT);
+        MenuItem qsTitlesMenuItem = mToolbar.getMenu().findItem(R.id.menu_item_titles);
+        qsTitlesMenuItem.setChecked(qsTitlesValue == 0);
+
         mToolbar.setTitle(R.string.qs_edit);
         mDefaultColumns = Math.max(1,
                     mContext.getResources().getInteger(R.integer.quick_settings_num_columns));
@@ -214,6 +221,20 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
             case R.id.menu_item_columns_seven:
                 Settings.System.putInt(mContext.getContentResolver(),
                         Settings.System.QS_LAYOUT_COLUMNS, 7);
+                break;
+            case R.id.menu_item_columns_eight:
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.QS_LAYOUT_COLUMNS, 8);
+                break;
+            case R.id.menu_item_columns_nine:
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.QS_LAYOUT_COLUMNS, 9);
+                break;
+            case R.id.menu_item_titles:
+                item.setChecked(!item.isChecked());
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                        Settings.System.QS_TILE_TITLE_VISIBILITY, item.isChecked() ? 0 : 1,
+                        UserHandle.USER_CURRENT);
                 break;
             }
         return false;
