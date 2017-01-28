@@ -64,9 +64,9 @@
          values/config.xml) and must be truncated.
          [CHAR LIMIT=4] -->
   <!-- LTE QS Tile -->
-  <string name="qs_lte_label">4G/LTE</string>
-  <string name="lte_on">LTE Ligado </string>
-  <string name="lte_off">LTE desligado</string>
+  <string name="qs_lte_label">4G</string>
+  <string name="lte_on">4G Ligado </string>
+  <string name="lte_off">4G Desligado</string>
   <!-- Sync QS tile -->
   <string name="quick_settings_sync_label">Sincronizar</string>
   <string name="accessibility_quick_settings_sync_off">Sincronização desativada</string>
