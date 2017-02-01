@@ -586,6 +586,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.QS_LAYOUT_COLUMNS_LANDSCAPE),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_LAYOUT_ROWS),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_LAYOUT_ROWS_LANDSCAPE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_TILE_TITLE_VISIBILITY),
                     false, this, UserHandle.USER_ALL);
             update();
@@ -638,6 +644,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mBrightnessControl = Settings.System.getIntForUser(
                     resolver, Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
                     UserHandle.USER_CURRENT) == 1;
+
+            if (mQSPanel != null) {
+                updateResources();
+            }
 
             if (mHeader != null) {
                 mHeader.updateSettings();

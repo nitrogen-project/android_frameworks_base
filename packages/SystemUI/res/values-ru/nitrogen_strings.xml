@@ -89,6 +89,8 @@
 
     <string name="qs_menu_item_columns">Столбцы в портрет.</string>
     <string name="qs_menu_item_columns_landscape">Столбцы в альбом.</string>
+    <string name="qs_menu_item_rows">Строки в портрет.</string>
+    <string name="qs_menu_item_rows_landscape">Строки в альбом.</string>
     <string name="qs_menu_item_reset">Сброс</string>
 
     <string name="qs_menu_item_titles">Скрыть подписи</string>

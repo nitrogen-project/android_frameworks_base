@@ -1,8 +1,10 @@
 package com.android.systemui.qs;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.provider.Settings;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -224,9 +226,10 @@ public class PagedTileLayout extends ViewPager implements QSTileLayout {
         for (int i = 0; i < mPages.size(); i++) {
             changed |= mPages.get(i).updateResources();
         }
-        if (changed) {
+        //Removing the check here to correctly distribute tiles on landscape after boot
+        //if (changed) {
             distributeTiles();
-        }
+        //}
         return changed;
     }
 
@@ -260,7 +263,7 @@ public class PagedTileLayout extends ViewPager implements QSTileLayout {
     }
 
     public static class TilePage extends TileLayout {
-        private int mMaxRows = 3;
+        private int mMaxRows = 5;
 
         public TilePage(Context context, AttributeSet attrs) {
             super(context, attrs);
@@ -280,12 +283,15 @@ public class PagedTileLayout extends ViewPager implements QSTileLayout {
         }
 
         private int getRows() {
-            final Resources res = getContext().getResources();
-            if (res.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                // Always have 3 rows in portrait.
-                return 3;
-            }
-            return Math.max(1, res.getInteger(R.integer.quick_settings_num_rows));
+            final Resources res = mContext.getResources();
+            final ContentResolver cr = mContext.getContentResolver();
+            boolean isPortrait = res.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+            int rowsPortrait = Settings.System.getInt(cr,
+                    Settings.System.QS_LAYOUT_ROWS, 3);
+            int rowsLandscape = Settings.System.getInt(cr,
+                    Settings.System.QS_LAYOUT_ROWS_LANDSCAPE,
+                    Math.max(1, res.getInteger(R.integer.quick_settings_num_rows)));
+            return isPortrait ? rowsPortrait : rowsLandscape;
         }
 
         public void setMaxRows(int maxRows) {

@@ -19,38 +19,60 @@ limitations under the License.
               android:title="@string/qs_menu_item_columns">
             <menu>
                 <item android:id="@+id/menu_item_columns_three"
-                      android:title="@string/qs_menu_item_columns_three" />
+                      android:title="@string/qs_menu_item_three" />
                 <item android:id="@+id/menu_item_columns_four"
-                      android:title="@string/qs_menu_item_columns_four" />
+                      android:title="@string/qs_menu_item_four" />
                 <item android:id="@+id/menu_item_columns_five"
-                      android:title="@string/qs_menu_item_columns_five" />
+                      android:title="@string/qs_menu_item_five" />
                 <item android:id="@+id/menu_item_columns_six"
-                      android:title="@string/qs_menu_item_columns_six" />
+                      android:title="@string/qs_menu_item_six" />
                 <item android:id="@+id/menu_item_columns_seven"
-                      android:title="@string/qs_menu_item_columns_seven" />
+                      android:title="@string/qs_menu_item_seven" />
                 <item android:id="@+id/menu_item_columns_eight"
-                      android:title="@string/qs_menu_item_columns_eight" />
+                      android:title="@string/qs_menu_item_eight" />
                 <item android:id="@+id/menu_item_columns_nine"
-                      android:title="@string/qs_menu_item_columns_nine" />
+                      android:title="@string/qs_menu_item_nine" />
             </menu>
         </item>
         <item android:id="@+id/menu_item_columns_landscape"
               android:title="@string/qs_menu_item_columns_landscape">
             <menu>
                 <item android:id="@+id/menu_item_columns_landscape_three"
-                      android:title="@string/qs_menu_item_columns_three" />
+                      android:title="@string/qs_menu_item_three" />
                 <item android:id="@+id/menu_item_columns_landscape_four"
-                      android:title="@string/qs_menu_item_columns_four" />
+                      android:title="@string/qs_menu_item_four" />
                 <item android:id="@+id/menu_item_columns_landscape_five"
-                      android:title="@string/qs_menu_item_columns_five" />
+                      android:title="@string/qs_menu_item_five" />
                 <item android:id="@+id/menu_item_columns_landscape_six"
-                      android:title="@string/qs_menu_item_columns_six" />
+                      android:title="@string/qs_menu_item_six" />
                 <item android:id="@+id/menu_item_columns_landscape_seven"
-                      android:title="@string/qs_menu_item_columns_seven" />
+                      android:title="@string/qs_menu_item_seven" />
                 <item android:id="@+id/menu_item_columns_landscape_eight"
-                      android:title="@string/qs_menu_item_columns_eight" />
+                      android:title="@string/qs_menu_item_eight" />
                 <item android:id="@+id/menu_item_columns_landscape_nine"
-                      android:title="@string/qs_menu_item_columns_nine" />
+                      android:title="@string/qs_menu_item_nine" />
+            </menu>
+        </item>
+        <item android:id="@+id/menu_item_rows"
+              android:title="@string/qs_menu_item_rows">
+            <menu>
+                <item android:id="@+id/menu_item_rows_three"
+                      android:title="@string/qs_menu_item_three" />
+                <item android:id="@+id/menu_item_rows_four"
+                      android:title="@string/qs_menu_item_four" />
+                <item android:id="@+id/menu_item_rows_five"
+                      android:title="@string/qs_menu_item_five" />
+            </menu>
+        </item>
+        <item android:id="@+id/menu_item_rows_landscape"
+              android:title="@string/qs_menu_item_rows_landscape">
+            <menu>
+                <item android:id="@+id/menu_item_rows_landscape_one"
+                      android:title="@string/qs_menu_item_one" />
+                <item android:id="@+id/menu_item_rows_landscape_two"
+                      android:title="@string/qs_menu_item_two" />
+                <item android:id="@+id/menu_item_rows_landscape_three"
+                      android:title="@string/qs_menu_item_three" />
             </menu>
         </item>
         <item android:id="@+id/menu_item_titles"
