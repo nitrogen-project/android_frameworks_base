@@ -163,4 +163,7 @@
     <string name="qs_menu_item_reset">Reset</string>
 
     <string name="qs_menu_item_titles">Hide labels</string>
+
+    <!-- volte icon switch -->
+    <string name="status_bar_volte">VOLTE</string>
 </resources>
