@@ -62,6 +62,7 @@ public class SignalClusterView
     private static final String SLOT_WIFI = "wifi";
     private static final String SLOT_ETHERNET = "ethernet";
     private static final String SLOT_VOLTE = "volte";
+    private static final String SLOT_VPN = "vpn";
 
     NetworkControllerImpl mNC;
     SecurityController mSC;
@@ -108,6 +109,7 @@ public class SignalClusterView
     private boolean mBlockWifi;
     private boolean mBlockEthernet;
     private boolean mBlockVolte;
+    private boolean mBlockVpn;
 
     public SignalClusterView(Context context) {
         this(context, null);
@@ -147,17 +149,20 @@ public class SignalClusterView
         boolean blockWifi = blockList.contains(SLOT_WIFI);
         boolean blockEthernet = blockList.contains(SLOT_ETHERNET);
         boolean blockVolte = blockList.contains(SLOT_VOLTE);
+        boolean blockVpn = blockList.contains(SLOT_VPN);
 
         if (blockAirplane != mBlockAirplane || blockMobile != mBlockMobile
-                || blockEthernet != mBlockEthernet || blockWifi != mBlockWifi || blockVolte != mBlockVolte) {
+                || blockEthernet != mBlockEthernet || blockWifi != mBlockWifi || blockVolte != mBlockVolte || blockVpn != mBlockVpn) {
             mBlockAirplane = blockAirplane;
             mBlockMobile = blockMobile;
             mBlockEthernet = blockEthernet;
             mBlockWifi = blockWifi;
             mBlockVolte = blockVolte;
+            mBlockVpn = blockVpn;
             // Re-register to get new callbacks.
             mNC.removeSignalCallback(this);
             mNC.addSignalCallback(this);
+            apply();
         }
     }
 
@@ -448,8 +453,8 @@ public class SignalClusterView
     private void apply() {
         if (mWifiGroup == null) return;
 
-        mVpn.setVisibility(mVpnVisible ? View.VISIBLE : View.GONE);
-        if (mVpnVisible) {
+        mVpn.setVisibility(mVpnVisible && !mBlockVpn ? View.VISIBLE : View.GONE);
+        if (mVpnVisible && !mBlockVpn) {
             if (mLastVpnIconId != mVpnIconId) {
                 setIconForView(mVpn, mVpnIconId);
                 mLastVpnIconId = mVpnIconId;

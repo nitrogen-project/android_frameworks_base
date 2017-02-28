@@ -166,4 +166,9 @@
 
     <!-- volte icon switch -->
     <string name="status_bar_volte">VOLTE</string>
+
+    <!-- vpn icon switch -->
+    <string name="status_bar_vpn">VPN</string>
+    <!-- data saver icon switch -->
+    <string name="status_bar_datasaver">Data saver</string>
 </resources>

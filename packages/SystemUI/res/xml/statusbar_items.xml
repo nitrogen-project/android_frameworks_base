@@ -43,6 +43,10 @@
         android:title="@string/status_bar_volte" />
 
     <com.android.systemui.tuner.StatusBarSwitch
+        android:key="vpn"
+        android:title="@string/status_bar_vpn" />
+
+    <com.android.systemui.tuner.StatusBarSwitch
         android:key="ethernet"
         android:title="@string/status_bar_ethernet" />
 
@@ -53,6 +57,10 @@
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="headset"
         android:title="@string/headset" />
+
+    <com.android.systemui.tuner.StatusBarSwitch
+        android:key="data_saver"
+        android:title="@string/status_bar_datasaver" />
 
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="hotspot"

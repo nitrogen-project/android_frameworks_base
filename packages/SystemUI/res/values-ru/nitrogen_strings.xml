@@ -94,4 +94,7 @@
     <string name="qs_menu_item_reset">Сброс</string>
 
     <string name="qs_menu_item_titles">Скрыть подписи</string>
+
+    <!-- data saver icon switch -->
+    <string name="status_bar_datasaver">Экономия трафика</string>
 </resources>
