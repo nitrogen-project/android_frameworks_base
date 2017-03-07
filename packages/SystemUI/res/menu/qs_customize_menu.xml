@@ -18,6 +18,8 @@ limitations under the License.
         <item android:id="@+id/menu_item_columns"
               android:title="@string/qs_menu_item_columns">
             <menu>
+                <item android:id="@+id/menu_item_columns_two"
+                      android:title="@string/qs_menu_item_two" />
                 <item android:id="@+id/menu_item_columns_three"
                       android:title="@string/qs_menu_item_three" />
                 <item android:id="@+id/menu_item_columns_four"
@@ -37,6 +39,8 @@ limitations under the License.
         <item android:id="@+id/menu_item_columns_landscape"
               android:title="@string/qs_menu_item_columns_landscape">
             <menu>
+                <item android:id="@+id/menu_item_columns_landscape_two"
+                      android:title="@string/qs_menu_item_two" />
                 <item android:id="@+id/menu_item_columns_landscape_three"
                       android:title="@string/qs_menu_item_three" />
                 <item android:id="@+id/menu_item_columns_landscape_four"
@@ -56,6 +60,8 @@ limitations under the License.
         <item android:id="@+id/menu_item_rows"
               android:title="@string/qs_menu_item_rows">
             <menu>
+                <item android:id="@+id/menu_item_rows_two"
+                      android:title="@string/qs_menu_item_two" />
                 <item android:id="@+id/menu_item_rows_three"
                       android:title="@string/qs_menu_item_three" />
                 <item android:id="@+id/menu_item_rows_four"

@@ -232,6 +232,10 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
                 reset();
                 break;
             //columns portrait
+            case R.id.menu_item_columns_two:
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                        Settings.System.QS_LAYOUT_COLUMNS, 2, UserHandle.USER_CURRENT);
+                break;
             case R.id.menu_item_columns_three:
                 Settings.System.putIntForUser(mContext.getContentResolver(),
                         Settings.System.QS_LAYOUT_COLUMNS, 3, UserHandle.USER_CURRENT);
@@ -261,6 +265,10 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
                         Settings.System.QS_LAYOUT_COLUMNS, 9, UserHandle.USER_CURRENT);
                 break;
             //columns landscape
+            case R.id.menu_item_columns_landscape_two:
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                        Settings.System.QS_LAYOUT_COLUMNS_LANDSCAPE, 2, UserHandle.USER_CURRENT);
+                break;
             case R.id.menu_item_columns_landscape_three:
                 Settings.System.putIntForUser(mContext.getContentResolver(),
                         Settings.System.QS_LAYOUT_COLUMNS_LANDSCAPE, 3, UserHandle.USER_CURRENT);
@@ -290,6 +298,10 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
                         Settings.System.QS_LAYOUT_COLUMNS_LANDSCAPE, 9, UserHandle.USER_CURRENT);
                 break;
             //rows portrait
+            case R.id.menu_item_rows_two:
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                        Settings.System.QS_LAYOUT_ROWS, 2, UserHandle.USER_CURRENT);
+                break;
             case R.id.menu_item_rows_three:
                 Settings.System.putIntForUser(mContext.getContentResolver(),
                         Settings.System.QS_LAYOUT_ROWS, 3, UserHandle.USER_CURRENT);
