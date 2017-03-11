@@ -171,4 +171,8 @@
     <string name="status_bar_vpn">VPN</string>
     <!-- data saver icon switch -->
     <string name="status_bar_datasaver">Data saver</string>
+
+    <!-- Sim recents -->
+    <string name="recents_multiwin_warning">A multiwindow session is already active.\nJust tap an app if you want to dock it now.</string>
+    <string name="recents_multiwin_nolastapp">You removed all recents, please choose an app from launcher or drawer.</string>
 </resources>

@@ -97,4 +97,8 @@
 
     <!-- data saver icon switch -->
     <string name="status_bar_datasaver">Экономия трафика</string>
+
+    <!-- Sim recents -->
+    <string name="recents_multiwin_warning">Многооконный режим уже активен.\nПросто выберите приложение и нажмите на него.</string>
+    <string name="recents_multiwin_nolastapp">Вы очистили недавние приложения, пожалуйста, выберите приложение на рабочем столе или меню.</string>
 </resources>
