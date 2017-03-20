@@ -65,4 +65,6 @@
 
     <color name="screenshot_flash_color">#4D3367d6</color>
     <color name="screenshot_background_color">#ff000000</color>
+
+    <color name="batterymeter_frame_color_darkintensity">@color/dark_mode_icon_color_dual_tone_background</color>
 </resources>
