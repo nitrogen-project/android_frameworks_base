@@ -68,16 +68,6 @@ static struct {
     jclass clazz;
 } gStringClassInfo;
 
-static struct {
-    jclass clazz;
-    jmethodID resetBusy;
-} gConnClassInfo;
-
-static struct {
-    jclass clazz;
-    jfieldID value;
-} gMutableBoolClassInfo;
-
 struct SQLiteConnection {
     // Open flags.
     // Must be kept in sync with the constants defined in SQLiteDatabase.java.
@@ -447,96 +437,70 @@ static void nativeResetStatementAndClearBindings(JNIEnv* env, jclass clazz, jlon
     }
 }
 
-static int executeNonQuery(JNIEnv* env, jobject javaConn,
-                           SQLiteConnection* connection, sqlite3_stmt* statement) {
-    bool locked = false;
-    while (true) {
-        int err = sqlite3_step(statement);
-        if (err == SQLITE_ROW) {
-            throw_sqlite3_exception(env,
-                    "Queries can be performed using SQLiteDatabase query or rawQuery methods only.");
-        } else if (err != SQLITE_DONE) {
-            if (!locked && err == SQLITE_LOCKED) {
-                locked = true;
-                // let's see if clearing some busy-but-not-in-use statements helps us
-                jboolean cleared = env->CallBooleanMethod(javaConn, gConnClassInfo.resetBusy);
-                if (cleared) {
-                    // we cleared something; let's retry.
-                    continue;
-                }
-            }
-            throw_sqlite3_exception(env, connection->db);
-        }
-        return err;
+static int executeNonQuery(JNIEnv* env, SQLiteConnection* connection, sqlite3_stmt* statement) {
+    int err = sqlite3_step(statement);
+    if (err == SQLITE_ROW) {
+        throw_sqlite3_exception(env,
+                "Queries can be performed using SQLiteDatabase query or rawQuery methods only.");
+    } else if (err != SQLITE_DONE) {
+        throw_sqlite3_exception(env, connection->db);
     }
+    return err;
 }
 
-static void nativeExecute(JNIEnv* env, jobject thiz, jlong connectionPtr,
+static void nativeExecute(JNIEnv* env, jclass clazz, jlong connectionPtr,
         jlong statementPtr) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
 
-    executeNonQuery(env, thiz, connection, statement);
+    executeNonQuery(env, connection, statement);
 }
 
-static jint nativeExecuteForChangedRowCount(JNIEnv* env, jobject thiz,
+static jint nativeExecuteForChangedRowCount(JNIEnv* env, jclass clazz,
         jlong connectionPtr, jlong statementPtr) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
 
-    int err = executeNonQuery(env, thiz, connection, statement);
+    int err = executeNonQuery(env, connection, statement);
     return err == SQLITE_DONE ? sqlite3_changes(connection->db) : -1;
 }
 
-static jlong nativeExecuteForLastInsertedRowId(JNIEnv* env, jobject thiz,
+static jlong nativeExecuteForLastInsertedRowId(JNIEnv* env, jclass clazz,
         jlong connectionPtr, jlong statementPtr) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
 
-    int err = executeNonQuery(env, thiz, connection, statement);
+    int err = executeNonQuery(env, connection, statement);
     return err == SQLITE_DONE && sqlite3_changes(connection->db) > 0
             ? sqlite3_last_insert_rowid(connection->db) : -1;
 }
 
-static int executeOneRowQuery(JNIEnv* env, jobject javaConn,
-                              SQLiteConnection* connection, sqlite3_stmt* statement) {
-    bool locked = false;
-    while (true) {
-        int err = sqlite3_step(statement);
-        if (err != SQLITE_ROW) {
-            if (!locked && err == SQLITE_LOCKED) {
-                locked = true;
-                // let's see if clearing some busy-but-not-in-use statements helps us
-                jboolean cleared = env->CallBooleanMethod(javaConn, gConnClassInfo.resetBusy);
-                if (cleared) {
-                    // we cleared something; let's retry.
-                    continue;
-                }
-            }
-            throw_sqlite3_exception(env, connection->db);
-        }
-        return err;
+static int executeOneRowQuery(JNIEnv* env, SQLiteConnection* connection, sqlite3_stmt* statement) {
+    int err = sqlite3_step(statement);
+    if (err != SQLITE_ROW) {
+        throw_sqlite3_exception(env, connection->db);
     }
+    return err;
 }
 
-static jlong nativeExecuteForLong(JNIEnv* env, jobject thiz,
+static jlong nativeExecuteForLong(JNIEnv* env, jclass clazz,
         jlong connectionPtr, jlong statementPtr) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
 
-    int err = executeOneRowQuery(env, thiz, connection, statement);
+    int err = executeOneRowQuery(env, connection, statement);
     if (err == SQLITE_ROW && sqlite3_column_count(statement) >= 1) {
         return sqlite3_column_int64(statement, 0);
     }
     return -1;
 }
 
-static jstring nativeExecuteForString(JNIEnv* env, jobject thiz,
+static jstring nativeExecuteForString(JNIEnv* env, jclass clazz,
         jlong connectionPtr, jlong statementPtr) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
 
-    int err = executeOneRowQuery(env, thiz, connection, statement);
+    int err = executeOneRowQuery(env, connection, statement);
     if (err == SQLITE_ROW && sqlite3_column_count(statement) >= 1) {
         const jchar* text = static_cast<const jchar*>(sqlite3_column_text16(statement, 0));
         if (text) {
@@ -581,12 +545,12 @@ static int createAshmemRegionWithData(JNIEnv* env, const void* data, size_t leng
     return -1;
 }
 
-static jint nativeExecuteForBlobFileDescriptor(JNIEnv* env, jobject thiz,
+static jint nativeExecuteForBlobFileDescriptor(JNIEnv* env, jclass clazz,
         jlong connectionPtr, jlong statementPtr) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
 
-    int err = executeOneRowQuery(env, thiz, connection, statement);
+    int err = executeOneRowQuery(env, connection, statement);
     if (err == SQLITE_ROW && sqlite3_column_count(statement) >= 1) {
         const void* blob = sqlite3_column_blob(statement, 0);
         if (blob) {
@@ -700,29 +664,27 @@ static CopyRowResult copyRow(JNIEnv* env, CursorWindow* window,
 
 static jlong nativeExecuteForCursorWindow(JNIEnv* env, jclass clazz,
         jlong connectionPtr, jlong statementPtr, jlong windowPtr,
-        jint startPos, jint requiredPos, jboolean countAllRows, jobject exhausted) {
+        jint startPos, jint requiredPos, jboolean countAllRows) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
     CursorWindow* window = reinterpret_cast<CursorWindow*>(windowPtr);
 
-    int numColumns = sqlite3_column_count(statement);
-    if (window) {
-        status_t status = window->clear();
-        if (status) {
-            String8 msg;
-            msg.appendFormat("Failed to clear the cursor window, status=%d", status);
-            throw_sqlite3_exception(env, connection->db, msg.string());
-            return 0;
-        }
+    status_t status = window->clear();
+    if (status) {
+        String8 msg;
+        msg.appendFormat("Failed to clear the cursor window, status=%d", status);
+        throw_sqlite3_exception(env, connection->db, msg.string());
+        return 0;
+    }
 
-        status = window->setNumColumns(numColumns);
-        if (status) {
-            String8 msg;
-            msg.appendFormat("Failed to set the cursor window column count to %d, status=%d",
-                    numColumns, status);
-            throw_sqlite3_exception(env, connection->db, msg.string());
-            return 0;
-        }
+    int numColumns = sqlite3_column_count(statement);
+    status = window->setNumColumns(numColumns);
+    if (status) {
+        String8 msg;
+        msg.appendFormat("Failed to set the cursor window column count to %d, status=%d",
+                numColumns, status);
+        throw_sqlite3_exception(env, connection->db, msg.string());
+        return 0;
     }
 
     int retryCount = 0;
@@ -730,16 +692,8 @@ static jlong nativeExecuteForCursorWindow(JNIEnv* env, jclass clazz,
     int addedRows = 0;
     bool windowFull = false;
     bool gotException = false;
-    bool first = true;
     while (!gotException && (!windowFull || countAllRows)) {
-        int err;
-        if (first && sqlite3_stmt_busy(statement)) {
-            err = SQLITE_ROW; // this one didn't fit in the window last time
-            totalRows -= 1; // we didn't step, so don't count it (compensating for the +1 below)
-        } else {
-            err = sqlite3_step(statement);
-        }
-        first = false;
+        int err = sqlite3_step(statement);
         if (err == SQLITE_ROW) {
             LOG_WINDOW("Stepped statement %p to row %d", statement, totalRows);
             retryCount = 0;
@@ -750,35 +704,27 @@ static jlong nativeExecuteForCursorWindow(JNIEnv* env, jclass clazz,
                 continue;
             }
 
-            if (window) {
-                CopyRowResult cpr = copyRow(env, window, statement, numColumns, startPos, addedRows);
-                if (cpr == CPR_FULL && addedRows && startPos + addedRows <= requiredPos) {
-                    // We filled the window before we got to the one row that we really wanted.
-                    // Clear the window and start filling it again from here.
-                    // TODO: Would be nicer if we could progressively replace earlier rows.
-                    window->clear();
-                    window->setNumColumns(numColumns);
-                    startPos += addedRows;
-                    addedRows = 0;
-                    cpr = copyRow(env, window, statement, numColumns, startPos, addedRows);
-                }
+            CopyRowResult cpr = copyRow(env, window, statement, numColumns, startPos, addedRows);
+            if (cpr == CPR_FULL && addedRows && startPos + addedRows <= requiredPos) {
+                // We filled the window before we got to the one row that we really wanted.
+                // Clear the window and start filling it again from here.
+                // TODO: Would be nicer if we could progressively replace earlier rows.
+                window->clear();
+                window->setNumColumns(numColumns);
+                startPos += addedRows;
+                addedRows = 0;
+                cpr = copyRow(env, window, statement, numColumns, startPos, addedRows);
+            }
 
-                if (cpr == CPR_OK) {
-                    addedRows += 1;
-                } else if (cpr == CPR_FULL) {
-                    windowFull = true;
-                } else {
-                    gotException = true;
-                }
+            if (cpr == CPR_OK) {
+                addedRows += 1;
+            } else if (cpr == CPR_FULL) {
+                windowFull = true;
             } else {
-                if (requiredPos < totalRows) {
-                    // we've counted the required number of rows; our non-existent window is "full"
-                    windowFull = true;
-                }
+                gotException = true;
             }
         } else if (err == SQLITE_DONE) {
             // All rows processed, bail
-            env->SetBooleanField(exhausted, gMutableBoolClassInfo.value, JNI_TRUE);
             LOG_WINDOW("Processed all rows");
             break;
         } else if (err == SQLITE_LOCKED || err == SQLITE_BUSY) {
@@ -798,6 +744,11 @@ static jlong nativeExecuteForCursorWindow(JNIEnv* env, jclass clazz,
             gotException = true;
         }
     }
+
+    LOG_WINDOW("Resetting statement %p after fetching %d rows and adding %d rows"
+            "to the window in %d bytes",
+            statement, totalRows, addedRows, window->size() - window->freeSpace());
+    sqlite3_reset(statement);
 
     // Report the total number of rows on request.
     if (startPos > totalRows) {
@@ -882,7 +833,7 @@ static const JNINativeMethod sMethods[] =
             (void*)nativeExecuteForChangedRowCount },
     { "nativeExecuteForLastInsertedRowId", "(JJ)J",
             (void*)nativeExecuteForLastInsertedRowId },
-    { "nativeExecuteForCursorWindow", "(JJJIIZLandroid/util/MutableBoolean;)J",
+    { "nativeExecuteForCursorWindow", "(JJJIIZ)J",
             (void*)nativeExecuteForCursorWindow },
     { "nativeGetDbLookaside", "(J)I",
             (void*)nativeGetDbLookaside },
@@ -903,14 +854,6 @@ int register_android_database_SQLiteConnection(JNIEnv *env)
 
     clazz = FindClassOrDie(env, "java/lang/String");
     gStringClassInfo.clazz = MakeGlobalRefOrDie(env, clazz);
-
-    clazz = FindClassOrDie(env, "android/database/sqlite/SQLiteConnection");
-    gConnClassInfo.clazz = MakeGlobalRefOrDie(env, clazz);
-    gConnClassInfo.resetBusy = GetMethodIDOrDie(env, clazz, "resetBusyStatements", "()Z");
-
-    clazz = FindClassOrDie(env, "android/util/MutableBoolean");
-    gMutableBoolClassInfo.clazz = MakeGlobalRefOrDie(env, clazz);
-    gMutableBoolClassInfo.value = GetFieldIDOrDie(env, clazz, "value", "Z");
 
     return RegisterMethodsOrDie(env, "android/database/sqlite/SQLiteConnection", sMethods,
                                 NELEM(sMethods));

@@ -1310,7 +1310,7 @@ public final class PrintSpoolerService extends Service {
                     if (TYPE_STRING.equals(type)) {
                         advancedOptions.putString(key, value);
                     } else if (TYPE_INT.equals(type)) {
-                        advancedOptions.putInt(key, Integer.parseInt(value));
+                        advancedOptions.putInt(key, Integer.valueOf(value));
                     }
                     parser.next();
                     skipEmptyTextTags(parser);

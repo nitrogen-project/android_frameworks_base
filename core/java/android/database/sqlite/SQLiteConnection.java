@@ -30,11 +30,8 @@ import android.os.SystemClock;
 import android.os.Trace;
 import android.util.Log;
 import android.util.LruCache;
-import android.util.MutableBoolean;
-import android.util.MutableInt;
 import android.util.Printer;
 
-import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -106,12 +103,6 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
     private final PreparedStatementCache mPreparedStatementCache;
     private PreparedStatement mPreparedStatementPool;
 
-    // Queue for resetting prepared statements that we've left open for performance reasons but may
-    // no longer need. Split into two parallel lists to avoid allocation of a Pair each time.
-    // Protected by mPool.mLock.
-    private final ArrayList<WeakReference<PreparedStatement>> mDerefQueueStmt = new ArrayList<>(2);
-    private final ArrayList<WeakReference> mDerefQueueClient = new ArrayList<>(2);
-
     // The recent operations log.
     private final OperationLog mRecentOperations = new OperationLog();
 
@@ -151,17 +142,17 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
             int index, byte[] value);
     private static native void nativeResetStatementAndClearBindings(
             long connectionPtr, long statementPtr);
-    private native void nativeExecute(long connectionPtr, long statementPtr);
-    private native long nativeExecuteForLong(long connectionPtr, long statementPtr);
-    private native String nativeExecuteForString(long connectionPtr, long statementPtr);
-    private native int nativeExecuteForBlobFileDescriptor(
+    private static native void nativeExecute(long connectionPtr, long statementPtr);
+    private static native long nativeExecuteForLong(long connectionPtr, long statementPtr);
+    private static native String nativeExecuteForString(long connectionPtr, long statementPtr);
+    private static native int nativeExecuteForBlobFileDescriptor(
             long connectionPtr, long statementPtr);
-    private native int nativeExecuteForChangedRowCount(long connectionPtr, long statementPtr);
-    private native long nativeExecuteForLastInsertedRowId(
+    private static native int nativeExecuteForChangedRowCount(long connectionPtr, long statementPtr);
+    private static native long nativeExecuteForLastInsertedRowId(
             long connectionPtr, long statementPtr);
     private static native long nativeExecuteForCursorWindow(
             long connectionPtr, long statementPtr, long windowPtr,
-            int startPos, int requiredPos, boolean countAllRows, MutableBoolean exhausted);
+            int startPos, int requiredPos, boolean countAllRows);
     private static native int nativeGetDbLookaside(long connectionPtr);
     private static native void nativeCancel(long connectionPtr);
     private static native void nativeResetCancel(long connectionPtr, boolean cancelable);
@@ -821,88 +812,51 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
      * @param countAllRows True to count all rows that the query would return
      * regagless of whether they fit in the window.
      * @param cancellationSignal A signal to cancel the operation in progress, or null if none.
-     * @param exhausted will be set to true if the full result set was consumed - never set to false
-     * @param seenRows Set to the number of rows that have been seen in this queryso far.  Might
+     * @return The number of rows that were counted during query execution.  Might
      * not be all rows in the result set unless <code>countAllRows</code> is true.
-     * @param client A client that will later be used in a queueClientDereferenceLocked() call
-     * @return A reference that will later be used in a queueClientDereferenceLocked() call
      *
      * @throws SQLiteException if an error occurs, such as a syntax error
      * or invalid number of bind arguments.
      * @throws OperationCanceledException if the operation was canceled.
      */
-    public WeakReference<PreparedStatement> executeForCursorWindow(String sql, Object[] bindArgs,
+    public int executeForCursorWindow(String sql, Object[] bindArgs,
             CursorWindow window, int startPos, int requiredPos, boolean countAllRows,
-            CancellationSignal cancellationSignal, MutableBoolean exhausted, MutableInt seenRows,
-            WeakReference client) {
+            CancellationSignal cancellationSignal) {
         if (sql == null) {
             throw new IllegalArgumentException("sql must not be null.");
         }
-        if (exhausted == null) {
-            throw new IllegalArgumentException("exhausted must not be null.");
+        if (window == null) {
+            throw new IllegalArgumentException("window must not be null.");
         }
 
-        if (window != null) window.acquireReference();
+        window.acquireReference();
         try {
             int actualPos = -1;
             int countedRows = -1;
             int filledRows = -1;
-            seenRows.value = -1;
             final int cookie = mRecentOperations.beginOperation("executeForCursorWindow",
                     sql, bindArgs);
             try {
-                final PreparedStatement statement;
-                if (window == null) {
-                    // we don't care if the statement has already been stepped a bit
-                    statement = acquirePreparedStatement(sql, bindArgs, Integer.MAX_VALUE);
-                } else {
-                    statement = acquirePreparedStatement(sql, bindArgs, startPos);
-                }
-                statement.mLastClient = client;
-
-                if (DEBUG) dumpStatement(statement, "before");
-                boolean shouldReset = countAllRows; // might as well, if we're consuming everything
+                final PreparedStatement statement = acquirePreparedStatement(sql);
                 try {
                     throwIfStatementForbidden(statement);
-                    final int alreadyStepped;
-                    if (statement.mNumSteps == PreparedStatement.RESET) {
-                        bindArguments(statement, bindArgs);
-                        alreadyStepped = 0;
-                    } else {
-                        alreadyStepped = statement.mNumSteps;
-                    }
+                    bindArguments(statement, bindArgs);
                     applyBlockGuardPolicy(statement);
                     attachCancellationSignal(cancellationSignal);
                     try {
-                        final int skip = startPos - alreadyStepped;
-                        final int req = requiredPos - alreadyStepped;
-                        final long winPtr = window == null ? 0 : window.mWindowPtr;
                         final long result = nativeExecuteForCursorWindow(
-                                mConnectionPtr, statement.mStatementPtr, winPtr,
-                                skip, req, countAllRows, exhausted);
-                        actualPos = alreadyStepped + (int)(result >> 32);
+                                mConnectionPtr, statement.mStatementPtr, window.mWindowPtr,
+                                startPos, requiredPos, countAllRows);
+                        actualPos = (int)(result >> 32);
                         countedRows = (int)result;
-                        statement.mNumSteps = alreadyStepped + countedRows;
-                        if (window != null) {
-                            filledRows = window.getNumRows();
-                            window.setStartPosition(actualPos);
-                        }
-                        if (exhausted.value) {
-                            // we've exhausted the result set, no use keeping the query state around
-                            shouldReset = true;
-                        }
-                        seenRows.value = alreadyStepped + countedRows;
-                        return statement.mWeak;
+                        filledRows = window.getNumRows();
+                        window.setStartPosition(actualPos);
+                        return countedRows;
                     } finally {
                         detachCancellationSignal(cancellationSignal);
                     }
-                } catch (RuntimeException|Error ex) {
-                    shouldReset = true;
-                    throw ex;
                 } finally {
-                    if (DEBUG) dumpStatement(statement, "after exec");
-                    releasePreparedStatement(statement, shouldReset);
-                    if (DEBUG) dumpStatement(statement, "after release");
+                    releasePreparedStatement(statement);
                 }
             } catch (RuntimeException ex) {
                 mRecentOperations.failOperation(cookie, ex);
@@ -913,74 +867,19 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
                             + "', startPos=" + startPos
                             + ", actualPos=" + actualPos
                             + ", filledRows=" + filledRows
-                            + ", countedRows=" + countedRows
-                            + ", seenRows=" + seenRows.value);
+                            + ", countedRows=" + countedRows);
                 }
             }
         } finally {
-            if (window != null) window.releaseReference();
+            window.releaseReference();
         }
-    }
-
-    /**
-     * Called from the connection pool when this connection is released, or when a new deref is
-     * queued and the connection was available. Must be locked on the pool's mLock.
-     */
-    void handleDereferenceQueueLocked() {
-        final int N = mDerefQueueStmt.size();
-        for (int i=0; i<N; ++i) {
-            PreparedStatement stmt = mDerefQueueStmt.get(i).get();
-            if (stmt != null) {
-                WeakReference lastClient = stmt.mLastClient;
-                if (lastClient != null && lastClient == mDerefQueueClient.get(i)) {
-                    resetAndClear(stmt);
-                }
-            }
-        }
-        mDerefQueueStmt.clear();
-        mDerefQueueClient.clear();
-    }
-
-    /**
-     * Called from the connection pool when a client releases their reference to a statement. Will
-     * be handled on the next call to handleDereferenceQueueLocked(). Must lock the pool's mLock.
-     */
-    void queueClientDereferenceLocked(WeakReference<PreparedStatement> stmt, WeakReference client) {
-        mDerefQueueStmt.add(stmt);
-        mDerefQueueClient.add(client);
-    }
-
-    private void dumpStatement(PreparedStatement stmt, String info) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(info).append(": ").append(stmt);
-        sb.append("\n    mSQL=").append(stmt.mSql);
-        sb.append("\n    mLastBindArgs=").append(stmt.mLastBindArgs);
-        sb.append("\n    mNumSteps=").append(stmt.mNumSteps);
-        Log.i(TAG, sb.toString());
     }
 
     private PreparedStatement acquirePreparedStatement(String sql) {
-        return acquirePreparedStatement(sql, null, PreparedStatement.RESET);
-    }
-
-    private PreparedStatement acquirePreparedStatement(String sql, Object[] bindArgs, int start) {
         PreparedStatement statement = mPreparedStatementCache.get(sql);
         boolean skipCache = false;
         if (statement != null) {
             if (!statement.mInUse) {
-                boolean started = statement.mNumSteps != PreparedStatement.RESET;
-                int pos = statement.mNumSteps - 1; // steps == 1 means that we can read row #0.
-                if (started && statement.mLastBindArgs != bindArgs || pos > start) {
-                    if (DEBUG) {
-                        Log.i(TAG, "clearing statement. " +
-                            "started=" + started + ", " +
-                            "pos=" + pos + ", " +
-                            "start=" + start + ", " +
-                            "bindArgs=" + bindArgs + ", " +
-                            "lastBind=" + statement.mLastBindArgs);
-                    }
-                    resetAndClear(statement);
-                }
                 return statement;
             }
             // The statement is already in the cache but is in use (this statement appears
@@ -1012,51 +911,25 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
     }
 
     private void releasePreparedStatement(PreparedStatement statement) {
-        releasePreparedStatement(statement, true);
-    }
-
-    private void releasePreparedStatement(PreparedStatement statement, boolean alwaysReset) {
         statement.mInUse = false;
-        if (!statement.mInCache) {
+        if (statement.mInCache) {
+            try {
+                nativeResetStatementAndClearBindings(mConnectionPtr, statement.mStatementPtr);
+            } catch (SQLiteException ex) {
+                // The statement could not be reset due to an error.  Remove it from the cache.
+                // When remove() is called, the cache will invoke its entryRemoved() callback,
+                // which will in turn call finalizePreparedStatement() to finalize and
+                // recycle the statement.
+                if (DEBUG) {
+                    Log.d(TAG, "Could not reset prepared statement due to an exception.  "
+                            + "Removing it from the cache.  SQL: "
+                            + trimSqlForDisplay(statement.mSql), ex);
+                }
+
+                mPreparedStatementCache.remove(statement.mSql);
+            }
+        } else {
             finalizePreparedStatement(statement);
-        } else if (alwaysReset) {
-            resetAndClear(statement);
-        }
-    }
-
-    private boolean resetBusyStatements() {
-        if (DEBUG) Log.i(TAG, "need to reset busy statements");
-        Map<String,PreparedStatement> snapshot = mPreparedStatementCache.snapshot();
-        int nreset = 0;
-        for (PreparedStatement stmt : snapshot.values()) {
-            if (!stmt.mInUse && stmt.mNumSteps != PreparedStatement.RESET) {
-                resetAndClear(stmt);
-                nreset++;
-            }
-        }
-        if (DEBUG) Log.i(TAG, "reset " + nreset + " busy statements");
-        return (nreset > 0);
-    }
-
-    private void resetAndClear(PreparedStatement statement) {
-        try {
-            nativeResetStatementAndClearBindings(mConnectionPtr, statement.mStatementPtr);
-            statement.mLastBindArgs = null;
-            statement.mNumSteps = PreparedStatement.RESET;
-            statement.mLastClient = null;
-        } catch (SQLiteException ex) {
-            // The statement could not be reset due to an error.  Remove it from the cache.
-            // When remove() is called, the cache will invoke its entryRemoved() callback,
-            // which will in turn call finalizePreparedStatement() to finalize and
-            // recycle the statement.
-            if (DEBUG) {
-                Log.d(TAG, "Could not reset prepared statement due to an exception.  "
-                        + "Removing it from the cache.  SQL: "
-                        + trimSqlForDisplay(statement.mSql), ex);
-            }
-
-            mPreparedStatementCache.remove(statement.mSql);
-            throw ex;
         }
     }
 
@@ -1112,7 +985,6 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
                     "Expected " + statement.mNumParameters + " bind arguments but "
                     + count + " were provided.");
         }
-        statement.mLastBindArgs = bindArgs;
         if (count == 0) {
             return;
         }
@@ -1254,10 +1126,8 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
         // We ignore the first row in the database list because it corresponds to
         // the main database which we have already described.
         CursorWindow window = new CursorWindow("collectDbStats");
-        MutableBoolean exh = new MutableBoolean(false);
-        MutableInt seen = new MutableInt(0);
         try {
-            executeForCursorWindow("PRAGMA database_list;", null, window, 0, 0, false, null, exh, seen, null);
+            executeForCursorWindow("PRAGMA database_list;", null, window, 0, 0, false, null);
             for (int i = 1; i < window.getNumRows(); i++) {
                 String name = window.getString(i, 1);
                 String path = window.getString(i, 2);
@@ -1318,22 +1188,18 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
             statement.mPoolNext = null;
             statement.mInCache = false;
         } else {
-            statement = new PreparedStatement(this);
+            statement = new PreparedStatement();
         }
         statement.mSql = sql;
         statement.mStatementPtr = statementPtr;
         statement.mNumParameters = numParameters;
         statement.mType = type;
         statement.mReadOnly = readOnly;
-        statement.mLastBindArgs = null;
-        statement.mNumSteps = PreparedStatement.RESET;
         return statement;
     }
 
     private void recyclePreparedStatement(PreparedStatement statement) {
         statement.mSql = null;
-        statement.mLastBindArgs = null;
-        statement.mLastClient = null;
         statement.mPoolNext = mPreparedStatementPool;
         mPreparedStatementPool = statement;
     }
@@ -1356,7 +1222,7 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
      * resource disposal because all native statement objects must be freed before
      * the native database object can be closed.  So no finalizers here.
      */
-    static final class PreparedStatement {
+    private static final class PreparedStatement {
         // Next item in pool.
         public PreparedStatement mPoolNext;
 
@@ -1366,15 +1232,6 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
         // The native sqlite3_stmt object pointer.
         // Lifetime is managed explicitly by the connection.
         public long mStatementPtr;
-
-        // The bind args of the last execute.
-        // null for a statement that has been reset (but may be null in other cases, too!)
-        public Object[] mLastBindArgs;
-
-        // The number of steps taken in this statement since it was last reset.
-        // Will be RESET for a statement that has not been stepped since the last reset.
-        public int mNumSteps;
-        public static final int RESET = -1;
 
         // The number of parameters that the prepared statement has.
         public int mNumParameters;
@@ -1393,15 +1250,6 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
         // possible for SQLite calls to be re-entrant.  Consequently we need to prevent
         // in use statements from being finalized until they are no longer in use.
         public boolean mInUse;
-
-        public final WeakReference<PreparedStatement> mWeak = new WeakReference<>(this);
-        public WeakReference mLastClient;
-
-        public final SQLiteConnection owner;
-
-        public PreparedStatement(SQLiteConnection owner) {
-            this.owner = owner;
-        }
     }
 
     private final class PreparedStatementCache
