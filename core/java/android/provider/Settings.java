@@ -6097,7 +6097,13 @@ public final class Settings {
          * @hide
          */
         public static final String PULSE_SOLID_UNITS_OPACITY = "pulse_solid_units_opacity";
- 
+
+        /**
+         * SmartBar buttons opacity on Pulse
+         * @hide
+         */
+        public static final String PULSE_CUSTOM_BUTTONS_OPACITY = "pulse_custom_buttons_opacity";
+
         /**
          * A flag containing settings used for biometric weak
          * @hide
