@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2014-2016 The Nitrogen Project
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Notification which notifies user flashlight is enabled -->
+    <string name="quick_settings_tile_flashlight_not_title">Baterka je zapnutá</string>
+    <string name="quick_settings_tile_flashlight_not_summary">Kliknite na tlačidlo pre vypnutie</string>
+
+    <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">Snímka obrazovky bola vymazaná</string>
+
+    <!-- QuickSettings: Sound [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_sound_label">Zvuk</string>
+    <string name="quick_settings_sound_ring">Zvonenie</string>
+    <string name="quick_settings_sound_vibrate">Vibrácia</string>
+    <string name="quick_settings_sound_silent">Bez zvuku</string>
+
+    <!-- Reboot/Recovery QS Tile -->
+    <string name="quick_settings_reboot_label">Reštart</string>
+    <string name="quick_settings_reboot_recovery_label">Do recovery</string>
+
+    <!-- Volume QS Tile -->
+    <string name="quick_settings_volume_panel_label">Panel hlasitosti</string>
+
+    <!-- Caffeine Tile -->
+    <string name="quick_settings_caffeine_label">Kofeín</string>
+
+    <!-- Navigation bar Tile -->
+    <string name="quick_settings_navigation_bar">Navigačný panel</string>
+    <string name="quick_settings_smartbar">SmartBar</string>
+    <string name="quick_settings_smartbar_off">SmartBar vyp.</string>
+    <string name="quick_settings_fling">Fling</string>
+    <string name="quick_settings_fling_off">Fling vyp.</string>
+
+    <string name="quick_settings_expanded_desktop_label">Rozšírená obrazovka</string>
+    <string name="quick_settings_expanded_desktop">Rozšírená</string>
+    <string name="quick_settings_expanded_desktop_off">Normálna</string>
+    <string name="quick_settings_expanded_navigation_off">Skryť nav. panel</string>
+    <string name="quick_settings_expanded_statusbar_off">Skryť stav. riadok</string>
+
+    <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE ZAP.</string>
+    <string name="lte_off">LTE VYP.</string>
+
+    <string name="quick_settings_sync_label">Synchronizácia</string>
+
+    <string name="statusbar_items_title">Editácia ikon</string>
+
+    <!-- Strings for lockscreen shortcut hints -->
+    <string name="left_shortcut_hint">Potiahni vpravo pre %1$s</string>
+    <string name="right_shortcut_hint">Potiahni vľavo pre %1$s</string>
+    <string name="lockscreen_message">Kliknutím na ikonu vľavo alebo vpravo zmeniť zástupcu na obrazovke uzamknutia.</string>
+    <string name="lockscreen_default_target">Predvolené</string>
+    <string name="select_application">Vybrať aplikáciu</string>
+    <string name="lockscreen_choose_action_title">Vyberte akciu</string>
+    <string name="lockscreen_none_target">Žiadny</string>
+
+    <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Vyskakovacie oznámenia sú odložené o 1 minútu.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Vyskakujúce oznámenia sú odložené o <xliff:g id="number">%d</xliff:g> minút.</string>
+
+    <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Snímka obrazovky</string>
+    <string name="quick_settings_region_screenshot_label">Snímka časti obrazovky</string>
+
+    <string name="recents_free_ram">Voľnej pamäti</string>
+
+    <!-- Lockscreen QS Tile -->
+    <string name="quick_settings_lockscreen_label">Obrazovka uzamknutia</string>
+    <string name="quick_settings_lockscreen_label_enforced">Vynútená obrazovka uzamknutia</string>
+
+    <string name="quick_settings_usb_tether_label">USB zdieľanie</string>
+
+    <string name="qs_menu_item_columns">Stĺpcov na výšku</string>
+    <string name="qs_menu_item_columns_landscape">Stĺpcov na šírku</string>
+    <string name="qs_menu_item_rows">Riadkov na výšku</string>
+    <string name="qs_menu_item_rows_landscape">Riadkov na šírku</string>
+    <string name="qs_menu_item_reset">Resetovať</string>
+
+    <string name="qs_menu_item_titles">Skryť popisky</string>
+
+    <!-- data saver icon switch -->
+    <string name="status_bar_datasaver">Šetrenie dát</string>
+
+    <!-- Sim recents -->
+    <string name="recents_multiwin_warning">Viac-okenný režim je už aktívny.\nStačí kliknúť na aplikáciu, ak ju chcete ukotviť.</string>
+    <string name="recents_multiwin_nolastapp">Odstránili ste všetky nedávne aplikácie, prosím vyberte aplikáciu z plochy alebo menu.</string>
+</resources>
