@@ -850,8 +850,9 @@ public class UsbDeviceManager {
             Resources r = mContext.getResources();
 
             if (Settings.System.getInt(mContext.getContentResolver(),
-	                  Settings.System.MTP_DIRTY_HACK, 1) == 1) {
+                    Settings.System.MTP_DIRTY_HACK, 1) == 1) {
                 mUsbDataUnlocked = true;
+                setCurrentFunctions(UsbManager.USB_FUNCTION_MTP, mUsbDataUnlocked);
             }
 
             if (mConnected) {
