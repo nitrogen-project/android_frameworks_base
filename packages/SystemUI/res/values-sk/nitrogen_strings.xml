@@ -79,7 +79,7 @@
     <string name="quick_settings_screenshot_label">Snímka obrazovky</string>
     <string name="quick_settings_region_screenshot_label">Snímka časti obrazovky</string>
 
-    <string name="recents_free_ram">Voľnej pamäti</string>
+    <string name="recents_free_ram">Voľná pamäť:</string>
 
     <!-- Lockscreen QS Tile -->
     <string name="quick_settings_lockscreen_label">Obrazovka uzamknutia</string>
