@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2015 Nitrogen OS
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Reboot menu -->
+    <!-- label for item that reboots the phone in phone options dialog -->
+    <string name="global_action_reboot">Restartovat</string>
+    <!-- Button to reboot the phone, within the Reboot Options dialog -->
+    <string name="reboot_reboot">Restart</string>
+    <!-- Button to reboot the phone into recovery, within the Reboot Options dialog -->
+    <string name="reboot_recovery">Recovery</string>
+    <!-- Button to reboot the phone into bootloader, within the Reboot Options dialog -->
+    <string name="reboot_bootloader">Bootloader</string>
+    <!-- Button to reboot the phone into download, within the Reboot Options dialog -->
+    <string name="reboot_download">Režim stahování</string>
+    <!-- Button to soft reboot the device, within the Reboot Options dialog -->
+    <string name="reboot_soft">Restart rozhraní</string>
+    <!-- Title of dialog to confirm rebooting. -->
+    <string name="reboot_title">Restart</string>
+    <!-- Reboot Confirmation Dialog.  When the user chooses to reboot the device, there will
+         be a confirmation dialog.  This is the message. -->
+    <string name="reboot_confirm" product="tablet">Váš tablet se restartuje.</string>
+    <string name="reboot_confirm" product="default">Váš telefon se restartuje.</string>
+    <!-- Reboot Progress Dialog. This is shown if the user chooses to reboot the phone. -->
+    <string name="reboot_progress">Restartování\u2026</string>
+
+    <!-- kill app long press back -->
+    <string name="app_killed_message">Aplikace ukončení</string>
+
+    <!-- screenshot in the power menu -->
+    <string name="powermenu_screenshot">Snímek obrazovky</string>
+
+    <!-- Powermenu Torch -->
+    <string name="global_action_torch">Svítilna</string>
+
+    <string name="default_string">Předvolené</string>
+
+    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_fakePackageSignature">Náhrada podpisů aplikací</string>
+    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_fakePackageSignature">Umožňuje aplikaci tvářit se jako jiná aplikace. Škodlivé aplikace můžou získat přístup k datům. Použijte na vlastní nebezpečí.</string>
+
+    <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
+    <string name="system_error_vendorprint">Vendor image neodpovídá systému. Prosím napalte správnou verzi pro váš systém <xliff:g id="string">%s</xliff:g></string>
+
+    <!-- ADB over network notification -->
+    <string name="adb_net_active_notification_title">Ladění po síti je povoleno</string>
+    <!-- ADB over USB and network notification -->
+    <string name="adb_both_active_notification_title">Ladění po síti i USB jsou povolené</string>
+    <!-- ADB notification message-->
+    <string name="adb_active_generic_notification_message">Klikněte pro zakázání ladění.</string>
+
+    <string name="singlehandmode_click_hint_message">Kliknutím mimo obrazovku ukončete režim jedné ruky</string>
+    <string name="singlehandmode_slide_hint_message">Potáhněte palcem po navigačním panelu pro přepnutí mezi obyčejným a režimem jedné ruky</string>
+</resources>
