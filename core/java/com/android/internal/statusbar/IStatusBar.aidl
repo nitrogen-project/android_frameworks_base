@@ -98,6 +98,7 @@ oneway interface IStatusBar
     void startAssist(in Bundle args);
     void setAutoRotate(boolean enabled);
     void screenPinningStateChanged(boolean enabled);
+    void restartUI();
 
     /**
      * Notifies the status bar that a camera launch gesture has been detected.
