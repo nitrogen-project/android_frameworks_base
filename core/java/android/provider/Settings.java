@@ -3910,6 +3910,7 @@ public final class Settings {
          * @hide
          */
         public static final String MTP_DIRTY_HACK = "mtp_dirty_hack";
+        public static final String MTP_DIRTY_HACK_SAVE = "mtp_dirty_hack_save";
 
         /**
          * Which applications to enable heads up notifications for
@@ -4283,7 +4284,7 @@ public final class Settings {
          */
         public static final String WAKELOCK_BLOCKING_LIST = "wakelock_blocking_list";
 
-	/**
+        /**
          * show the membar in recents
          *  @hide
          */
