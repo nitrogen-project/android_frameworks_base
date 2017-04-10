@@ -85,8 +85,6 @@
     <string name="quick_settings_lockscreen_label">Экран блокировки</string>
     <string name="quick_settings_lockscreen_label_enforced">Экран блокировки принудительно</string>
 
-    <string name="quick_settings_usb_tether_label">USB-модем</string>
-
     <string name="qs_menu_item_columns">Столбцы в портрет.</string>
     <string name="qs_menu_item_columns_landscape">Столбцы в альбом.</string>
     <string name="qs_menu_item_rows">Строки в портрет.</string>

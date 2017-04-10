@@ -141,12 +141,6 @@
     <!-- Announcement made when lock screen changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_lock_screen_changed_on">Lock screen turned on.</string>
 
-    <string name="accessibility_quick_settings_usb_tether_off">USB tethering off</string>
-    <string name="accessibility_quick_settings_usb_tether_on">USB tethering on</string>
-    <string name="accessibility_quick_settings_usb_tether_changed_off">USB tethering turned off</string>
-    <string name="accessibility_quick_settings_usb_tether_changed_on">USB tethering turned on</string>
-    <string name="quick_settings_usb_tether_label">USB tethering</string>
-
     <string name="qs_menu_item_columns">Columns portrait</string>
     <string name="qs_menu_item_columns_landscape">Columns landscape</string>
     <string name="qs_menu_item_rows">Rows portrait</string>
