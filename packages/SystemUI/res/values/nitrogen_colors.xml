@@ -72,4 +72,7 @@
     <color name="qs_alarm_status_text_color">#64ffffff</color>
     <!-- QS edit page toolbar text color -->
     <color name="qs_edit_toolbar_text_color">#FFFFFF</color>
+
+    <!-- Separate QS text label tint from icon tint -->
+    <color name="qs_tile_label_tint_unavailable">@color/qs_tile_tint_unavailable</color>
 </resources>
