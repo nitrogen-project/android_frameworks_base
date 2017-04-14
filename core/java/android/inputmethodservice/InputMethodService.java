@@ -2082,7 +2082,7 @@ public class InputMethodService extends AbstractInputMethodService {
         }
             if (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP) {
                 mVolumeKeyCursorControl = Settings.System.getInt(getContentResolver(),
-                        Settings.System.VOLUME_KEY_CURSOR_CONTROL, 1);
+                        Settings.System.VOLUME_KEY_CURSOR_CONTROL, 0);
                 if (isInputViewShown() && (mVolumeKeyCursorControl != VOLUME_CURSOR_OFF)) {
                     sendDownUpKeyEvents((mVolumeKeyCursorControl == VOLUME_CURSOR_ON_REVERSE)
                             ? KeyEvent.KEYCODE_DPAD_RIGHT : KeyEvent.KEYCODE_DPAD_LEFT);
@@ -2149,6 +2149,15 @@ public class InputMethodService extends AbstractInputMethodService {
             if (event.isTracking() && !event.isCanceled()) {
                 return handleBack(true);
             }
+        }
+        if (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP
+                 || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+            mVolumeKeyCursorControl = Settings.System.getIntForUser(getContentResolver(),
+                    Settings.System.VOLUME_KEY_CURSOR_CONTROL, 0, UserHandle.USER_CURRENT_OR_SELF);
+            if (isInputViewShown() && (mVolumeKeyCursorControl != VOLUME_CURSOR_OFF)) {
+                return true;
+            }
+            return false;
         }
         return doMovementKey(keyCode, event, MOVEMENT_UP);
     }
