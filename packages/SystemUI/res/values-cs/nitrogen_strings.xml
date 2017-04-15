@@ -38,7 +38,7 @@
     <string name="quick_settings_volume_panel_label">Panel hlasitosti</string>
 
     <!-- Caffeine Tile -->
-    <string name="quick_settings_caffeine_label">Kofeín</string>
+    <string name="quick_settings_caffeine_label">Kofein</string>
 
     <!-- Navigation bar Tile -->
     <string name="quick_settings_navigation_bar">Navigační panel</string>
@@ -96,7 +96,7 @@
     <string name="qs_menu_item_titles">Skrýt popisky</string>
 
     <!-- data saver icon switch -->
-    <string name="status_bar_datasaver">Šetrení dat</string>
+    <string name="status_bar_datasaver">Šetření dat</string>
 
     <!-- Sim recents -->
     <string name="recents_multiwin_warning">Více-okenní režim je již aktívní.\nStačí kliknout na aplikaci, pokud ji chcete ukotvit.</string>
