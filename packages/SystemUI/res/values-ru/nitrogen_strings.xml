@@ -99,4 +99,9 @@
     <!-- Sim recents -->
     <string name="recents_multiwin_warning">Многооконный режим уже активен.\nПросто выберите приложение и нажмите на него.</string>
     <string name="recents_multiwin_nolastapp">Вы очистили недавние приложения, пожалуйста, выберите приложение на рабочем столе или меню.</string>
+
+    <!-- HW Keys Tile -->
+    <string name="accessibility_quick_settings_hwkeys_on">Кнопки вкл.</string>
+    <string name="accessibility_quick_settings_hwkeys_off">Кнопки выкл.</string>
+    <string name="quick_settings_hwkeys_label">Аппарат. кнопки</string>
 </resources>
