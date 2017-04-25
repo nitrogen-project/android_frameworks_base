@@ -148,8 +148,10 @@ ifndef HWUI_COMPILE_SYMBOLS
 endif
 
 ifdef HWUI_COMPILE_FOR_PERF
-    # TODO: Non-arm?
-    hwui_cflags += -fno-omit-frame-pointer -marm -mapcs
+    hwui_cflags += -fno-omit-frame-pointer
+    ifeq ($(TARGET_ARCH),arm%)
+        hwui_cflags += -marm
+    endif
 endif
 
 # This has to be lazy-resolved because it depends on the LOCAL_MODULE_CLASS
@@ -167,7 +169,7 @@ hwui_c_includes += \
 ifneq (false,$(ANDROID_ENABLE_RENDERSCRIPT))
     hwui_cflags += -DANDROID_ENABLE_RENDERSCRIPT
     hwui_c_includes += \
-        $(call intermediates-dir-for,STATIC_LIBRARIES,libRS,TARGET,) \
+        $(call intermediates-dir-for,STATIC_LIBRARIES,TARGET,) \
         frameworks/rs/cpp \
         frameworks/rs
 endif
