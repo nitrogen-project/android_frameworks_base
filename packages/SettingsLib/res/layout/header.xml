@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/nos_header"
         android:layout_width="match_parent"
-        android:layout_height="175dp"
-        android:scaleType="fitXY"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/nos_logo" />
 </LinearLayout>
