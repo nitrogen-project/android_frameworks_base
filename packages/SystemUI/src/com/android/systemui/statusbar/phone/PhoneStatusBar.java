@@ -3044,8 +3044,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         // Panels are not available in setup
         if (!mUserSetup) return;
 
-        final boolean isRotated = mDisplay.getRotation() == Surface.ROTATION_90
-                || mDisplay.getRotation() == Surface.ROTATION_270;
+        final boolean needsAxisInversion = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_needsFingerprintAxisInversion);
+        final boolean isRotated = (mDisplay.getRotation() == Surface.ROTATION_90
+                || mDisplay.getRotation() == Surface.ROTATION_270) && needsAxisInversion;
         if (key ==  (!isRotated ? KeyEvent.KEYCODE_SYSTEM_NAVIGATION_UP
                 : KeyEvent.KEYCODE_SYSTEM_NAVIGATION_DOWN)) {
             MetricsLogger.action(mContext, !isRotated ? MetricsEvent.ACTION_SYSTEM_NAVIGATION_KEY_UP
