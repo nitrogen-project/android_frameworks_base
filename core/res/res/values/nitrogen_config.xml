@@ -76,4 +76,7 @@
 
     <!-- The duration (in milliseconds) of recent app screen exit animation. -->
     <integer name="config_recentExitDur">450</integer>
+
+    <!-- Whether the device needs axis inversion for the fingerprint notification panel gesture when rotated -->
+    <bool name="config_needsFingerprintAxisInversion">false</bool>
 </resources>
