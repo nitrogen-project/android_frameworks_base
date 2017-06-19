@@ -18,6 +18,4 @@
     <dimen name="floating_action_button_translation_z">12dp</dimen>
     <dimen name="floating_action_button_margin_side">54dp</dimen>
     <dimen name="floating_action_button_margin_bottom">54dp</dimen>
-
-    <dimen name="recents_task_view_header_lock_button_padding">48dp</dimen>
 </resources>
