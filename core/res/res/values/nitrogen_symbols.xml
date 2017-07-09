@@ -73,4 +73,7 @@
 
   <!-- Emergency button in power menu -->
   <java-symbol type="bool" name="config_showEmergencyButtonInPowerMenu" />
+
+  <!-- sensor block per-package -->
+  <java-symbol type="array" name="config_blockPackagesSensorDrain" />
 </resources>
