@@ -42,9 +42,9 @@
      <string name="quick_settings_volume_panel_label">音量</string>
 
     <!-- Caffeine QS Tile -->
-    <string name="quick_settings_caffeine_label">Caffeine</string>
-    <string name="accessibility_quick_settings_caffeine_off">Caffeine关闭</string>
-    <string name="accessibility_quick_settings_caffeine_on">Caffeine开启</string>
+    <string name="quick_settings_caffeine_label">保持亮屏</string>
+    <string name="accessibility_quick_settings_caffeine_off">保持亮屏关闭</string>
+    <string name="accessibility_quick_settings_caffeine_on">保持亮屏开启</string>
 
     <!-- Nfc qs tile -->
     <string name="quick_settings_nfc_label">NFC</string>
@@ -59,10 +59,10 @@
 
     <!-- Navigation bar Tile -->
     <string name="quick_settings_navigation_bar">导航栏</string>
-    <string name="quick_settings_smartbar">SmartBar</string>
-    <string name="quick_settings_smartbar_off">SmartBar关闭</string>
+    <string name="quick_settings_smartbar">Smart bar</string>
+    <string name="quick_settings_smartbar_off">关闭 Smart bar</string>
     <string name="quick_settings_fling">Fling</string>
-    <string name="quick_settings_fling_off">Fling关闭</string>
+    <string name="quick_settings_fling_off">Fling 关闭</string>
 
     <string name="quick_settings_expanded_desktop_label">扩展桌面</string>
     <string name="quick_settings_expanded_desktop">扩展</string>
@@ -115,12 +115,6 @@
     <!-- Announcement made when lock screen changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_lock_screen_changed_on">锁屏已开启。</string>
 
-    <string name="accessibility_quick_settings_usb_tether_off">USB 网络共享关闭</string>
-    <string name="accessibility_quick_settings_usb_tether_on">USB 网络共享开启</string>
-    <string name="accessibility_quick_settings_usb_tether_changed_off">USB 网络共享已关闭</string>
-    <string name="accessibility_quick_settings_usb_tether_changed_on">USB 网络共享已开启</string>
-    <string name="quick_settings_usb_tether_label">USB 网络共享</string>
-
     <string name="qs_menu_item_columns">每行显示几个</string>
     <string name="qs_menu_item_columns_landscape">横屏下每行显示几个</string>
     <string name="qs_menu_item_rows">每页显示几列</string>
@@ -140,4 +134,33 @@
 
     <!-- volte icon switch -->
     <string name="status_bar_volte">VOLTE</string>
+
+    <!-- vpn icon switch -->
+    <string name="status_bar_vpn">VPN</string>
+    <!-- data saver icon switch -->
+    <string name="status_bar_datasaver">流量节省程序</string>
+
+    <!-- Sim recents -->
+    <string name="recents_multiwin_warning">多会话已启用。\n请选择你想停靠的应用</string>
+    <string name="recents_multiwin_nolastapp">您已移除所有最近使用，请从启动器或抽屉选择应用</string>
+
+    <!-- HW Keys Tile -->
+    <string name="accessibility_quick_settings_hwkeys_on">实体按键开启</string>
+    <string name="accessibility_quick_settings_hwkeys_off">实体按键关闭</string>
+    <string name="quick_settings_hwkeys_label">实体按键</string>
+
+    <!-- Music QS Tile -->
+    <string name="quick_settings_music_label">音乐</string>
+    <string name="quick_settings_music_play">播放</string>
+    <string name="quick_settings_music_pause">暂停</string>
+
+    <!-- Heads Up QS Tile -->
+    <string name="quick_settings_heads_up_label">浮动通知</string>
+    <string name="accessibility_quick_settings_heads_up_off">浮动通知已关闭</string>
+    <string name="accessibility_quick_settings_heads_up_on">浮动通知已开启</string>
+    <string name="accessibility_quick_settings_heads_up_changed_off">浮动通知已关闭</string>
+    <string name="accessibility_quick_settings_heads_up_changed_on">浮动通知已开启</string>
+
+    <!-- IME QS Tile -->
+    <string name="quick_settings_ime_tile_label">输入法</string>
 </resources>
