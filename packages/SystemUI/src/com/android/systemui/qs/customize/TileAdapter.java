@@ -389,6 +389,15 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
         holder.mTileView.setFocusable(true);
         holder.mTileView.setFocusableInTouchMode(true);
 
+        if (!(mAccessibilityAction != ACTION_NONE && selectable)) {
+            holder.mTileView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    move(holder.getLayoutPosition(), mEditIndex);
+                }
+            });
+        }
+
         if (mAccessibilityAction != ACTION_NONE) {
             holder.mTileView.setClickable(selectable);
             holder.mTileView.setFocusable(selectable);
