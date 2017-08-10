@@ -65,4 +65,7 @@
 
     <string name="singlehandmode_click_hint_message">Коснитесь снаружи экрана для выхода из режима одной руки</string>
     <string name="singlehandmode_slide_hint_message">Проведите пальцем по панели навигации для переключения между обычным режимом и режимом одной руки</string>
+
+    <!-- Pocket Lock -->
+    <string name="pocket_lock_message_long_press">Удерживайте кнопку питания для отключения</string>
 </resources>
