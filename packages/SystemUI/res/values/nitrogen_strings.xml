@@ -26,4 +26,5 @@
     <bool name="config_audioPanelOnLeftSide">false</bool>
 
     <string name="statusbar_items_title">Statusbar icon</string>
+    <string name="global_action_restart_advanced">Advanced reboot</string>
 </resources>
