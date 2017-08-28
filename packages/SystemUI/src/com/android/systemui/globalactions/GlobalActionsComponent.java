@@ -122,4 +122,12 @@ public class GlobalActionsComponent extends CoreStartable
         } catch (RemoteException e) {
         }
     }
+
+    @Override
+    public void advancedReboot(String mode) {
+        try {
+            mBarService.advancedReboot(mode);
+        } catch (RemoteException e) {
+        }
+    }
 }
