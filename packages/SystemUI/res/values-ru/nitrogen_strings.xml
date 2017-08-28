@@ -22,4 +22,6 @@
     <string name="quick_settings_sound_ring">Звонок</string>
     <string name="quick_settings_sound_vibrate">Вибрация</string>
     <string name="quick_settings_sound_dnd">Не беспокоить</string>
+
+    <string name="global_action_restart_advanced">Расшир. перезагрузка</string>
 </resources>
