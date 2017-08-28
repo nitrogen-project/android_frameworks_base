@@ -24,4 +24,6 @@
 
     <!-- Caffeine Tile -->
     <string name="quick_settings_caffeine_label">Кофеин</string>
+
+    <string name="global_action_restart_advanced">Расшир. перезагрузка</string>
 </resources>
