@@ -3874,6 +3874,14 @@ public final class Settings {
         };
 
         /**
+         * Whether to use the MTP by default after connecting to PC
+         * @hide
+         */
+        public static final String MTP_DIRTY_HACK = "mtp_dirty_hack";
+        /** @hide */
+        public static final String MTP_DIRTY_HACK_SAVE = "mtp_dirty_hack_save";
+
+        /**
          * Setting to determine whether or not to show the battery percentage in the status bar.
          *    0 - Don't show percentage
          *    1 - Show percentage

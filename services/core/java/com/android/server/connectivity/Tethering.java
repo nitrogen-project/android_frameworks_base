@@ -37,6 +37,7 @@ import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothProfile.ServiceListener;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -946,6 +947,12 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
 
         synchronized (mPublicSync) {
             if (enable) {
+                int currentState = Settings.System.getInt(mContext.getContentResolver(),
+                       Settings.System.MTP_DIRTY_HACK, 1);
+                Settings.System.putInt(mContext.getContentResolver(),
+                       Settings.System.MTP_DIRTY_HACK_SAVE, currentState);
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.MTP_DIRTY_HACK, 0);
                 if (mRndisEnabled) {
                     final long ident = Binder.clearCallingIdentity();
                     try {
@@ -959,6 +966,10 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                     usbManager.setCurrentFunction(UsbManager.USB_FUNCTION_RNDIS, false);
                 }
             } else {
+                int oldState = Settings.System.getInt(mContext.getContentResolver(),
+                       Settings.System.MTP_DIRTY_HACK_SAVE, 1);
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.MTP_DIRTY_HACK, oldState);
                 final long ident = Binder.clearCallingIdentity();
                 try {
                     tetherMatchingInterfaces(IControlsTethering.STATE_AVAILABLE,
