@@ -4058,6 +4058,12 @@ public final class Settings {
                 "double_tap_sleep_lockscreen";
 
         /**
+         *  Enable statusbar double tap gesture on to put device to sleep
+         * @hide
+         */
+        public static final String DOUBLE_TAP_SLEEP_GESTURE = "double_tap_sleep_gesture";
+
+        /**
          * One of the sip call options: Only if destination is a SIP address.
          * @hide
          */
