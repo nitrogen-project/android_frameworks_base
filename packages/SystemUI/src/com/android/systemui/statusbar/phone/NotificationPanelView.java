@@ -249,8 +249,9 @@ public class NotificationPanelView extends PanelView implements
     private StatusBarKeyguardViewManager mStatusBarKeyguardViewManager;
     private boolean mUserSetupComplete;
 
-    private GestureDetector mLockscreenDoubleTapToSleep;
+    private GestureDetector mDoubleTapToSleepGesture;
     private boolean mIsLockscreenDoubleTapEnabled;
+    private int mStatusBarHeaderHeight;
 
     private Handler mHandler = new Handler();
     private SettingsObserver mSettingsObserver;
@@ -264,7 +265,7 @@ public class NotificationPanelView extends PanelView implements
         mFalsingManager = FalsingManager.getInstance(context);
         mSettingsObserver = new SettingsObserver(mHandler);
         mPowerManager = context.getSystemService(PowerManager.class);
-        mLockscreenDoubleTapToSleep = new GestureDetector(context,
+        mDoubleTapToSleepGesture = new GestureDetector(context,
                 new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDoubleTap(MotionEvent e) {
@@ -336,6 +337,8 @@ public class NotificationPanelView extends PanelView implements
                 R.dimen.max_notification_fadeout_height);
         mIndicationBottomPadding = getResources().getDimensionPixelSize(
                 R.dimen.keyguard_indication_bottom_padding);
+        mStatusBarHeaderHeight = getResources().getDimensionPixelSize(
+                R.dimen.status_bar_height);
     }
 
     public void updateResources() {
@@ -860,9 +863,11 @@ public class NotificationPanelView extends PanelView implements
         if (mBlockTouches || (mQs != null && mQs.isCustomizing())) {
             return false;
         }
-        if (mIsLockscreenDoubleTapEnabled
-                && mStatusBarState == StatusBarState.KEYGUARD) {
-            mLockscreenDoubleTapToSleep.onTouchEvent(event);
+        if ((mIsLockscreenDoubleTapEnabled
+                && mStatusBarState == StatusBarState.KEYGUARD) ||
+                (!mQsExpanded && mDoubleTapToSleepEnabled
+                && event.getY() < mStatusBarHeaderHeight)) {
+            mDoubleTapToSleepGesture.onTouchEvent(event);
         }
         initDownStates(event);
         if (mListenForHeadsUp && !mHeadsUpTouchHelper.isTrackingHeadsUp()
@@ -2758,5 +2763,9 @@ public class NotificationPanelView extends PanelView implements
 
     public LockIcon getLockIcon() {
         return mKeyguardBottomArea.getLockIcon();
+    }
+
+    public void updateDoubleTapToSleep(boolean doubleTapToSleepEnabled) {
+        mDoubleTapToSleepEnabled = doubleTapToSleepEnabled;
     }
 }
