@@ -481,4 +481,16 @@ public class NotificationShadeWindowViewController {
                 mTempLocation[1] + view.getHeight());
         return mTempRect.contains(x, y);
     }
+
+    public void updateSettings() {
+        boolean doubleTapToSleepEnabled = Settings.System.getIntForUser(
+                mView.getContext().getContentResolver(), Settings.System.DOUBLE_TAP_SLEEP_GESTURE, 1,
+                UserHandle.USER_CURRENT) == 1;
+        if (mNotificationPanelViewController != null) {
+            mNotificationPanelViewController.updateDoubleTapToSleep(doubleTapToSleepEnabled);
+        }
+        if (mDragDownHelper != null) {
+            mDragDownHelper.updateDoubleTapToSleep(doubleTapToSleepEnabled);
+        }
+    }
 }
