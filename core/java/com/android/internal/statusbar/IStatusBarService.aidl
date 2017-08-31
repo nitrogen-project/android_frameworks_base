@@ -230,4 +230,9 @@ interface IStatusBarService
 
     /** Shows rear display educational dialog */
     void showRearDisplayDialog(int currentBaseState);
+
+    /**
+     * Nitrogen
+     */
+    void toggleCameraFlash();
 }
