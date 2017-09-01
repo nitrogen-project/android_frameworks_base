@@ -99,4 +99,8 @@
     <!-- Smart Pixels QS Tile -->
     <string name="quick_settings_smart_pixels">Smart Pixels</string>
     <string name="quick_settings_smart_pixels_on_power_save">Автомат. Smart Pixels</string>
+
+    <!-- Partial screenshot -->
+    <string name="screenshot_abort_title">Снимок экрана не был снят</string>
+    <string name="screenshot_abort_text">Операция отменена.</string>
 </resources>
