@@ -81,6 +81,7 @@ import android.util.IndentingPrintWriter;
 import android.util.Log;
 import android.util.MathUtils;
 import android.view.InputDevice;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -228,6 +229,8 @@ import com.android.systemui.util.LargeScreenUtils;
 import com.android.systemui.util.Utils;
 import com.android.systemui.util.time.SystemClock;
 import com.android.wm.shell.animation.FlingAnimationUtils;
+
+import com.android.internal.util.nitrogen.NitrogenUtils;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -408,6 +411,9 @@ public final class NotificationPanelViewController implements Dumpable {
     /** Whether the ongoing gesture might both trigger the expansion in both the view and QS. */
     private boolean mConflictingQsExpansionGesture;
     private boolean mPanelExpanded;
+
+    private GestureDetector mLockscreenDoubleTapToSleep;
+    private boolean mIsLockscreenDoubleTapEnabled;
 
     /**
      * Indicates that QS is in expanded state which can happen by:
@@ -962,6 +968,15 @@ public final class NotificationPanelViewController implements Dumpable {
         mQsFrameTranslateController = qsFrameTranslateController;
         updateUserSwitcherFlags();
         mKeyguardBottomAreaViewModel = keyguardBottomAreaViewModel;
+        mLockscreenDoubleTapToSleep = new GestureDetector(context,
+                new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                NitrogenUtils.switchScreenOff(context);
+                return true;
+            }
+        });
+
         mKeyguardBottomAreaInteractor = keyguardBottomAreaInteractor;
         onFinishInflate();
         keyguardUnlockAnimationController.addKeyguardUnlockAnimationListener(
@@ -4295,6 +4310,10 @@ public final class NotificationPanelViewController implements Dumpable {
         }
     }
 
+    public void setLockscreenDoubleTapToSleep(boolean isDoubleTapEnabled) {
+        mIsLockscreenDoubleTapEnabled = isDoubleTapEnabled
+    }
+
     public void dozeTimeTick() {
         mLockIconViewController.dozeTimeTick();
         mKeyguardStatusViewController.dozeTimeTick();
@@ -6120,6 +6139,12 @@ public final class NotificationPanelViewController implements Dumpable {
             if (mLastEventSynthesizedDown && event.getAction() == MotionEvent.ACTION_UP) {
                 expand(true /* animate */);
             }
+
+            if (mIsLockscreenDoubleTapEnabled && !mPulsing && !mDozing
+                    && mStatusBarState == StatusBarState.KEYGUARD) {
+                mLockscreenDoubleTapToSleep.onTouchEvent(event);
+            }
+
             initDownStates(event);
 
             // If pulse is expanding already, let's give it the touch. There are situations
