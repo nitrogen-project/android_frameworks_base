@@ -4051,6 +4051,13 @@ public final class Settings {
         public static final Validator SIP_ALWAYS_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Double tap on lockscreen to sleep
+         * @hide
+         */
+        public static final String DOUBLE_TAP_SLEEP_LOCKSCREEN =
+                "double_tap_sleep_lockscreen";
+
+        /**
          * One of the sip call options: Only if destination is a SIP address.
          * @hide
          */
