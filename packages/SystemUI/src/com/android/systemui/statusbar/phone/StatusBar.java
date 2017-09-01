@@ -4244,6 +4244,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.HEADS_UP_STOPLIST_VALUES), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HEADS_UP_BLACKLIST_VALUES), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN),
+                    false, this, UserHandle.USER_ALL);
         }
          @Override
         public void onChange(boolean selfChange, Uri uri) {
@@ -4252,6 +4255,7 @@ public class StatusBar extends SystemUI implements DemoMode,
          public void update() {
             setHeadsUpStoplist();
             setHeadsUpBlacklist();
+            setLockscreenDoubleTapToSleep();
         }
     }
 
@@ -4263,6 +4267,12 @@ public class StatusBar extends SystemUI implements DemoMode,
     private void setHeadsUpBlacklist() {
         if (mNotificationInterruptStateProvider != null)
             mNotificationInterruptStateProvider.setHeadsUpBlacklist();
+    }
+
+    private void setLockscreenDoubleTapToSleep() {
+        if (mNotificationPanelViewController != null) {
+            mNotificationPanelViewController.setLockscreenDoubleTapToSleep();
+        }
     }
 
     public int getWakefulnessState() {
