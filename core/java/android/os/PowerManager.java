@@ -1512,4 +1512,17 @@ public final class PowerManager {
         return mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_buttonBrightnessSettingDefault);
     }
+
+    /**
+     * @hide
+     */
+    public String getSeenWakeLocks() {
+        try {
+            if (mService != null) {
+                return mService.getSeenWakeLocks();
+            }
+        } catch (RemoteException e) {
+        }
+        return null;
+    }
 }
