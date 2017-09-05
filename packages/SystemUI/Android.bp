@@ -73,6 +73,10 @@ android_library {
     ],
     manifest: "AndroidManifest.xml",
 
+    libs: [
+        "telephony-common",
+    ],
+
     kotlincflags: ["-Xjvm-default=enable"],
 
     plugins: ["dagger2-compiler-2.19"],
@@ -169,6 +173,10 @@ android_app {
     optimize: {
         proguard_flags_files: ["proguard.flags"],
     },
+
+    libs: [
+        "telephony-common",
+    ],
 
     kotlincflags: ["-Xjvm-default=enable"],
 
