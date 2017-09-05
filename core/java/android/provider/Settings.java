@@ -4163,6 +4163,18 @@ public final class Settings {
         public static final String POWERMENU_LOCKDOWN = "powermenu_lockdown";
 
         /**
+         * show clear all recents button
+         * @hide
+         */
+        public static final String SHOW_CLEAR_ALL_RECENTS = "show_clear_all_recents";
+
+        /**
+         * location of the clear all rectents button
+         * @hide
+         */
+        public static final String  RECENTS_CLEAR_ALL_LOCATION = "recents_clear_all_location";
+
+        /**
          * Whether to display airplane in the power menu
          *
          * @hide
