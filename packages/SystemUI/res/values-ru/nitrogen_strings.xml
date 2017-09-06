@@ -31,4 +31,9 @@
     <string name="qs_data_switch_label">Переключить SIM на</string>
     <string name="qs_data_switch_changed_1">Используется SIM 1 для передачи данных</string>
     <string name="qs_data_switch_changed_2">Используется SIM 2 для передачи данных</string>
+
+    <!-- Caffeine Tile -->
+    <string name="quick_settings_caffeine_label">Кофеин</string>
+    <string name="accessibility_quick_settings_caffeine_off">Кофеин выкл</string>
+    <string name="accessibility_quick_settings_caffeine_on">Кофеин вкл</string>
 </resources>
