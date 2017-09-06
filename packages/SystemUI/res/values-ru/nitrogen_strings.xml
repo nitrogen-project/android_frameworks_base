@@ -28,6 +28,9 @@
     <string name="keyguard_indication_dash_charging_time">Dash зарядка (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> до полной)</string>
     <string name="keyguard_plugged_in_dash_charging">Dash зарядка</string>
 
+    <!-- Caffeine Tile -->
+    <string name="quick_settings_caffeine_label">Кофеин</string>
+
     <string name="statusbar_items_title">Редактирование иконок</string>
 
     <string name="lockscreen_default">По умолчанию</string>
