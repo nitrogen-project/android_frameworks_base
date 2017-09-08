@@ -32,4 +32,6 @@
     <!-- Reboot/Recovery QS Tile -->
     <string name="quick_settings_reboot_label">Reboot</string>
     <string name="quick_settings_reboot_recovery_label">Recovery</string>
+
+    <string name="statusbar_items_title">Statusbar icon</string>
 </resources>
