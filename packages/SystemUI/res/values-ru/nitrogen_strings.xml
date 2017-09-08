@@ -21,4 +21,6 @@
     <string name="qs_lte_label">LTE</string>
     <string name="lte_on">LTE ВКЛ</string>
     <string name="lte_off">LTE ВЫКЛ.</string>
+
+    <string name="statusbar_items_title">Редактирование иконок</string>
 </resources>
