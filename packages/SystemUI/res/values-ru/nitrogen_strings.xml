@@ -24,4 +24,6 @@
     <string name="quick_settings_sound_dnd">Не беспокоить</string>
 
     <string name="global_action_restart_advanced">Расшир. перезагрузка</string>
+
+    <string name="statusbar_items_title">Редактирование иконок</string>
 </resources>
