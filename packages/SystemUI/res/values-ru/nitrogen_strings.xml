@@ -29,4 +29,6 @@
     <string name="quick_settings_sound_ring">Звонок</string>
     <string name="quick_settings_sound_vibrate">Вибрация</string>
     <string name="quick_settings_sound_dnd">Не беспокоить</string>
+
+    <string name="statusbar_items_title">Редактирование иконок</string>
 </resources>
