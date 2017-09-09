@@ -3889,6 +3889,24 @@ public final class Settings {
         };
 
         /**
+         * Setting to determine whether or not to show the battery percentage in the status bar.
+         *    0 - Don't show percentage
+         *    1 - Show percentage
+         * @hide
+         */
+        public static final String SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
+
+        /** @hide */
+        private static final Validator SHOW_BATTERY_PERCENT_VALIDATOR = sBooleanValidator;
+
+        /**
+         * IMPORTANT: If you add a new public settings you also have to add it to
+         * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
+         * it to PRIVATE_SETTINGS below. Also add a validator that can validate
+         * the setting value. See an example above.
+         */
+
+        /**
          * Whether to use the MTP by default after connecting to PC
          * @hide
          */
@@ -3978,24 +3996,6 @@ public final class Settings {
          * @hide
          */
         public static final String DOUBLE_TAP_SLEEP_NAVBAR = "double_tap_sleep_navbar";
-
-        /**
-         * Setting to determine whether or not to show the battery percentage in the status bar.
-         *    0 - Don't show percentage
-         *    1 - Show percentage
-         * @hide
-         */
-        public static final String SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
-
-        /** @hide */
-        private static final Validator SHOW_BATTERY_PERCENT_VALIDATOR = sBooleanValidator;
-
-        /**
-         * IMPORTANT: If you add a new public settings you also have to add it to
-         * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
-         * it to PRIVATE_SETTINGS below. Also add a validator that can validate
-         * the setting value. See an example above.
-         */
 
         /**
          * Change volume up and down handlign based on rotation
