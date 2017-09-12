@@ -37,6 +37,10 @@
     <string name="quick_settings_reboot_label">Перезагрузка</string>
     <string name="quick_settings_reboot_recovery_label">В рекавери</string>
 
+    <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Снимок экрана</string>
+    <string name="quick_settings_region_screenshot_label">Снимок области</string>
+
     <string name="statusbar_items_title">Редактирование иконок</string>
 
     <string name="lockscreen_default">По умолчанию</string>
