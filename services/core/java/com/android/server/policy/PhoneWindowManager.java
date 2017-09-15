@@ -351,6 +351,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private static final int KEY_ACTION_SLEEP = 7;
     private static final int KEY_ACTION_LAST_APP = 8;
     private static final int KEY_ACTION_SPLIT_SCREEN = 9;
+    private static final int KEY_ACTION_SCREENSHOT = 10;
+    private static final int KEY_ACTION_PARTIAL_SCREENSHOT = 11;
+    private static final int KEY_ACTION_PIP = 12;
 
     // Masks for checking presence of hardware keys.
     // Must match values in core/res/res/values/config.xml
@@ -1981,6 +1984,15 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             case KEY_ACTION_SPLIT_SCREEN:
                 toggleSplitScreen();
                 break;
+            case KEY_ACTION_SCREENSHOT:
+                NitrogenUtils.takeScreenshot(true);
+                break;
+            case KEY_ACTION_PARTIAL_SCREENSHOT:
+                NitrogenUtils.takeScreenshot(false);
+                break;
+            case KEY_ACTION_PIP:
+                NitrogenUtils.sendKeycode(171);
+                break;
             default:
                 break;
          }
@@ -2340,14 +2352,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mLongPressOnHomeBehavior = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_longPressOnHomeBehavior);
         if (mLongPressOnHomeBehavior < KEY_ACTION_NOTHING ||
-                mLongPressOnHomeBehavior > KEY_ACTION_SLEEP) {
+                mLongPressOnHomeBehavior > KEY_ACTION_PIP) {
             mLongPressOnHomeBehavior = KEY_ACTION_NOTHING;
         }
 
         mDoubleTapOnHomeBehavior = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_doubleTapOnHomeBehavior);
         if (mDoubleTapOnHomeBehavior < KEY_ACTION_NOTHING ||
-                mDoubleTapOnHomeBehavior > KEY_ACTION_SLEEP) {
+                mDoubleTapOnHomeBehavior > KEY_ACTION_PIP) {
             mDoubleTapOnHomeBehavior = KEY_ACTION_NOTHING;
         }
 
