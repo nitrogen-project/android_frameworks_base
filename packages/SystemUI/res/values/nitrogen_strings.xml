@@ -44,4 +44,7 @@
 
     <!-- Content description of the data connection type HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_data_connection_HP">HSPA+</string>
+
+    <!-- volte icon switch -->
+    <string name="status_bar_volte">VOLTE</string>
 </resources>
