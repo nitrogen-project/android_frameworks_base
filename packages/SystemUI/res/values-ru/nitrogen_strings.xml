@@ -36,6 +36,6 @@
     <string name="statusbar_items_title">Редактирование иконок</string>
 
     <!-- Screenshot QS tile -->
-    <string name="quick_settings_screenshot_label">Снимок экрана</string>
-    <string name="quick_settings_region_screenshot_label">Снимок области</string>
+    <string name="quick_settings_screenshot_label">Скриншот</string>
+    <string name="quick_settings_region_screenshot_label">Скриншот области</string>
 </resources>
