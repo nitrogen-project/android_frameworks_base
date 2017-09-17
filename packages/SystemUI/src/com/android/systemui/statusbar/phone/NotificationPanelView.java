@@ -23,13 +23,20 @@ import android.animation.ValueAnimator;
 import android.app.ActivityManager;
 import android.app.Fragment;
 import android.app.StatusBarManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.PowerManager;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.FloatProperty;
 import android.util.MathUtils;
@@ -181,6 +188,7 @@ public class NotificationPanelView extends PanelView implements
     private boolean mTwoFingerQsExpandPossible;
 
     private boolean mOneFingerQuickSettingsIntercept;
+    private int mQsSmartPullDown;
 
     /**
      * If we are in a panel collapsing motion, we reset scrollY of our scroll view but still
@@ -234,6 +242,9 @@ public class NotificationPanelView extends PanelView implements
     private boolean mNoVisibleNotifications = true;
     private ValueAnimator mDarkAnimator;
 
+    private Handler mHandler = new Handler();
+    private SettingsObserver mSettingsObserver;
+
     private GestureDetector mDoubleTapToSleepGesture;
     private boolean mIsLockscreenDoubleTapEnabled;
 
@@ -243,6 +254,7 @@ public class NotificationPanelView extends PanelView implements
         super(context, attrs);
         setWillNotDraw(!DEBUG);
         mFalsingManager = FalsingManager.getInstance(context);
+        mSettingsObserver = new SettingsObserver(mHandler);
         mQsOverscrollExpansionEnabled =
                 getResources().getBoolean(R.bool.config_enableQuickSettingsOverscrollExpansion);
 
@@ -286,12 +298,14 @@ public class NotificationPanelView extends PanelView implements
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+        mSettingsObserver.observe();
         FragmentHostManager.get(this).addTagListener(QS.TAG, mFragmentListener);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        mSettingsObserver.unobserve();
         FragmentHostManager.get(this).removeTagListener(QS.TAG, mFragmentListener);
     }
 
@@ -912,6 +926,12 @@ public class NotificationPanelView extends PanelView implements
                 showQsOverride = isLayoutRtl() ? x < region : w - region < x;
         }
         showQsOverride &= mStatusBarState == StatusBarState.SHADE;
+
+        if (mQsSmartPullDown == 1 && !mStatusBar.hasActiveClearableNotificationsQS()
+                || mQsSmartPullDown == 2 && !mStatusBar.hasActiveOngoingNotifications()
+                || mQsSmartPullDown == 3 && !mStatusBar.hasActiveVisibleNotifications()) {
+                showQsOverride = true;
+        }
 
         return showQsOverride || twoFingerDrag || stylusButtonClickDrag || mouseButtonClickDrag;
     }
@@ -2509,6 +2529,40 @@ public class NotificationPanelView extends PanelView implements
 
     public boolean hideStatusBarIconsWhenExpanded() {
         return !isFullWidth() || !mShowIconsWhenExpanded;
+    }
+
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_SMART_PULLDOWN), false, this, UserHandle.USER_ALL);
+            update();
+        }
+
+        void unobserve() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.unregisterContentObserver(this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            update();
+        }
+
+        public void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+            mQsSmartPullDown = Settings.System.getIntForUser(resolver,
+                    Settings.System.QS_SMART_PULLDOWN, 0, UserHandle.USER_CURRENT);
+        }
     }
 
     private final FragmentListener mFragmentListener = new FragmentListener() {
