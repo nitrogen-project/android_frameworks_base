@@ -49,4 +49,5 @@
     <string name="qs_menu_item_columns">Столбцы</string>
     <string name="qs_menu_item_columns_landscape">Столбцы в ландш.</string>
     <string name="qs_menu_item_reset">Сброс</string>
+    <string name="qs_menu_item_titles">Отображать подписи</string>
 </resources>
