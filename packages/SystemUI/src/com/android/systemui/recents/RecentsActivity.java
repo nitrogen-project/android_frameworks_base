@@ -392,6 +392,10 @@ public class RecentsActivity extends Activity implements ViewTreeObserver.OnPreD
 
         // Notify of the next draw
         mRecentsView.getViewTreeObserver().addOnPreDrawListener(mRecentsDrawnEventListener);
+
+        if (isInMultiWindowMode()) {
+            reloadTaskStack(true /* isInMultiWindowMode */, false /* sendConfigChangedEvent */);
+        }
     }
 
     @Override
