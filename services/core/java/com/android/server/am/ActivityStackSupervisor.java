@@ -4612,6 +4612,7 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
                             }
                             getStatusBarService().disable(flags, mToken,
                                     mService.mContext.getPackageName());
+                            getStatusBarService().screenPinningStateChanged(true);
                         }
                         mWindowManager.disableKeyguard(mToken, LOCK_TASK_TAG);
                         if (getDevicePolicyManager() != null) {
@@ -4628,6 +4629,7 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
                         if (getStatusBarService() != null) {
                             getStatusBarService().disable(StatusBarManager.DISABLE_NONE, mToken,
                                     mService.mContext.getPackageName());
+                            getStatusBarService().screenPinningStateChanged(false);
                         }
                         mWindowManager.reenableKeyguard(mToken);
                         if (getDevicePolicyManager() != null) {
