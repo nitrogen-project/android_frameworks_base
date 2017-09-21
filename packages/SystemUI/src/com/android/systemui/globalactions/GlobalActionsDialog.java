@@ -559,12 +559,21 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
 
         @Override
         public void onPress() {
+            /* wait for the dialog box to close */
+            try {
+                 Thread.sleep(1000); //1s
+            } catch (InterruptedException ie) {}
             NitrogenUtils.takeScreenshot(true);
         }
 
 
         @Override
         public boolean onLongPress() {
+            mHandler.sendEmptyMessage(MESSAGE_DISMISS);
+            /* wait for the dialog box to close */
+            try {
+                 Thread.sleep(1000); //1s
+            } catch (InterruptedException ie) {}
             NitrogenUtils.takeScreenshot(false);
             return true;
         }
