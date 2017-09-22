@@ -90,4 +90,7 @@
 
     <!-- Screenrecord Tile -->
     <string name="quick_settings_screenrecord">Screenrecord</string>
+
+    <string name="lockscreen_default">Default</string>
+    <string name="lockscreen_hidden">None</string>
 </resources>

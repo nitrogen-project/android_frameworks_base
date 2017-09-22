@@ -80,4 +80,7 @@
 
     <!-- Screenrecord Tile -->
     <string name="quick_settings_screenrecord">Запись экрана</string>
+
+    <string name="lockscreen_default">По умолчанию</string>
+    <string name="lockscreen_hidden">Нет</string>
 </resources>
