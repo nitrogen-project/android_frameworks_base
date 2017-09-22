@@ -56,4 +56,7 @@
     <string name="accessibility_quick_settings_heads_up_on">Всплывающие уведомления включены.</string>
     <string name="accessibility_quick_settings_heads_up_changed_off">Всплывающие уведомления отключены.</string>
     <string name="accessibility_quick_settings_heads_up_changed_on">Всплывающие уведомления включены.</string>
+
+    <string name="lockscreen_default">По умолчанию</string>
+    <string name="lockscreen_hidden">Нет</string>
 </resources>
