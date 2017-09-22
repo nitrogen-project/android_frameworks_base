@@ -24,4 +24,5 @@
     <string name="reboot_to_bootloader_message">Rebooting to bootloader</string>
     <string name="reboot_title">Reboot</string>
     <string name="reboot_message">Rebooting system</string>
+
 </resources>

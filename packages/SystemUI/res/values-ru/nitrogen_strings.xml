@@ -29,4 +29,7 @@
     <string name="keyguard_plugged_in_dash_charging">Dash зарядка</string>
 
     <string name="statusbar_items_title">Редактирование иконок</string>
+
+    <string name="lockscreen_default">По умолчанию</string>
+    <string name="lockscreen_hidden">Нет</string>
 </resources>

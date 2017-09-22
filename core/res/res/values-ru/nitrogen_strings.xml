@@ -24,4 +24,5 @@
     <string name="reboot_to_bootloader_message">Перезагрузка в загрузчик</string>
     <string name="reboot_title">Перезагрузка</string>
     <string name="reboot_message">Перезагрузка системы</string>
+
 </resources>
