@@ -144,6 +144,7 @@ import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.statusbar.NotificationVisibility;
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.internal.util.NotificationMessagingUtil;
+import com.android.internal.util.nitrogen.NitrogenUtils;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.keyguard.KeyguardHostView.OnDismissAction;
 import com.android.keyguard.KeyguardStatusView;
@@ -5319,6 +5320,8 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private Set<String> mNonBlockablePkgs;
 
+    private boolean mShowNavBar;
+
     @Override  // NotificationData.Environment
     public boolean isDeviceProvisioned() {
         return mDeviceProvisionedController.isDeviceProvisioned();
@@ -5405,6 +5408,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.BATTERY_SAVER_MODE_COLOR),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.NAVIGATION_BAR_SHOW),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -5438,6 +5444,17 @@ public class StatusBar extends SystemUI implements DemoMode,
                     if (mBatterySaverWarningColor != 0) {
                         mBatterySaverWarningColor = Utils.getColorAttr(mContext, android.R.attr.colorError);
                     }
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.NAVIGATION_BAR_SHOW))) {
+                int showNavBar = Settings.System.getIntForUser(
+                        mContext.getContentResolver(), Settings.System.NAVIGATION_BAR_SHOW,
+                        -1, mCurrentUserId);
+                if (showNavBar != -1){
+                    boolean showNavBarBool = showNavBar == 1;
+                    if (showNavBarBool !=  mShowNavBar){
+                        updateNavigationBar();
+                    }
+                }
             }
         }
 
@@ -7160,4 +7177,20 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     }
     // End Extra BaseStatusBarMethods.
+
+    private void updateNavigationBar() {
+        mShowNavBar = NitrogenUtils.deviceSupportNavigationBarForUser(mContext, mCurrentUserId);
+        if (DEBUG) Log.v(TAG, "updateNavigationBar=" + mShowNavBar);
+
+        if (mShowNavBar) {
+            if (mNavigationBarView == null) {
+                createNavigationBar();
+            }
+        } else {
+            if (mNavigationBarView != null){
+                mWindowManager.removeViewImmediate(mNavigationBarView);
+                mNavigationBarView = null;
+            }
+        }
+    }
 }
