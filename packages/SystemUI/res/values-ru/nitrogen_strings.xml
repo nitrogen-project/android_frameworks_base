@@ -97,4 +97,6 @@
 
     <!-- Volume QS Tile -->
     <string name="quick_settings_volume_panel_label">Панель громкости</string>
+
+    <string name="quick_settings_usb_tether_label">USB модем</string>
 </resources>
