@@ -34,4 +34,6 @@
 
     <string name="lockscreen_default">По умолчанию</string>
     <string name="lockscreen_hidden">Нет</string>
+    <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
+    <string name="custom_hint">Проведите пальцем от иконки в сторону центра экрана</string>
 </resources>
