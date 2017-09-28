@@ -62,4 +62,6 @@
     <string name="accessibility_quick_settings_hwkeys_on">Кнопки вкл.</string>
     <string name="accessibility_quick_settings_hwkeys_off">Кнопки выкл.</string>
     <string name="quick_settings_hwkeys_label">Аппарат. кнопки</string>
+
+    <string name="quick_settings_usb_tether_label">USB модем</string>
 </resources>
