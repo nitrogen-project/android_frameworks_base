@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2014-2016 The Nitrogen Project
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE ZAP.</string>
+    <string name="lte_off">LTE VYP.</string>
+
+    <!-- Caffeine Tile -->
+    <string name="quick_settings_caffeine_label">Kofeín</string>
+
+    <string name="global_action_restart_advanced">Rozšířený restart</string>
+    <string name="global_action_restart_recovery">Skok do recovery</string>
+    <string name="global_action_restart_bootloader">Skok do bootloadera</string>
+
+    <!-- Reboot/Recovery QS Tile -->
+    <string name="quick_settings_reboot_label">Reštartovat</string>
+    <string name="quick_settings_reboot_recovery_label">Do recovery</string>
+
+    <string name="statusbar_items_title">Upravit ikony</string>
+
+    <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Snímka obrazovky</string>
+    <string name="quick_settings_region_screenshot_label">Částečná snímka obraz.</string>
+
+    <!-- ADB network tile -->
+    <string name="quick_settings_adb_network">Ladění po síti</string>
+    <string name="quick_settings_network_adb_disabled_label">Ladění VYP.</string>
+    <string name="quick_settings_network_adb_enabled_label">Ladění ZAP.</string>
+	
+    <!-- QuickSettings: Sound [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_sound_label">Zvuk</string>
+    <string name="quick_settings_sound_ring">Zvonení</string>
+    <string name="quick_settings_sound_vibrate">Vibrace</string>
+    <string name="quick_settings_sound_dnd">Nerušit</string>
+
+    <!-- Heads Up QS Tile -->
+    <string name="quick_settings_heads_up_label">Vvyskakující upozornění</string>
+    <string name="accessibility_quick_settings_heads_up_off">Vyskakující upozornění jsou vypnuta.</string>
+    <string name="accessibility_quick_settings_heads_up_on">Vyskakující upozornění jsou zapnuta.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_off">Vyskakující upozornění byly vypnuty.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_on">Vyskakující upozornění byly zapnuty.</string>
+
+    <string name="lockscreen_default">Výchozí</string>
+    <string name="lockscreen_hidden">Ne</string>
+    <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
+    <string name="custom_hint">Posuňte prst z ikony směrem do středu obrazovky</string>
+
+    <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Vyskakující upozornění bude odloženo o 1 minutu.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Vyskakující upozornění bude odloženo o <xliff:g id="number">%d</xliff:g> minut.</string>
+	
+    <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Obrazovka se nahrává</string>
+    <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Nahrávání obrazovky</string>
+    <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Zastavit</string>
+    <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Zobrazit ukazovatel</string>
+    <string name="screenrecord_notif_pointer_off">Skrýt ukazovateľ</string>
+    <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Nelze nahrávat obrazovku</string>
+    <string name="notification_channel_screenrecord">Nahrávky obrazovky</string>
+</resources>

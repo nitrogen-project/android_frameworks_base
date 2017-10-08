@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/* //device/apps/common/assets/res/any/strings.xml
+**
+** Copyright 2006, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="reboot_to_recovery_title">Recovery</string>
+    <string name="reboot_to_recovery_message">ReStart do Recovery</string>
+    <string name="reboot_to_bootloader_title">Bootloader</string>
+    <string name="reboot_to_bootloader_message">ReStart do Bootloadera</string>
+
+    <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
+    <string name="system_error_vendorprint">Verze vendor obrazu neodpovídá systému. Prosím, vypalte vendor obraz pro vaše zařízení <xliff:g id="string">%s</xliff:g></string>
+
+    <!-- kill app long press back -->
+    <string name="app_killed_message">Aplikace byla ukončena</string>
+
+    <!-- ADB over network notification -->
+    <string name="adb_net_active_notification_title">Ladění po síti je povoleno</string>
+    <!-- ADB over USB and network notification -->
+    <string name="adb_both_active_notification_title">Ladění po síti a přes USB je povoleno</string>
+    <!-- ADB notification message-->
+    <string name="adb_active_generic_notification_message">Klikněte pro zrušení ladění.</string>
+</resources>
