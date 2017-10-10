@@ -5025,7 +5025,7 @@ public class AudioService extends IAudioService.Stub
 
     private void setVolumeKeysControlMediaStream() {
         mVolumeKeysControlMediaStream = Settings.System.getIntForUser(mContentResolver,
-                Settings.System.VOLUME_KEYS_CONTROL_MEDIA_STREAM, 1,
+                Settings.System.VOLUME_KEYS_CONTROL_MEDIA_STREAM, 0,
                 UserHandle.USER_CURRENT) == 1;
     }
 
