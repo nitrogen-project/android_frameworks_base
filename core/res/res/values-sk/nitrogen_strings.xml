@@ -35,4 +35,7 @@
     <string name="adb_both_active_notification_title">Ladenie cez sieť a USB je povolené</string>
     <!-- ADB notification message-->
     <string name="adb_active_generic_notification_message">Kliknite pre zrušenie ladenia.</string>
+	
+    <!-- Pocket Lock -->
+    <string name="pocket_lock_message_long_press">Dlho podržte tlačidlo Napájanie</string>
 </resources>

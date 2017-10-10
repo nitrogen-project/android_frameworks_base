@@ -28,6 +28,7 @@
     <string name="global_action_restart_advanced">Rozšířený restart</string>
     <string name="global_action_restart_recovery">Skok do recovery</string>
     <string name="global_action_restart_bootloader">Skok do bootloadera</string>
+    <string name="global_action_screenrecord">Záznam obrazovky</string>
 
     <!-- Reboot/Recovery QS Tile -->
     <string name="quick_settings_reboot_label">Reštartovat</string>
@@ -78,4 +79,7 @@
     <!-- Screen record notification error title -->
     <string name="screenrecord_notif_error">Nelze nahrávat obrazovku</string>
     <string name="notification_channel_screenrecord">Nahrávky obrazovky</string>
+	
+    <!-- Screenrecord Tile -->
+    <string name="quick_settings_screenrecord">Záznam obrazovky</string>
 </resources>
