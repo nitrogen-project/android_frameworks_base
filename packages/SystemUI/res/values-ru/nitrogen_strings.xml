@@ -36,6 +36,8 @@
 
     <string name="statusbar_items_title">Редактирование иконок</string>
 
+    <string name="quick_settings_pip_tile_app_na">Приложение не поддерживает PiP</string>
+
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">Снимок экрана</string>
     <string name="quick_settings_region_screenshot_label">Снимок области</string>

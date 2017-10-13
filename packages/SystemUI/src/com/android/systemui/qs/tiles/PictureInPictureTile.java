@@ -18,9 +18,11 @@ package com.android.systemui.qs.tiles;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
+import android.widget.Toast;
 
 import com.android.internal.util.nitrogen.NitrogenUtils;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
@@ -52,6 +54,12 @@ public class PictureInPictureTile extends QSTileImpl<BooleanState> {
     @Override
     public void handleClick() {
         mHost.collapsePanels();
+        ActivityInfo ai = NitrogenUtils.getRunningActivityInfo(mContext);
+        if (ai != null && !ai.supportsPictureInPicture()) {
+            Toast.makeText(mContext, mContext.getString(
+                    R.string.quick_settings_pip_tile_app_na), Toast.LENGTH_LONG).show();
+            return;
+        }
         NitrogenUtils.sendKeycode(171);
     }
 
