@@ -21,15 +21,16 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.graphics.Rect;
+import android.media.MediaMetadata;
 import android.os.Handler;
-import android.os.UserHandle;
-import android.provider.Settings;
 import android.service.notification.StatusBarNotification;
 import android.text.Layout.Alignment;
 import android.text.StaticLayout;
 import android.text.TextPaint;
-import android.view.animation.Animation;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 import android.view.View;
 import android.widget.ImageSwitcher;
 import android.widget.TextSwitcher;
@@ -37,12 +38,15 @@ import android.widget.TextView;
 
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.internal.util.NotificationColorUtil;
+import com.android.systemui.Dependency;
 import com.android.systemui.R;
+import com.android.systemui.statusbar.policy.DarkIconDispatcher;
+import com.android.systemui.statusbar.policy.DarkIconDispatcher.DarkReceiver;
 import com.android.systemui.statusbar.StatusBarIconView;
 
 import java.util.ArrayList;
 
-public abstract class Ticker {
+public abstract class Ticker implements DarkReceiver {
     private static final int TICKER_SEGMENT_DELAY = 3000;
 
     private Context mContext;
@@ -52,7 +56,7 @@ public abstract class Ticker {
     private ImageSwitcher mIconSwitcher;
     private TextSwitcher mTextSwitcher;
     private float mIconScale;
-    private ColorStateList mIconTint = null;
+    private int mIconTint =  0xffffffff;
     private int mTextColor = 0xffffffff;
 
     private NotificationColorUtil mNotificationColorUtil;
@@ -78,7 +82,10 @@ public abstract class Ticker {
         StaticLayout getLayout(CharSequence substr) {
             int w = mTextSwitcher.getWidth() - mTextSwitcher.getPaddingLeft()
                     - mTextSwitcher.getPaddingRight();
-            return new StaticLayout(substr, mPaint, w, Alignment.ALIGN_NORMAL, 1, 0, true);
+            if (w > 0) {
+                return new StaticLayout(substr, mPaint, w, Alignment.ALIGN_NORMAL, 1, 0, true);
+            }
+            return null;
         }
 
         CharSequence rtrim(CharSequence substr, int start, int end) {
@@ -98,6 +105,9 @@ public abstract class Ticker {
             }
             CharSequence substr = this.text.subSequence(this.current, this.text.length());
             StaticLayout l = getLayout(substr);
+            if (l == null) {
+                return null;
+            }
             int lineCount = l.getLineCount();
             if (lineCount > 0) {
                 int start = l.getLineStart(0);
@@ -124,6 +134,9 @@ public abstract class Ticker {
 
             CharSequence substr = this.text.subSequence(index, this.text.length());
             StaticLayout l = getLayout(substr);
+            if (l == null) {
+                return null;
+            }
             final int lineCount = l.getLineCount();
             int i;
             for (i=0; i<lineCount; i++) {
@@ -166,31 +179,52 @@ public abstract class Ticker {
         final int imageBounds = res.getDimensionPixelSize(R.dimen.status_bar_icon_drawing_size);
         mIconScale = (float)imageBounds / (float)outerBounds;
 
+        AlphaAnimation animationIn = new AlphaAnimation(0.0f, 1.0f);
+        Interpolator interpolatorIn = AnimationUtils.loadInterpolator(context,
+                android.R.interpolator.decelerate_quad);
+        animationIn.setInterpolator(interpolatorIn);
+        animationIn.setDuration(350);
+
+        AlphaAnimation animationOut = new AlphaAnimation(1.0f, 0.0f);
+        Interpolator interpolatorOut = AnimationUtils.loadInterpolator(context,
+                android.R.interpolator.accelerate_quad);
+        animationIn.setInterpolator(interpolatorOut);
+        animationOut.setDuration(350);
+
         mIconSwitcher = (ImageSwitcher) tickerLayout.findViewById(R.id.tickerIcon);
-        mIconSwitcher.setInAnimation(
-                    AnimationUtils.loadAnimation(context, com.android.internal.R.anim.push_up_in));
-        mIconSwitcher.setOutAnimation(
-                    AnimationUtils.loadAnimation(context, com.android.internal.R.anim.push_up_out));
+        mIconSwitcher.setInAnimation(animationIn);
+        mIconSwitcher.setOutAnimation(animationOut);
         mIconSwitcher.setScaleX(mIconScale);
         mIconSwitcher.setScaleY(mIconScale);
 
         mTextSwitcher = (TextSwitcher) tickerLayout.findViewById(R.id.tickerText);
-        mTextSwitcher.setInAnimation(
-                    AnimationUtils.loadAnimation(context, com.android.internal.R.anim.push_up_in));
-        mTextSwitcher.setOutAnimation(
-                    AnimationUtils.loadAnimation(context, com.android.internal.R.anim.push_up_out));
+        mTextSwitcher.setInAnimation(animationIn);
+        mTextSwitcher.setOutAnimation(animationOut);
 
         // Copy the paint style of one of the TextSwitchers children to use later for measuring
         TextView text = (TextView) mTextSwitcher.getChildAt(0);
         mPaint = text.getPaint();
 
         mNotificationColorUtil = NotificationColorUtil.getInstance(mContext);
+
+        Dependency.get(DarkIconDispatcher.class).addDarkReceiver(this);
     }
 
 
-    public void addEntry(StatusBarNotification n) {
+    public void addEntry(StatusBarNotification n, boolean isMusic, MediaMetadata mediaMetaData) {
         int initialCount = mSegments.size();
         ContentResolver resolver = mContext.getContentResolver();
+
+        if (isMusic) {
+            CharSequence artist = mediaMetaData.getText(MediaMetadata.METADATA_KEY_ARTIST);
+            CharSequence album = mediaMetaData.getText(MediaMetadata.METADATA_KEY_ALBUM);
+            CharSequence title = mediaMetaData.getText(MediaMetadata.METADATA_KEY_TITLE);
+            if (artist != null && album != null && title != null) {
+                n.getNotification().tickerText = artist.toString() + " - " + album.toString() + " - " + title.toString();
+            } else {
+                return;
+            }
+        }
 
         // If what's being displayed has the same text and icon, just drop it
         // (which will let the current one finish, this happens when apps do
@@ -201,7 +235,7 @@ public abstract class Ticker {
                     && n.getNotification().icon == seg.notification.getNotification().icon
                     && n.getNotification().iconLevel == seg.notification.getNotification().iconLevel
                     && charSequencesEqual(seg.notification.getNotification().tickerText,
-                        n.getNotification().tickerText)) {
+                    n.getNotification().tickerText)) {
                 return;
             }
         }
@@ -227,11 +261,9 @@ public abstract class Ticker {
             Segment seg = mSegments.get(0);
             seg.first = false;
 
-            boolean isGrayscale = mNotificationColorUtil.isGrayscaleIcon(seg.icon);
-
             mIconSwitcher.setAnimateFirstView(false);
             mIconSwitcher.reset();
-            mIconSwitcher.setColoredImageDrawable(seg.icon, isGrayscale ? mIconTint : null);
+            setAppIconColor(seg.icon);
 
             mTextSwitcher.setAnimateFirstView(false);
             mTextSwitcher.reset();
@@ -290,8 +322,7 @@ public abstract class Ticker {
                     // this makes the icon slide in for the first one for a given
                     // notification even if there are two notifications with the
                     // same icon in a row
-                    boolean isGrayscale = mNotificationColorUtil.isGrayscaleIcon(seg.icon);
-                    mIconSwitcher.setColoredImageDrawable(seg.icon, isGrayscale ? mIconTint : null);
+                    setAppIconColor(seg.icon);
                 }
                 CharSequence text = seg.advance();
                 if (text == null) {
@@ -318,11 +349,26 @@ public abstract class Ticker {
     public abstract void tickerDone();
     public abstract void tickerHalting();
 
-    public void setIconColorTint(ColorStateList tint) {
-        mIconTint = tint;
-    }
-
     public void setTextColor(int color) {
         mTextColor = color;
+    }
+
+    @Override
+    public void onDarkChanged(Rect area, float darkIntensity, int tint) {}
+
+    public void applyDarkIntensity(Rect area, View v, int tint) {
+        mTextColor = DarkIconDispatcher.getTint(area, v, tint);
+        mIconTint = mTextColor;
+        if (mSegments.size() > 0) {
+            Segment seg = mSegments.get(0);
+            mTextSwitcher.setTextColor(mTextColor);
+            mIconSwitcher.reset();
+            setAppIconColor(seg.icon);
+        }
+    }
+
+    private void setAppIconColor(Drawable icon) {
+        boolean isGrayscale = mNotificationColorUtil.isGrayscaleIcon(icon);
+        mIconSwitcher.setImageDrawableTint(icon, mIconTint, isGrayscale);
     }
 }
