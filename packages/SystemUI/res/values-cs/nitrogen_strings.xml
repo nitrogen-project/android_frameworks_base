@@ -31,20 +31,20 @@
     <string name="global_action_screenrecord">Záznam obrazovky</string>
 
     <!-- Reboot/Recovery QS Tile -->
-    <string name="quick_settings_reboot_label">Reštartovat</string>
+    <string name="quick_settings_reboot_label">Restartovat</string>
     <string name="quick_settings_reboot_recovery_label">Do recovery</string>
 
     <string name="statusbar_items_title">Upravit ikony</string>
 
     <!-- Screenshot QS tile -->
-    <string name="quick_settings_screenshot_label">Snímka obrazovky</string>
-    <string name="quick_settings_region_screenshot_label">Částečná snímka obraz.</string>
+    <string name="quick_settings_screenshot_label">Snímek obrazovky</string>
+    <string name="quick_settings_region_screenshot_label">Částečný snímek obraz.</string>
 
     <!-- ADB network tile -->
     <string name="quick_settings_adb_network">Ladění po síti</string>
     <string name="quick_settings_network_adb_disabled_label">Ladění VYP.</string>
     <string name="quick_settings_network_adb_enabled_label">Ladění ZAP.</string>
-	
+
     <!-- QuickSettings: Sound [CHAR LIMIT=NONE] -->
     <string name="quick_settings_sound_label">Zvuk</string>
     <string name="quick_settings_sound_ring">Zvonení</string>
@@ -52,7 +52,7 @@
     <string name="quick_settings_sound_dnd">Nerušit</string>
 
     <!-- Heads Up QS Tile -->
-    <string name="quick_settings_heads_up_label">Vvyskakující upozornění</string>
+    <string name="quick_settings_heads_up_label">Vyskakující upozornění</string>
     <string name="accessibility_quick_settings_heads_up_off">Vyskakující upozornění jsou vypnuta.</string>
     <string name="accessibility_quick_settings_heads_up_on">Vyskakující upozornění jsou zapnuta.</string>
     <string name="accessibility_quick_settings_heads_up_changed_off">Vyskakující upozornění byly vypnuty.</string>
@@ -66,7 +66,7 @@
     <!-- Heads up snooze toast -->
     <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Vyskakující upozornění bude odloženo o 1 minutu.</string>
     <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Vyskakující upozornění bude odloženo o <xliff:g id="number">%d</xliff:g> minut.</string>
-	
+
     <!-- Screenrecord Notification Ticker -->
     <string name="screenrecord_notif_ticker">Obrazovka se nahrává</string>
     <!-- Screenrecord notification title -->
@@ -79,7 +79,7 @@
     <!-- Screen record notification error title -->
     <string name="screenrecord_notif_error">Nelze nahrávat obrazovku</string>
     <string name="notification_channel_screenrecord">Nahrávky obrazovky</string>
-	
+
     <!-- Screenrecord Tile -->
     <string name="quick_settings_screenrecord">Záznam obrazovky</string>
 </resources>
