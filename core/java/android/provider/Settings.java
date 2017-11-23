@@ -5917,20 +5917,6 @@ public final class Settings {
         public static final String FLING_RIPPLE_COLOR = "fling_ripple_color";
 
         /**
-         * Fling gesture trails on/off
-         *
-         * @hide
-         */
-        public static final String FLING_TRAILS_ENABLED = "fling_trails_enabled";
-
-        /**
-         * Fling gesture trails color
-         *
-         * @hide
-         */
-        public static final String FLING_TRAILS_COLOR = "fling_trails_color";
-
-        /**
          * Fling pulse lavalamp psychedelic colors
          *
          * @hide
@@ -6005,13 +5991,6 @@ public final class Settings {
          * @hide
          */
         public static final String FLING_LONGSWIPE_THRESHOLD_DOWN_LAND = "fling_longswipe_threshold_down_land";
-
-        /**
-         * width of Fling trails stroke, in density pixels
-         *
-         * @hide
-         */
-        public static final String FLING_TRAILS_WIDTH = "fling_trails_width";
 
         /**
          * Navbar buttons transparency
