@@ -122,32 +122,6 @@ public class NitrogenUtils {
         }
     }
 
-    public static boolean deviceSupportNavigationBar(Context context) {
-        return deviceSupportNavigationBarForUser(context, UserHandle.USER_CURRENT);
-    }
-
-    public static boolean deviceSupportNavigationBarForUser(Context context, int userId) {
-        final boolean showByDefault = context.getResources().getBoolean(
-                com.android.internal.R.bool.config_showNavigationBar);
-        final int hasNavigationBar = Settings.System.getIntForUser(
-                context.getContentResolver(),
-                Settings.System.NAVIGATION_BAR_SHOW, -1,
-                userId);
-
-        if (hasNavigationBar == -1) {
-            String navBarOverride = SystemProperties.get("qemu.hw.mainkeys");
-            if ("1".equals(navBarOverride)) {
-                return false;
-            } else if ("0".equals(navBarOverride)) {
-                return true;
-            } else {
-                return showByDefault;
-            }
-        } else {
-            return hasNavigationBar == 1;
-        }
-    }
-
     public static ActivityInfo getRunningActivityInfo(Context context) {
         final ActivityManager am = (ActivityManager) context
                 .getSystemService(Context.ACTIVITY_SERVICE);
@@ -188,5 +162,4 @@ public class NitrogenUtils {
         keyguardIntent.putExtra(DISMISS_KEYGUARD_EXTRA_INTENT, launchIntent);
         context.sendBroadcastAsUser(keyguardIntent, user);
     }
-
 }
