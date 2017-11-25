@@ -553,9 +553,6 @@ public final class PowerManagerService extends SystemService
     // True if we are currently in device idle mode.
     private boolean mDeviceIdleMode;
 
-    // overrule and disable brightness for buttons
-    private boolean mHasHwKeysEnabled = false;
-
     // True if we are currently in light device idle mode.
     private boolean mLightDeviceIdleMode;
 
@@ -862,9 +859,6 @@ public final class PowerManagerService extends SystemService
         resolver.registerContentObserver(Settings.Global.getUriFor(
                 Settings.Global.WAKE_WHEN_PLUGGED_OR_UNPLUGGED),
                 false, mSettingsObserver, UserHandle.USER_ALL);
-        resolver.registerContentObserver(Settings.System.getUriFor(
-                Settings.System.ENABLE_HW_KEYS),
-                false, mSettingsObserver, UserHandle.USER_ALL);
         IVrManager vrManager = (IVrManager) getBinderService(Context.VR_SERVICE);
         if (vrManager != null) {
             try {
@@ -1032,10 +1026,6 @@ public final class PowerManagerService extends SystemService
         mButtonBrightness = Settings.System.getIntForUser(resolver,
                 Settings.System.BUTTON_BRIGHTNESS, mButtonBrightnessSettingDefault,
                 UserHandle.USER_CURRENT);
-
-        mHasHwKeysEnabled = Settings.System.getIntForUser(resolver,
-                Settings.System.ENABLE_HW_KEYS, 1,
-                UserHandle.USER_CURRENT) != 0;
 
         mDirty |= DIRTY_SETTINGS;
     }
@@ -2059,14 +2049,10 @@ public final class PowerManagerService extends SystemService
                         mUserActivitySummary = USER_ACTIVITY_SCREEN_BRIGHT;
                         if (mWakefulness == WAKEFULNESS_AWAKE) {
                             int buttonBrightness;
-                            if (!mHasHwKeysEnabled) {
-                                buttonBrightness = 0;
+                            if (mButtonBrightnessOverrideFromWindowManager >= 0) {
+                                buttonBrightness = mButtonBrightnessOverrideFromWindowManager;
                             } else {
-                                if (mButtonBrightnessOverrideFromWindowManager >= 0) {
-                                    buttonBrightness = mButtonBrightnessOverrideFromWindowManager;
-                                } else {
-                                    buttonBrightness = mButtonBrightness;
-                                }
+                                buttonBrightness = mButtonBrightness;
                             }
                             mLastButtonActivityTime = mButtonBacklightOnTouchOnly ?
                                     mLastButtonActivityTime : mLastUserActivityTime;
