@@ -28,9 +28,6 @@
     <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
     <string name="system_error_vendorprint">Your vendor image does not match the system. Please flash the <xliff:g id="string">%s</xliff:g> vendor image for your device</string>
 
-    <!-- kill app long press back -->
-    <string name="app_killed_message">Application killed</string>
-
     <!-- ADB over network notification -->
     <string name="adb_net_active_notification_title">ADB over network enabled</string>
     <!-- ADB over USB and network notification -->
