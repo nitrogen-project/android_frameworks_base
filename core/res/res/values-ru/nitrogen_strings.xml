@@ -42,4 +42,9 @@
     <string name="permlab_fakePackageSignature">Подмена подписи приложения</string>
     <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permdesc_fakePackageSignature">Разрешать работу в качестве другого приложения. Вредоносное приложение может получить доступ к вашим данным. Используйте на ваш страх и риск.</string>
+
+    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_toggleNavigationEditor">управление редактированием панели навигации</string>
+    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_toggleNavigationEditor">Разрешать приложению управлять редактированием панели навигации.</string>
 </resources>
