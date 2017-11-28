@@ -36,6 +36,8 @@
 
     <string name="statusbar_items_title">Upravit ikony</string>
 
+    <string name="quick_settings_pip_tile_app_na">Aplikace nepodporuje PiP</string>
+
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">Snímek obrazovky</string>
     <string name="quick_settings_region_screenshot_label">Částečný snímek obraz.</string>
@@ -82,4 +84,8 @@
 
     <!-- Screenrecord Tile -->
     <string name="quick_settings_screenrecord">Záznam obrazovky</string>
+
+    <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Nabíjení Dash (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> до полной)</string>
+    <string name="keyguard_plugged_in_dash_charging">Nabíjení Dash</string>
 </resources>

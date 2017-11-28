@@ -36,6 +36,8 @@
 
     <string name="statusbar_items_title">Upraviť ikony</string>
 
+    <string name="quick_settings_pip_tile_app_na">Aplikácia nepodporuje PiP</string>
+
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">Snímka obrazovky</string>
     <string name="quick_settings_region_screenshot_label">Čiastoč. snímka obraz.</string>
@@ -44,7 +46,7 @@
     <string name="quick_settings_adb_network">Ladenie po sieti</string>
     <string name="quick_settings_network_adb_disabled_label">Ladenie VYP.</string>
     <string name="quick_settings_network_adb_enabled_label">Ladenie ZAP.</string>
-	
+
     <!-- QuickSettings: Sound [CHAR LIMIT=NONE] -->
     <string name="quick_settings_sound_label">Zvuk</string>
     <string name="quick_settings_sound_ring">Zvonenie</string>
@@ -57,7 +59,7 @@
     <string name="accessibility_quick_settings_heads_up_on">Vyskakujúce upozornenia sú zapnuté.</string>
     <string name="accessibility_quick_settings_heads_up_changed_off">Vyskakujúce upozornenia boli vypnuté.</string>
     <string name="accessibility_quick_settings_heads_up_changed_on">Vyskakujúce upozornenia boli zapnuté.</string>
-	
+
     <string name="lockscreen_default">Predvolené</string>
     <string name="lockscreen_hidden">Nie</string>
     <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
@@ -66,7 +68,7 @@
     <!-- Heads up snooze toast -->
     <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Vyskakujúce upozornenie bude odložené o 1 minútu.</string>
     <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Vyskakujúce upozornenie bude odložené o <xliff:g id="number">%d</xliff:g> minút.</string>
-	
+
     <!-- Screenrecord Notification Ticker -->
     <string name="screenrecord_notif_ticker">Nahráva sa obrazovka</string>
     <!-- Screenrecord notification title -->
@@ -81,5 +83,9 @@
     <string name="notification_channel_screenrecord">Nahrávky obrazovky</string>
 
     <!-- Screenrecord Tile -->
-    <string name="quick_settings_screenrecord">Záznam obrazovky</string>	
+    <string name="quick_settings_screenrecord">Záznam obrazovky</string>
+
+    <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Nabíjanie Dash (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> до полной)</string>
+    <string name="keyguard_plugged_in_dash_charging">Nabíjanie Dash</string>
 </resources>
