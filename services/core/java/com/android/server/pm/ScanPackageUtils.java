@@ -51,9 +51,11 @@ import android.annotation.Nullable;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.SharedLibraryInfo;
+import android.content.pm.Signature;
 import android.content.pm.SigningDetails;
 import android.content.pm.parsing.result.ParseResult;
 import android.content.pm.parsing.result.ParseTypeImpl;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
@@ -102,6 +104,17 @@ import java.util.UUID;
  * Helper class that handles package scanning logic
  */
 final class ScanPackageUtils {
+
+    private static final Signature[] VENDOR_PLATFORM_SIGNATURES;
+    static {
+        final String[] signatures = Resources.getSystem()
+            .getStringArray(com.android.internal.R.array.config_vendorPlatformSignatures);
+        VENDOR_PLATFORM_SIGNATURES = new Signature[signatures.length];
+        for (int i = 0; i < signatures.length; i++) {
+            VENDOR_PLATFORM_SIGNATURES[i] = new Signature(signatures[i]);
+        }
+    }
+
     /**
      * Just scans the package without any side effects.
      *
@@ -863,10 +876,17 @@ final class ScanPackageUtils {
         // Check if the package is signed with the same key as the platform package.
         parsedPackage.setSignedWithPlatformKey(
                 (PLATFORM_PACKAGE_NAME.equals(parsedPackage.getPackageName())
-                        || (platformPkg != null && compareSignatures(
-                        platformPkg.getSigningDetails().getSignatures(),
-                        parsedPackage.getSigningDetails().getSignatures()
-                ) == PackageManager.SIGNATURE_MATCH))
+                        || (platformPkg != null &&
+                        (
+                            compareSignatures(
+                                platformPkg.getSigningDetails().getSignatures(),
+                                parsedPackage.getSigningDetails().getSignatures()
+                            ) == PackageManager.SIGNATURE_MATCH) ||
+                            compareSignatures(
+                                VENDOR_PLATFORM_SIGNATURES,
+                                parsedPackage.getSigningDetails().getSignatures()
+                            ) == PackageManager.SIGNATURE_MATCH)
+                        )
         );
 
         if (!parsedPackage.isSystem()) {
@@ -928,7 +948,7 @@ final class ScanPackageUtils {
 
     public static void collectCertificatesLI(PackageSetting ps, ParsedPackage parsedPackage,
             Settings.VersionInfo settingsVersionForPackage, boolean forceCollect,
-            boolean skipVerify, boolean isPreNMR1Upgrade)
+            boolean skipVerify, boolean isPreNMR1Upgrade, @Nullable AndroidPackage platformPackage)
             throws PackageManagerException {
         // When upgrading from pre-N MR1, verify the package time stamp using the package
         // directory and not the APK file.
@@ -968,7 +988,21 @@ final class ScanPackageUtils {
                 throw new PackageManagerException(
                         result.getErrorCode(), result.getErrorMessage(), result.getException());
             }
-            parsedPackage.setSigningDetails(result.getResult());
+            final SigningDetails signingDetails = result.getResult();
+            parsedPackage.setSigningDetails(signingDetails);
+            if (compareSignatures(signingDetails.getSignatures(), VENDOR_PLATFORM_SIGNATURES) == PackageManager.SIGNATURE_MATCH) {
+                // Overwrite package signature with our platform signature if the signature is the vendor's platform signature
+                if (platformPackage != null) {
+                    parsedPackage.setSigningDetails(platformPackage.getSigningDetails());
+                    parsedPackage.setSeInfo(
+                        SELinuxMMAC.getSeInfo(
+                            parsedPackage,
+                            parsedPackage.isPrivileged(),
+                            parsedPackage.getTargetSdkVersion()
+                        )
+                    );
+                }
+            }
         } finally {
             Trace.traceEnd(TRACE_TAG_PACKAGE_MANAGER);
         }
