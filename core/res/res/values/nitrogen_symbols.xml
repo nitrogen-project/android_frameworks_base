@@ -51,4 +51,6 @@
   <java-symbol type="string" name="url_copy_success" />
   <java-symbol type="string" name="url_copy_failed" />
 
+  <!-- Vendor signatures -->
+  <java-symbol type="array" name="config_vendorPlatformSignatures" />
 </resources>
