@@ -3943,7 +3943,7 @@ final class InstallPackageHelper {
                 || (forceCollect && canSkipForcedPackageVerification(parsedPackage));
         ScanPackageUtils.collectCertificatesLI(pkgSetting, parsedPackage,
                 mPm.getSettingsVersionForPackage(parsedPackage), forceCollect, skipVerify,
-                mPm.isPreNMR1Upgrade());
+                mPm.isPreNMR1Upgrade(), mPm.getPlatformPackage());
 
         // Reset profile if the application version is changed
         maybeClearProfilesForUpgradesLI(pkgSetting, parsedPackage);
