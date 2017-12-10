@@ -19,7 +19,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="reboot_to_recovery_title">Режим восстановления</string>
-    <string name="reboot_to_recovery_message">Перезагрузка в режим восстановления</string>
+    <string name="reboot_to_recovery_message">Перезагрузка в рекавери</string>
     <string name="reboot_to_bootloader_title">Загрузчик</string>
     <string name="reboot_to_bootloader_message">Перезагрузка в загрузчик</string>
     <string name="reboot_title">Перезагрузка</string>
