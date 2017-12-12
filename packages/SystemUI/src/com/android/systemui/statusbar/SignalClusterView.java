@@ -121,6 +121,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
     private boolean mActivityEnabled;
     private boolean mForceBlockWifi;
     private boolean mBlockVolte;
+    private boolean mBlockVpn;
 
     private final IconLogger mIconLogger = Dependency.get(IconLogger.class);
 
@@ -175,6 +176,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
         boolean blockWifi = blockList.contains(SLOT_WIFI);
         boolean blockEthernet = blockList.contains(SLOT_ETHERNET);
         boolean blockVolte = blockList.contains(SLOT_VOLTE);
+        boolean blockVpn = blockList.contains(SLOT_VPN);
 
         if (blockAirplane != mBlockAirplane || blockMobile != mBlockMobile
                 || blockEthernet != mBlockEthernet || blockWifi != mBlockWifi || blockVolte != mBlockVolte) {
@@ -186,6 +188,11 @@ public class SignalClusterView extends LinearLayout implements NetworkController
             // Re-register to get new callbacks.
             mNetworkController.removeCallback(this);
             mNetworkController.addCallback(this);
+        }
+        if (blockVpn != mBlockVpn) {
+            mBlockVpn = blockVpn;
+            mVpnVisible = mSecurityController.isVpnEnabled() && !mBlockVpn;
+            apply();
         }
     }
 
@@ -235,7 +242,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        mVpnVisible = mSecurityController.isVpnEnabled();
+        mVpnVisible = mSecurityController.isVpnEnabled() && !mBlockVpn;
         mVpnIconId = currentVpnIconId(mSecurityController.isVpnBranded());
 
         for (PhoneState state : mPhoneStates) {
@@ -280,7 +287,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
         post(new Runnable() {
             @Override
             public void run() {
-                mVpnVisible = mSecurityController.isVpnEnabled();
+                mVpnVisible = mSecurityController.isVpnEnabled() && !mBlockVpn;
                 mVpnIconId = currentVpnIconId(mSecurityController.isVpnBranded());
                 apply();
             }
