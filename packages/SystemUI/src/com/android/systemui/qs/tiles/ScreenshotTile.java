@@ -60,11 +60,6 @@ public class ScreenshotTile extends QSTileImpl<BooleanState> {
     @Override
     public void handleLongClick() {
         mHost.collapsePanels();
-
-        //finish collapsing the panel
-        try {
-             Thread.sleep(1000); //1s
-        } catch (InterruptedException ie) {}
         NitrogenUtils.takeScreenshot(mRegion ? false : true);
     }
 

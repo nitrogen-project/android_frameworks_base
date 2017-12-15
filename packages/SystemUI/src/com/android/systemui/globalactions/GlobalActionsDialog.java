@@ -567,22 +567,23 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
 
         @Override
         public void onPress() {
-            /* wait for the dialog box to close */
-            try {
-                 Thread.sleep(1000); //1s
-            } catch (InterruptedException ie) {}
-            NitrogenUtils.takeScreenshot(true);
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    NitrogenUtils.takeScreenshot(true);
+                }
+            }, 500);
         }
-
 
         @Override
         public boolean onLongPress() {
             mHandler.sendEmptyMessage(MESSAGE_DISMISS);
-            /* wait for the dialog box to close */
-            try {
-                 Thread.sleep(1000); //1s
-            } catch (InterruptedException ie) {}
-            NitrogenUtils.takeScreenshot(false);
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    NitrogenUtils.takeScreenshot(false);
+                }
+            }, 500);
             return true;
         }
 
@@ -602,13 +603,12 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
                 com.android.systemui.R.string.global_action_screenrecord) {
 
             public void onPress() {
-                mHandler.sendEmptyMessage(MESSAGE_DISMISS);
-                /* wait for the dialog box to close */
-                try {
-                     Thread.sleep(1000); //1s
-                } catch (InterruptedException ie) {}
-
-                takeScreenrecord();
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        takeScreenrecord();
+                    }
+                }, 500);
             }
 
             public boolean showDuringKeyguard() {
