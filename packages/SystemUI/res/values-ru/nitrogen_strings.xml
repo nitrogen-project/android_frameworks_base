@@ -87,4 +87,6 @@
 
     <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
     <string name="custom_hint">Проведите пальцем от иконки в сторону центра экрана</string>
+
+    <string name="status_bar_roaming">Роуминг</string>
 </resources>

@@ -43,6 +43,10 @@
         android:title="@string/status_bar_vpn" />
 
     <com.android.systemui.tuner.StatusBarSwitch
+        android:key="roaming"
+        android:title="@string/status_bar_roaming" />
+
+    <com.android.systemui.tuner.StatusBarSwitch
         android:key="ethernet"
         android:title="@string/status_bar_ethernet" />
 
