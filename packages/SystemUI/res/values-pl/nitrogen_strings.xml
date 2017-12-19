@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2014-2016 The Nitrogen Project
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE WŁ </string>
+    <string name="lte_off">LTE WYŁ</string>
+
+    <!-- Caffeine QS Tile -->
+    <string name="quick_settings_caffeine_label">Kofeina</string>
+    <string name="accessibility_quick_settings_caffeine_off">Kofeina wył</string>
+    <string name="accessibility_quick_settings_caffeine_on">Kofeina wł</string>
+
+    <string name="global_action_restart_advanced">Zaawansowany restart</string>
+    <string name="global_action_screenrecord">Nagrywanie ekranu</string>
+
+    <!-- Reboot/Recovery QS Tile -->
+    <string name="quick_settings_reboot_label">Uruchom ponownie</string>
+    <string name="quick_settings_reboot_recovery_label">Recovery</string>
+
+    <string name="statusbar_items_title">Ikony paska stanu</string>
+
+    <!-- PiP Tile -->
+    <string name="quick_settings_pip_label">Obraz w obrazie</string>
+    <string name="quick_settings_pip_tile_app_na">Aplikacja nie obsługuje trybu Obraz w obrazie</string>
+
+    <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Zrzut ekranu</string>
+    <string name="quick_settings_region_screenshot_label">Częściowy zrzut ekranu</string>
+
+    <!-- Content description of the data connection type HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_data_connection_HP">HSPA+</string>
+
+    <!-- volte icon switch -->
+    <string name="status_bar_volte">VOLTE</string>
+
+    <!-- ADB network tile -->
+    <string name="quick_settings_adb_network">Sieć ADB</string>
+    <string name="quick_settings_network_adb_enabled_label">ADB przez sieć wł</string>
+    <string name="quick_settings_network_adb_disabled_label">ADB przez sieć wył</string>
+
+     <!-- Sound QS Tile -->
+     <string name="quick_settings_sound_label">Dźwięk</string>
+     <string name="quick_settings_sound_ring">Dzwonek</string>
+     <string name="quick_settings_sound_vibrate">Wibracje</string>
+     <string name="quick_settings_sound_dnd">Nie przeszkadzać</string>
+
+    <!-- Heads Up QS Tile -->
+    <string name="quick_settings_heads_up_label">Wyskakujące powiadomienia</string>
+    <string name="accessibility_quick_settings_heads_up_off">Wyskakujące powiadomienia wył</string>
+    <string name="accessibility_quick_settings_heads_up_on">Wyskakujące powiadomienia wł</string>
+    <string name="accessibility_quick_settings_heads_up_changed_off">Wył. wyskakujące powiadomienia</string>
+    <string name="accessibility_quick_settings_heads_up_changed_on">Wł. wyskakujące powiadomienia</string>
+
+    <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Podgląd powiadomień uśpiony na 1 minutę.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Podgląd powiadomień uśpiony na <xliff:g id="number">%d</xliff:g> minut.</string>
+
+    <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Ładowanie Dash (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> do pełna)</string>
+    <string name="keyguard_plugged_in_dash_charging">Ładowanie Dash</string>
+
+    <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Ekran jest nagrywany</string>
+    <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Nagrywanie ekranu</string>
+    <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Zakończ</string>
+    <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Pokaż wskaźnik</string>
+    <string name="screenrecord_notif_pointer_off">Ukryj wskaźnik</string>
+    <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Nie można nagrać ekranu</string>
+    <string name="notification_channel_screenrecord">Nagrania ekranu</string>
+
+    <!-- Screenrecord Tile -->
+    <string name="quick_settings_screenrecord">Nagrywanie ekranu</string>
+
+    <string name="lockscreen_default">Domyślny</string>
+	<string name="lockscreen_hidden">Brak</string>
+
+    <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
+    <string name="custom_hint">Przesuń palcem od ikony, aby uruchomić</string>
+
+    <string name="status_bar_vpn">VPN</string>
+
+    <string name="status_bar_roaming">Roaming</string>
+</resources>
