@@ -36,8 +36,12 @@ import android.graphics.Typeface;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.graphics.PorterDuff.Mode;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.service.dreams.DreamService;
+import android.service.dreams.IDreamManager;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
@@ -368,6 +372,23 @@ public class KeyguardStatusView extends GridLayout implements
        }
     }
 
+    private boolean isDozeMode() {
+        IDreamManager dreamManager = getDreamManager();
+        try {
+            if (dreamManager != null && dreamManager.isDozing()) {
+                return true;
+            }
+        } catch (RemoteException e) {
+            return false;
+        }
+        return false;
+    }
+
+    static IDreamManager getDreamManager() {
+        return IDreamManager.Stub.asInterface(
+                ServiceManager.checkService(DreamService.DREAM_SERVICE));
+    }
+
     private void updateSettings() {
         final ContentResolver resolver = getContext().getContentResolver();
         final Resources res = getContext().getResources();
@@ -381,7 +402,7 @@ public class KeyguardStatusView extends GridLayout implements
         }
         if (mWeatherView != null) {
             mWeatherView.setVisibility(
-                (mShowWeather && ConditionText ? View.VISIBLE : View.GONE));
+                (mShowWeather && ConditionText && !isDozeMode() ? View.VISIBLE : View.GONE));
         }
         if (weatherPanel != null) {
             weatherPanel.setVisibility(View.VISIBLE);
