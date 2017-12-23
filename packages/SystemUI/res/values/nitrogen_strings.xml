@@ -101,4 +101,9 @@
     <string name="status_bar_vpn">VPN</string>
 
     <string name="status_bar_roaming">Roaming</string>
+
+    <!-- HW Keys Tile -->
+    <string name="accessibility_quick_settings_hwkeys_on">HW keys on</string>
+    <string name="accessibility_quick_settings_hwkeys_off">HW keys off</string>
+    <string name="quick_settings_hwkeys_label">HW keys</string>
 </resources>

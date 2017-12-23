@@ -89,4 +89,9 @@
     <string name="custom_hint">Проведите пальцем от иконки в сторону центра экрана</string>
 
     <string name="status_bar_roaming">Роуминг</string>
+
+    <!-- HW Keys Tile -->
+    <string name="accessibility_quick_settings_hwkeys_on">Кнопки вкл.</string>
+    <string name="accessibility_quick_settings_hwkeys_off">Кнопки выкл.</string>
+    <string name="quick_settings_hwkeys_label">Аппарат. кнопки</string>
 </resources>
