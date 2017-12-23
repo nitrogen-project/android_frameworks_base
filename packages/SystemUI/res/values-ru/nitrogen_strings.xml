@@ -48,6 +48,11 @@
     <string name="accessibility_quick_settings_heads_up_changed_off">Всплывающие уведомления отключены.</string>
     <string name="accessibility_quick_settings_heads_up_changed_on">Всплывающие уведомления включены.</string>
 
+    <!-- HW Keys Tile -->
+    <string name="accessibility_quick_settings_hwkeys_on">Кнопки вкл.</string>
+    <string name="accessibility_quick_settings_hwkeys_off">Кнопки выкл.</string>
+    <string name="quick_settings_hwkeys_label">Аппарат. кнопки</string>
+
     <string name="statusbar_items_title">Редактирование иконок</string>
 
     <string name="lockscreen_default">По умолчанию</string>

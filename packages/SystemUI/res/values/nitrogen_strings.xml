@@ -50,6 +50,11 @@
     <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off.</string>
     <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
 
+    <!-- HW Keys Tile -->
+    <string name="accessibility_quick_settings_hwkeys_on">HW keys on</string>
+    <string name="accessibility_quick_settings_hwkeys_off">HW keys off</string>
+    <string name="quick_settings_hwkeys_label">HW keys</string>
+
     <string name="statusbar_items_title">Statusbar icon</string>
 
     <string name="lockscreen_default">Default</string>
