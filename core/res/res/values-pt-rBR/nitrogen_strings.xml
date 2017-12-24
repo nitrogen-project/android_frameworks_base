@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/* //device/apps/common/assets/res/any/strings.xml
+**
+** Copyright 2006, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="reboot_to_recovery_title">Recuperação</string>
+    <string name="reboot_to_recovery_message">Reiniciando para Recuperação</string>
+    <string name="reboot_to_bootloader_title">Bootloader</string>
+    <string name="reboot_to_bootloader_message">Reiniciando para bootloader</string>
+    <string name="reboot_title">Reiniciar</string>
+    <string name="reboot_message">Reiniciando sistema</string>
+
+    <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
+    <string name="system_error_vendorprint">A sua imagem vendor não corresponde ao sistema. Favor instalar a <xliff:g id="string">%s</xliff:g> imagem vendor para seu aparelho</string>
+
+    <!-- ADB over network notification -->
+    <string name="adb_net_active_notification_title">ADB via rede não disponível</string>
+    <!-- ADB over USB and network notification -->
+    <string name="adb_both_active_notification_title">ADB via USB &amp; rede ativo</string>
+    <!-- ADB notification message-->
+    <string name="adb_active_generic_notification_message">Toque para desativar depuração.</string>
+
+    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_fakePackageSignature">Assinatura de pacote forjado</string>
+    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_fakePackageSignature">Permite ao app fingir ser um app diferente. Aplicativos maliciosos podem conseguir usar isso para acessar dados de apps privados. Conceda esta permissão apenas com cautela!</string>
+
+    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_toggleNavigationEditor">editor de controle da navegação</string>
+    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_toggleNavigationEditor">Permite que um aplicativo controle o editor da barra de navegação.</string>
+</resources>
