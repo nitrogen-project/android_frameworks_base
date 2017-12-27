@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2014-2016 The Nitrogen Project
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE Pornit</string>
+    <string name="lte_off">LTE Oprit</string>
+
+    <!-- Caffeine QS Tile -->
+    <string name="quick_settings_caffeine_label">Cofeină</string>
+    <string name="accessibility_quick_settings_caffeine_off">Cofeină oprită</string>
+    <string name="accessibility_quick_settings_caffeine_on">Cofeină pornită</string>
+
+    <string name="global_action_restart_advanced">Repornire avansată</string>
+    <string name="global_action_screenrecord">Înregistrare ecran</string>
+
+    <!-- Reboot/Recovery QS Tile -->
+    <string name="quick_settings_reboot_label">Repornire</string>
+    <string name="quick_settings_reboot_recovery_label">Recuperare</string>
+
+    <string name="statusbar_items_title">Pictogramă bară de stare</string>
+
+    <!-- PiP Tile -->
+    <string name="quick_settings_pip_label">PiP</string>
+    <string name="quick_settings_pip_tile_app_na">Aplicația nu acceptă PiP</string>
+
+    <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Captură de ecran</string>
+    <string name="quick_settings_region_screenshot_label">Captură de ecran parțială</string>
+
+    <!-- Content description of the data connection type HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_data_connection_HP">HSPA+</string>
+
+    <!-- volte icon switch -->
+    <string name="status_bar_volte">VOLTE</string>
+
+    <!-- ADB network tile -->
+    <string name="quick_settings_adb_network">ADB prin reţea</string>
+    <string name="quick_settings_network_adb_enabled_label">Adb prin reţea pornit</string>
+    <string name="quick_settings_network_adb_disabled_label">Adb prin reţea oprit</string>
+
+     <!-- Sound QS Tile -->
+     <string name="quick_settings_sound_label">Sunet</string>
+     <string name="quick_settings_sound_ring">Sonerie</string>
+     <string name="quick_settings_sound_vibrate">Vibrare</string>
+     <string name="quick_settings_sound_dnd">Nu deranja</string>
+
+    <!-- Heads Up QS Tile -->
+    <string name="quick_settings_heads_up_label">Atenţionare</string>
+    <string name="accessibility_quick_settings_heads_up_off">Atenţionare oprită.</string>
+    <string name="accessibility_quick_settings_heads_up_on">Atenţionare pornită.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_off">Atenţionare oprită.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_on">Atenţionare pornită.</string>
+
+    <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Notificarea de avertizare este amânată pentru 1 minut.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Notificarea de avertizare este amânată pentru <xliff:g id="number">%d</xliff:g> minute.</string>
+
+    <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Încărcare rapidă: (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> până la finalizare)</string>
+    <string name="keyguard_plugged_in_dash_charging">Încărcare rapidă</string>
+
+    <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Ecranul se înregistrează</string>
+    <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Înregistrare ecran</string>
+    <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Oprire</string>
+    <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Afişare indicator</string>
+    <string name="screenrecord_notif_pointer_off">Ascundere indicator</string>
+    <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Imposibil de înregistrat ecranul</string>
+    <string name="notification_channel_screenrecord">Înregistrări ecran</string>
+
+    <!-- Screenrecord Tile -->
+    <string name="quick_settings_screenrecord">Înregistrare ecran</string>
+
+    <string name="lockscreen_default">Implicit</string>
+    <string name="lockscreen_hidden">Nimic</string>
+
+    <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
+    <string name="custom_hint">Glisați de pe pictogramă pentru a lansa</string>
+
+    <string name="status_bar_vpn">VPN</string>
+
+    <string name="status_bar_roaming">Roaming</string>
+
+    <!-- HW Keys Tile -->
+    <string name="accessibility_quick_settings_hwkeys_on">Botoane HW pornite</string>
+    <string name="accessibility_quick_settings_hwkeys_off">Botoane HW oprite</string>
+    <string name="quick_settings_hwkeys_label">Botoane HW</string>
+
+     <!-- Volume QS Tile -->
+     <string name="accessibility_quick_settings_volume_panel">Volum</string>
+     <string name="quick_settings_volume_panel_label">Volum</string>
+</resources>
