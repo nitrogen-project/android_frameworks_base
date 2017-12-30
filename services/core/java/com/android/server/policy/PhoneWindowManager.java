@@ -96,6 +96,7 @@ import android.app.ActivityTaskManager;
 import android.app.AlarmManager;
 import android.app.AppOpsManager;
 import android.app.IUiModeManager;
+import android.app.KeyguardManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
@@ -1334,7 +1335,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     private void powerLongPress() {
-        final int behavior = mResolvedLongPressOnPowerBehavior;
+        int behavior = mResolvedLongPressOnPowerBehavior;
         switch (behavior) {
             case LONG_PRESS_POWER_NOTHING:
                 break;
@@ -1342,7 +1343,15 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mPowerKeyHandled = true;
                 performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, false,
                         "Power - Long Press - Global Actions");
-                showGlobalActionsInternal();
+                KeyguardManager km = (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
+                boolean locked = km.inKeyguardRestrictedInputMode();
+                boolean globalActionsOnLockScreen = Settings.System.getInt(
+                        mContext.getContentResolver(), Settings.System.POWERMENU_LOCKSCREEN, 1) == 1;
+                if (locked && !globalActionsOnLockScreen) {
+                    behavior = LONG_PRESS_POWER_NOTHING;
+                } else {
+                    showGlobalActionsInternal();
+                }
                 break;
             case LONG_PRESS_POWER_SHUT_OFF:
             case LONG_PRESS_POWER_SHUT_OFF_NO_CONFIRM:

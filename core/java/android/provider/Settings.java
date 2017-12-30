@@ -5068,6 +5068,12 @@ public final class Settings {
 
         public static final String THREE_FINGER_GESTURE = "three_finger_gesture";
 
+         /**
+         * Whether to display the power menu dialog while on the lockscreen
+         * @hide
+         */
+        public static final String POWERMENU_LOCKSCREEN = "powermenu_lockscreen";
+
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
