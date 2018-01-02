@@ -4420,14 +4420,6 @@ public final class Settings {
         public static final String FINGERPRINT_SUCCESS_VIB = "fingerprint_success_vib";
 
         /**
-         * 0 - wallpaper based
-         * 1 - force light
-         * 2 - force dark
-         * @hide
-         */
-        public static final String SYSTEM_UI_THEME = "system_ui_theme";
-
-        /**
          * Allow all rotations.
          * @hide
          */
@@ -7938,6 +7930,15 @@ public final class Settings {
          * @hide
          */
         public static final String LOCK_QS_DISABLED = "lockscreen_qs_disabled";
+
+        /**
+         * 0 - Automatic (Wallpaper based)
+         * 1 - Light
+         * 2 - Dark
+         * 3 - Black
+         * @hide
+         */
+        public static final String DEVICE_THEME = "device_theme";
 
         /**
          * This are the settings to be backed up.
