@@ -47,7 +47,7 @@
 
     <!-- QuickSettings: Sound [CHAR LIMIT=NONE] -->
     <string name="quick_settings_sound_label">Zvuk</string>
-    <string name="quick_settings_sound_ring">Zvonení</string>
+    <string name="quick_settings_sound_ring">Zvonění</string>
     <string name="quick_settings_sound_vibrate">Vibrace</string>
     <string name="quick_settings_sound_dnd">Nerušit</string>
 
@@ -74,7 +74,7 @@
     <string name="screenrecord_notif_stop">Zastavit</string>
     <!-- Screenrecord notification action: show/hide pointer -->
     <string name="screenrecord_notif_pointer_on">Zobrazit ukazovatel</string>
-    <string name="screenrecord_notif_pointer_off">Skrýt ukazovateľ</string>
+    <string name="screenrecord_notif_pointer_off">Skrýt ukazovatel</string>
     <!-- Screen record notification error title -->
     <string name="screenrecord_notif_error">Nelze nahrávat obrazovku</string>
     <string name="notification_channel_screenrecord">Nahrávky obrazovky</string>
@@ -89,4 +89,12 @@
     <string name="custom_hint">Posuňte prst z ikony směrem do středu obrazovky</string>
 
     <string name="status_bar_roaming">Roaming</string>
+
+    <!-- HW Keys Tile -->
+    <string name="accessibility_quick_settings_hwkeys_on">Tlačítka zap.</string>
+    <string name="accessibility_quick_settings_hwkeys_off">Tlačítka vyp.</string>
+    <string name="quick_settings_hwkeys_label">Hardvér. tlačítka</string>
+
+    <!-- Volume QS Tile -->
+    <string name="quick_settings_volume_panel_label">Panel hlasitosti</string>
 </resources>
