@@ -134,7 +134,7 @@ public final class NotificationChannel implements Parcelable {
             NotificationManager.IMPORTANCE_UNSPECIFIED;
     private static final boolean DEFAULT_DELETED = false;
     private static final boolean DEFAULT_SHOW_BADGE = true;
-    private static final boolean DEFAULT_ON_ZEN = true;
+    private static final boolean DEFAULT_ON_ZEN = false;
 
     private final String mId;
     private String mName;
