@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2014-2016 The Nitrogen Project
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- LTE QS Tile -->
+  <string name="qs_lte_label">LTE</string>
+  <string name="lte_on">LTE BE </string>
+  <string name="lte_off">LTE KI</string>
+  <!-- Caffeine QS Tile -->
+  <string name="quick_settings_caffeine_label">Koffein</string>
+  <string name="accessibility_quick_settings_caffeine_off">Koffein ki</string>
+  <string name="accessibility_quick_settings_caffeine_on">Koffein be</string>
+  <string name="global_action_restart_advanced">Speciális újraindítás</string>
+  <string name="global_action_screenrecord">Képernyőfelvétel</string>
+  <!-- Reboot/Recovery QS Tile -->
+  <string name="quick_settings_reboot_label">Újraindítás</string>
+  <string name="quick_settings_reboot_recovery_label">Recovery</string>
+  <string name="statusbar_items_title">Állapotsori ikonok</string>
+  <!-- PiP Tile -->
+  <string name="quick_settings_pip_label">PiP</string>
+  <string name="quick_settings_pip_tile_app_na">Az alkalmazás nem támogatja a PiP módot</string>
+  <!-- Screenshot QS tile -->
+  <string name="quick_settings_screenshot_label">Képernyőkép</string>
+  <string name="quick_settings_region_screenshot_label">Részleges képernyőkép</string>
+  <!-- Content description of the data connection type HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_data_connection_HP">HSPA+</string>
+  <!-- volte icon switch -->
+  <string name="status_bar_volte">VOLTE</string>
+  <!-- ADB network tile -->
+  <string name="quick_settings_adb_network">ADB hálózat</string>
+  <string name="quick_settings_network_adb_enabled_label">ADB hálózaton keresztül</string>
+  <string name="quick_settings_network_adb_disabled_label">ADB hálózaton keresztül</string>
+  <!-- Sound QS Tile -->
+  <string name="quick_settings_sound_label">Hang</string>
+  <string name="quick_settings_sound_ring">Csengetés</string>
+  <string name="quick_settings_sound_vibrate">Rezgés</string>
+  <string name="quick_settings_sound_dnd">Ne zavarjanak</string>
+  <!-- Heads Up QS Tile -->
+  <string name="quick_settings_heads_up_label">Lebegő értesítések</string>
+  <string name="accessibility_quick_settings_heads_up_off">Lebegő értesítések ki.</string>
+  <string name="accessibility_quick_settings_heads_up_on">Lebegő értesítések be.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">Lebegő értesítések kikapcsolva.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">Lebegő értesítések bekapcsolva.</string>
+  <!-- Heads up snooze toast -->
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Lebegő értesítések elhalasztva 1 percig.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Lebegő értesítések elhalasztva <xliff:g id="number">%d</xliff:g> percig.</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_dash_charging_time">Dash töltés (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> a teljes töltöttségig)</string>
+  <string name="keyguard_plugged_in_dash_charging">Dash töltés</string>
+  <!-- Screenrecord Notification Ticker -->
+  <string name="screenrecord_notif_ticker">Képernyőfelvétel folyamatban</string>
+  <!-- Screenrecord notification title -->
+  <string name="screenrecord_notif_title">Képernyő felvétele</string>
+  <!-- Screenrecord notification action: Stop -->
+  <string name="screenrecord_notif_stop">Leállítás</string>
+  <!-- Screenrecord notification action: show/hide pointer -->
+  <string name="screenrecord_notif_pointer_on">Mutató megjelenítése</string>
+  <string name="screenrecord_notif_pointer_off">Mutató elrejtése</string>
+  <!-- Screen record notification error title -->
+  <string name="screenrecord_notif_error">Képernyőfelvétel sikertelen</string>
+  <string name="notification_channel_screenrecord">Képernyőfelvételek</string>
+  <!-- Screenrecord Tile -->
+  <string name="quick_settings_screenrecord">Képernyőfelvétel</string>
+  <string name="lockscreen_default">Alapértelmezett</string>
+  <string name="lockscreen_hidden">Nincs</string>
+  <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
+  <string name="custom_hint">Csúsztassa az ujját az ikonon az elindításhoz</string>
+  <string name="status_bar_vpn">VPN</string>
+  <string name="status_bar_roaming">Roaming</string>
+  <!-- HW Keys Tile -->
+  <string name="accessibility_quick_settings_hwkeys_on">Hardveres gombok BE</string>
+  <string name="accessibility_quick_settings_hwkeys_off">Hardveres gombok KI</string>
+  <string name="quick_settings_hwkeys_label">Hardveres gombok</string>
+  <!-- Volume QS Tile -->
+  <string name="accessibility_quick_settings_volume_panel">Hangerő</string>
+  <string name="quick_settings_volume_panel_label">Hangerő</string>
+</resources>
