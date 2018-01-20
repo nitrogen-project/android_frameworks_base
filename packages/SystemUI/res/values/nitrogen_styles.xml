@@ -20,4 +20,12 @@
     <style name="ExTunerSettings" parent="@android:style/Theme.DeviceDefault.Settings">
         <item name="preferenceTheme">@style/TunerPreferenceTheme</item>
     </style>
+
+    <!-- Status bar notification ticker -->
+    <style name="TextAppearance.StatusBar.PhoneTicker"
+        parent="@*android:style/TextAppearance.StatusBar.Ticker">
+        <!-- Note: must be dp to fit in status bar -->
+        <item name="android:textSize">14dp</item>
+    </style>
+
 </resources>
