@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2014-2016 The Nitrogen Project
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE acceso</string>
+    <string name="lte_off">LTE spento</string>
+
+    <!-- Caffeine QS Tile -->
+    <string name="quick_settings_caffeine_label">Caffeina</string>
+    <string name="accessibility_quick_settings_caffeine_off">Caffeina accesa</string>
+    <string name="accessibility_quick_settings_caffeine_on">Caffeina spenta</string>
+
+    <string name="global_action_restart_advanced">Riavvio avanzato</string>
+    <string name="global_action_screenrecord">Registra schermo</string>
+
+    <!-- Reboot/Recovery QS Tile -->
+    <string name="quick_settings_reboot_label">Riavvia</string>
+    <string name="quick_settings_reboot_recovery_label">Recovery</string>
+
+    <string name="statusbar_items_title">Icona della barra di stato</string>
+
+    <!-- PiP Tile -->
+    <string name="quick_settings_pip_label">PiP</string>
+    <string name="quick_settings_pip_tile_app_na">L\'app non supporta PiP</string>
+
+    <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Screenshot</string>
+    <string name="quick_settings_region_screenshot_label">Screenshot parziale</string>
+
+    <!-- Content description of the data connection type HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_data_connection_HP">HSPA+</string>
+
+    <!-- volte icon switch -->
+    <string name="status_bar_volte">VOLTE</string>
+
+    <!-- ADB network tile -->
+    <string name="quick_settings_adb_network">ADB via rete</string>
+    <string name="quick_settings_network_adb_enabled_label">Abilitato</string>
+    <string name="quick_settings_network_adb_disabled_label">Disabilitato</string>
+
+     <!-- Sound QS Tile -->
+     <string name="quick_settings_sound_label">Suono</string>
+     <string name="quick_settings_sound_ring">Suoneria</string>
+     <string name="quick_settings_sound_vibrate">Vibrazione</string>
+     <string name="quick_settings_sound_dnd">Non disturbare</string>
+
+    <!-- Heads Up QS Tile -->
+    <string name="quick_settings_heads_up_label">Notifiche a comparsa</string>
+    <string name="accessibility_quick_settings_heads_up_off">Notifiche a comparsa spente.</string>
+    <string name="accessibility_quick_settings_heads_up_on">Notifiche a comparsa accese.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_off">Notifiche a comparsa disattivate.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_on">Notifiche a comparsa attivate.</string>
+
+    <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - La notifica è posticipata per 1 minuto.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Le notifiche saranno posticipate per <xliff:g id="number">%d</xliff:g> minuti.</string>
+
+    <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Ricarica rapida (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> al termine)</string>
+    <string name="keyguard_plugged_in_dash_charging">Ricarica Rapida</string>
+
+    <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Lo schermo è in fase di registrazione</string>
+    <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Registrazione schermo in corso</string>
+    <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Interrompi</string>
+    <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Mostra puntatore</string>
+    <string name="screenrecord_notif_pointer_off">Nascondi puntatore</string>
+    <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Impossibile registrare lo schermo</string>
+    <string name="notification_channel_screenrecord">Registrazione schermo</string>
+
+    <!-- Screenrecord Tile -->
+    <string name="quick_settings_screenrecord">Screenrecord</string>
+
+    <string name="lockscreen_default">Predefinito</string>
+    <string name="lockscreen_hidden">Nessuno</string>
+
+    <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
+    <string name="custom_hint">Scorri dall\'icona per avviare</string>
+
+    <string name="status_bar_vpn">VPN</string>
+
+    <string name="status_bar_roaming">Roaming</string>
+
+    <!-- HW Keys Tile -->
+    <string name="accessibility_quick_settings_hwkeys_on">Tasti HW attivati</string>
+    <string name="accessibility_quick_settings_hwkeys_off">Tasti HW disattivati</string>
+    <string name="quick_settings_hwkeys_label">Tasti HW</string>
+
+     <!-- Volume QS Tile -->
+     <string name="accessibility_quick_settings_volume_panel">Volume</string>
+     <string name="quick_settings_volume_panel_label">Volume</string>
+
+    <!-- USB Tethering tile -->
+    <string name="accessibility_quick_settings_usb_tether_off">Tethering USB spento</string>
+    <string name="accessibility_quick_settings_usb_tether_on">Tethering USB acceso</string>
+    <string name="accessibility_quick_settings_usb_tether_changed_off">Tethering USB disattivato</string>
+    <string name="accessibility_quick_settings_usb_tether_changed_on">Tethering USB attivato</string>
+    <string name="quick_settings_usb_tether_label">USB tethering</string>
+</resources>
