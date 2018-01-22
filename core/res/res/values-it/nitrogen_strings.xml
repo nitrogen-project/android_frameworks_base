@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/* //device/apps/common/assets/res/any/strings.xml
+**
+** Copyright 2006, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="reboot_to_recovery_title">Recovery</string>
+    <string name="reboot_to_recovery_message">Riavvio in recovery</string>
+    <string name="reboot_to_bootloader_title">Bootloader</string>
+    <string name="reboot_to_bootloader_message">Riavvio in bootloader</string>
+    <string name="reboot_title">Riavvio</string>
+    <string name="reboot_message">Riavvio del sistema</string>
+
+    <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
+    <string name="system_error_vendorprint">L\'immagine del fornitore non corrisponde al sistema. Si prega di installare il <xliff:g id="string">%s</xliff:g> immagine del fornitore per il tuo dispositivo</string>
+
+    <!-- ADB over network notification -->
+    <string name="adb_net_active_notification_title">ADB su rete abilitata</string>
+    <!-- ADB over USB and network notification -->
+    <string name="adb_both_active_notification_title">ADB su USB &amp; rete abilitata</string>
+    <!-- ADB notification message-->
+    <string name="adb_active_generic_notification_message">Tocca per disabilitare il debug.</string>
+
+    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_fakePackageSignature">Firma del pacchetto Spoof</string>
+    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_fakePackageSignature">Consente all\'applicazione di fingere di essere un\'app diversa. Le applicazioni dannose potrebbero essere in grado di utilizzarlo per accedere ai dati delle applicazioni private. Concedi questa autorizzazione con cautela!</string>
+
+    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_toggleNavigationEditor">Modifica dei controlli di navigazione</string>
+    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_toggleNavigationEditor">Consente a un\'applicazione di controllare le modifiche sulla barra di navigazione.</string>
+
+    <!-- Pocket Lock -->
+    <string name="pocket_lock_message_long_press">Pressione prolungata sul pulsante di accensione per interagire</string>
+</resources>
