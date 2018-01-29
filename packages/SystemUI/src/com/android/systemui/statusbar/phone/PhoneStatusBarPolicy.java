@@ -415,9 +415,8 @@ public class PhoneStatusBarPolicy
         int iconId = R.drawable.stat_sys_data_bluetooth_connected;
         String contentDescription =
                 mContext.getString(R.string.accessibility_quick_settings_bluetooth_on);
-        boolean bluetoothEnabled = false;
+        boolean bluetoothVisible = false;
         if (mBluetooth != null) {
-            bluetoothEnabled = mBluetooth.isBluetoothEnabled();
             final Collection<CachedBluetoothDevice> devices = mBluetooth.getDevices();
             if (devices != null) {
                 // get battery level for the first device with battery level support
@@ -434,6 +433,7 @@ public class PhoneStatusBarPolicy
                             iconId = R.drawable.stat_sys_data_bluetooth_connected;
                         }
                         contentDescription = mContext.getString(R.string.accessibility_bluetooth_connected);
+                        bluetoothVisible = mBluetooth.isBluetoothEnabled();
                         break;
                     }
                 }
@@ -441,7 +441,7 @@ public class PhoneStatusBarPolicy
         }
 
         mIconController.setIcon(mSlotBluetooth, iconId, contentDescription);
-        mIconController.setIconVisibility(mSlotBluetooth, bluetoothEnabled);
+        mIconController.setIconVisibility(mSlotBluetooth, bluetoothVisible);
     }
 
     private int getBtLevelIconRes(int batteryLevel) {
