@@ -44,4 +44,7 @@
     <string name="permlab_toggleNavigationEditor">управление редактированием панели навигации</string>
     <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permdesc_toggleNavigationEditor">Разрешать приложению управлять редактированием панели навигации.</string>
+
+    <!-- Pocket Lock -->
+    <string name="pocket_lock_message_long_press">Удерживайте кнопку питания для отключения</string>
 </resources>
