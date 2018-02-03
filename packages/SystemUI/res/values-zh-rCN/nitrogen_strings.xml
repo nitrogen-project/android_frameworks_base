@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2014-2016 The Nitrogen Project
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE 开</string>
+    <string name="lte_off">LTE 关</string>
+
+    <!-- Caffeine QS Tile -->
+    <string name="quick_settings_caffeine_label">保持亮屏</string>
+    <string name="accessibility_quick_settings_caffeine_off">保持亮屏 关</string>
+    <string name="accessibility_quick_settings_caffeine_on">保持亮屏 开</string>
+
+    <string name="global_action_restart_advanced">高级重启</string>
+    <string name="global_action_screenrecord">屏幕录制</string>
+
+    <!-- Reboot/Recovery QS Tile -->
+    <string name="quick_settings_reboot_label">重启</string>
+    <string name="quick_settings_reboot_recovery_label">恢复模式</string>
+
+    <string name="statusbar_items_title">状态栏图标</string>
+
+    <!-- PiP Tile -->
+    <string name="quick_settings_pip_label">画中画</string>
+    <string name="quick_settings_pip_tile_app_na">当前应用不支持画中画</string>
+
+    <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">屏幕截图</string>
+    <string name="quick_settings_region_screenshot_label">部分截图</string>
+
+    <!-- Content description of the data connection type HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_data_connection_HP">HSPA+</string>
+
+    <!-- volte icon switch -->
+    <string name="status_bar_volte">VOLTE</string>
+
+    <!-- ADB network tile -->
+    <string name="quick_settings_adb_network">网络 ADB 调试</string>
+    <string name="quick_settings_network_adb_enabled_label">网络 ADB 调试</string>
+    <string name="quick_settings_network_adb_disabled_label">网络 ADB 调试</string>
+
+     <!-- Sound QS Tile -->
+     <string name="quick_settings_sound_label">声音</string>
+     <string name="quick_settings_sound_ring">铃声</string>
+     <string name="quick_settings_sound_vibrate">振动</string>
+     <string name="quick_settings_sound_dnd">勿扰</string>
+
+    <!-- Heads Up QS Tile -->
+    <string name="quick_settings_heads_up_label">浮动通知</string>
+    <string name="accessibility_quick_settings_heads_up_off">浮动通知 关</string>
+    <string name="accessibility_quick_settings_heads_up_on">浮动通知 开</string>
+    <string name="accessibility_quick_settings_heads_up_changed_off">关闭浮动通知</string>
+    <string name="accessibility_quick_settings_heads_up_changed_on">打开浮动通知</string>
+
+    <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - 浮动通知打盹1分钟。</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - 浮动通知打盹<xliff:g id="number">%d</xliff:g>分钟。</string>
+
+    <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Dash 闪充 (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g>充满)</string>
+    <string name="keyguard_plugged_in_dash_charging">Dash 闪充</string>
+
+    <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">正在录制屏幕</string>
+    <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">录制屏幕中</string>
+    <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">停止</string>
+    <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">显示指针</string>
+    <string name="screenrecord_notif_pointer_off">隐藏指针</string>
+    <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">无法录制屏幕</string>
+    <string name="notification_channel_screenrecord">屏幕录制</string>
+
+    <!-- Screenrecord Tile -->
+    <string name="quick_settings_screenrecord">屏幕录制</string>
+
+    <string name="lockscreen_default">默认</string>
+    <string name="lockscreen_hidden">隐藏</string>
+
+    <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
+    <string name="custom_hint">从图标上滑动即可启动</string>
+
+    <string name="status_bar_vpn">VPN</string>
+
+    <string name="status_bar_roaming">漫游</string>
+    
+    <string name="status_bar_data_saver">数据服务</string>
+    
+    <!-- HW Keys Tile -->
+    <string name="accessibility_quick_settings_hwkeys_on">实体按键 开</string>
+    <string name="accessibility_quick_settings_hwkeys_off">实体按键 关</string>
+    <string name="quick_settings_hwkeys_label">实体按键</string>
+
+    <!-- Volume QS Tile -->
+    <string name="accessibility_quick_settings_volume_panel">音量</string>
+    <string name="quick_settings_volume_panel_label">音量</string>
+    
+    <!-- USB Tethering tile -->
+    <string name="accessibility_quick_settings_usb_tether_off">USB共享 关</string>
+    <string name="accessibility_quick_settings_usb_tether_on">USB共享 开</string>
+    <string name="accessibility_quick_settings_usb_tether_changed_off">关闭USB共享</string>
+    <string name="accessibility_quick_settings_usb_tether_changed_on">打开USB共享</string>
+    <string name="quick_settings_usb_tether_label">USB共享</string>
+</resources>
