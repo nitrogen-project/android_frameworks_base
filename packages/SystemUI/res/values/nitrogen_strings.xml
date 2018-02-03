@@ -102,6 +102,8 @@
 
     <string name="status_bar_roaming">Roaming</string>
 
+    <string name="status_bar_data_saver">Data saver</string>
+
     <!-- HW Keys Tile -->
     <string name="accessibility_quick_settings_hwkeys_on">HW keys on</string>
     <string name="accessibility_quick_settings_hwkeys_off">HW keys off</string>

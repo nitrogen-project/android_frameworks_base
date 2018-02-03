@@ -90,6 +90,8 @@
 
     <string name="status_bar_roaming">Роуминг</string>
 
+    <string name="status_bar_data_saver">Экономия трафика</string>
+
     <!-- HW Keys Tile -->
     <string name="accessibility_quick_settings_hwkeys_on">Кнопки вкл.</string>
     <string name="accessibility_quick_settings_hwkeys_off">Кнопки выкл.</string>
