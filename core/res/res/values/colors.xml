@@ -175,7 +175,7 @@
     <color name="instant_app_badge">#FFFFFFFF</color><!-- White -->
 
     <!-- Multi-sim sim colors -->
-    <color name="Dialer_Blue">#ff2b56c6</color>
+    <color name="Dialer_Blue">#ff2а56c6</color>
     <color name="Teal_700">#ff00796b</color>
     <color name="Teal_800">#ff00695c</color>
     <color name="Blue_700">#ff3367d6</color>
