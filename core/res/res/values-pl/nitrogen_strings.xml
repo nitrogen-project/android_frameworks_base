@@ -44,4 +44,7 @@
     <string name="permlab_toggleNavigationEditor">Kontrola edytora paska nawigacji</string>
     <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permdesc_toggleNavigationEditor">Zezwala aplikacji na kontrolowanie edytora paska nawigacyjnego.</string>
+	
+    <!-- Pocket Lock -->
+    <string name="pocket_lock_message_long_press">Długo wciśnij przycisk zasilania w celu interakcji</string>
 </resources>
