@@ -34,6 +34,11 @@
         <item name="android:colorPrimaryDark">@*android:color/primary_dark_device_default_settings</item>
         <item name="android:colorAccent">@*android:color/accent_device_default_light</item>
     </style>
+    <style name="Theme.DeviceDefault.Light.Dialog.Alert" parent="@*android:style/Theme.Material.Dialog.Alert">
+        <item name="android:colorPrimary">@*android:color/primary_dark_device_default_settings</item>
+        <item name="android:colorPrimaryDark">@*android:color/primary_device_default_settings</item>
+        <item name="android:colorAccent">@*android:color/accent_device_default_light</item>
+    </style>
     <style name="Theme.Material.Settings.DialogWhenLarge" parent="@*android:style/Theme.Material.DialogWhenLarge">
         <item name="android:colorPrimary">@*android:color/primary_device_default_dark</item>
         <item name="android:colorPrimaryDark">@*android:color/primary_dark_device_default_settings</item>
