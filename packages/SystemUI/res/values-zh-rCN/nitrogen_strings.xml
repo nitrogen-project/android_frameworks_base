@@ -38,7 +38,7 @@
 
     <!-- PiP Tile -->
     <string name="quick_settings_pip_label">画中画</string>
-    <string name="quick_settings_pip_tile_app_na">应用不支持画中画</string>
+    <string name="quick_settings_pip_tile_app_na">当前应用不支持画中画</string>
 
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">屏幕截图</string>
@@ -73,8 +73,8 @@
     <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - 浮动通知打盹<xliff:g id="number">%d</xliff:g>分钟。</string>
 
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_dash_charging_time">Dash 充电 (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g>充满)</string>
-    <string name="keyguard_plugged_in_dash_charging">Dash 充电</string>
+    <string name="keyguard_indication_dash_charging_time">Dash 闪充 (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g>充满)</string>
+    <string name="keyguard_plugged_in_dash_charging">Dash 闪充</string>
 
     <!-- Screenrecord Notification Ticker -->
     <string name="screenrecord_notif_ticker">正在录制屏幕</string>
@@ -102,6 +102,8 @@
 
     <string name="status_bar_roaming">漫游</string>
     
+    <string name="status_bar_data_saver">数据服务</string>
+    
     <!-- HW Keys Tile -->
     <string name="accessibility_quick_settings_hwkeys_on">实体按键 开</string>
     <string name="accessibility_quick_settings_hwkeys_off">实体按键 关</string>
@@ -110,4 +112,11 @@
     <!-- Volume QS Tile -->
     <string name="accessibility_quick_settings_volume_panel">音量</string>
     <string name="quick_settings_volume_panel_label">音量</string>
+    
+    <!-- USB Tethering tile -->
+    <string name="accessibility_quick_settings_usb_tether_off">USB共享 关</string>
+    <string name="accessibility_quick_settings_usb_tether_on">USB共享 开</string>
+    <string name="accessibility_quick_settings_usb_tether_changed_off">关闭USB共享</string>
+    <string name="accessibility_quick_settings_usb_tether_changed_on">打开USB共享</string>
+    <string name="quick_settings_usb_tether_label">USB共享</string>
 </resources>
