@@ -101,4 +101,8 @@
     <string name="quick_settings_volume_panel_label">Панель громкости</string>
 
     <string name="quick_settings_usb_tether_label">USB модем</string>
+
+    <!-- Caffeine tile -->
+    <string name="caffeine_info_title">Подсказка</string>
+    <string name="caffeine_info_message">Плитка Кофеин не позволяет экрану устройства выключиться.\n\nВыключение экрана вручную, отключает плитку.</string>
 </resources>

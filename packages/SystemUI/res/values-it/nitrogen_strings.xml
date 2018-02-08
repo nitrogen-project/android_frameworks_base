@@ -114,4 +114,7 @@
     <string name="accessibility_quick_settings_usb_tether_changed_off">Tethering USB disattivato</string>
     <string name="accessibility_quick_settings_usb_tether_changed_on">Tethering USB attivato</string>
     <string name="quick_settings_usb_tether_label">USB tethering</string>
+
+    <string name="caffeine_info_title">A che serve questo?</string>
+    <string name="caffeine_info_message">La tile Caffeina ti permette di mantenere lo schermo acceso finchè non viene disattivata.\n\nLa tile viene disattivata automaticamente se lo schermo viene spento.</string>
 </resources>
