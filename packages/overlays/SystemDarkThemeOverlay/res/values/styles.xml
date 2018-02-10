@@ -132,4 +132,22 @@
         <item name="android:colorAccent">@*android:color/accent_device_default_light</item>
         <item name="android:colorControlNormal">@*android:color/accent_device_default_light</item>
     </style>
+
+    <style name="Theme.DeviceDefault.Light.Panel" parent="@*android:style/Theme.Material.Panel">
+        <item name="android:colorPrimary">@*android:color/primary_device_default_dark</item>
+        <item name="android:colorPrimaryDark">@*android:color/primary_dark_device_default_settings</item>
+        <item name="android:colorAccent">@*android:color/accent_device_default_light</item>
+    </style>
+
+    <style name="Theme.DeviceDefault.Light.SearchBar" parent="@*android:style/Theme.Material.SearchBar">
+        <item name="android:colorPrimary">@*android:color/primary_device_default_dark</item>
+        <item name="android:colorPrimaryDark">@*android:color/primary_dark_device_default_settings</item>
+        <item name="android:colorAccent">@*android:color/accent_device_default_light</item>
+    </style>
+
+    <style name="Theme.DeviceDefault.Light.Voice" parent="@*android:style/Theme.Material.Voice">
+        <item name="android:colorPrimary">@*android:color/primary_device_default_dark</item>
+        <item name="android:colorPrimaryDark">@*android:color/primary_dark_device_default_settings</item>
+        <item name="android:colorAccent">@*android:color/accent_device_default_light</item>
+    </style>
 </resources>
