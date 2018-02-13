@@ -104,7 +104,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     private TouchAnimator mAnimator;
     private View mDateTimeGroup;
     private boolean mKeyguardShowing;
-    private TouchAnimator mAlarmAnimator;
 
     public QSFooterImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -162,26 +161,9 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                 .addFloat(mSettingsButton, "rotation", -120, 0)
                 .build();
         if (mAlarmShowing) {
-            int translate = isLayoutRtl() ? mDate.getWidth() : -mDate.getWidth();            
-            mAlarmAnimator = new Builder().addFloat(mDate, "alpha", 1, 0)
-                    .addFloat(mDateTimeGroup, "translationX", 0, translate)
-                    .addFloat(mAlarmStatus, "alpha", 0, 1)
-                    .setListener(new ListenerAdapter() {
-                        @Override
-                        public void onAnimationAtStart() {
-                            mAlarmStatus.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onAnimationStarted() {
-                            mAlarmStatus.setVisibility(View.VISIBLE);
-                        }
-                    }).build();
+            mAlarmStatus.setVisibility(View.VISIBLE);
         } else {
-            mAlarmAnimator = null;
             mAlarmStatus.setVisibility(View.GONE);
-            mDate.setAlpha(1);
-            mDateTimeGroup.setTranslationX(0);
         }
         setExpansion(mExpansionAmount);
     }
@@ -265,8 +247,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     public void setExpansion(float headerExpansionFraction) {
         mExpansionAmount = headerExpansionFraction;
         if (mAnimator != null) mAnimator.setPosition(headerExpansionFraction);
-        if (mAlarmAnimator != null) mAlarmAnimator.setPosition(
-                mKeyguardShowing ? 0 : headerExpansionFraction);
 
         if (mSettingsAlpha != null) {
             mSettingsAlpha.setPosition(headerExpansionFraction);
