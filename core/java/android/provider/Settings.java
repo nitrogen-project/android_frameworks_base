@@ -4161,11 +4161,6 @@ public final class Settings {
         public static final String QS_ROWS_LANDSCAPE = "qs_rows_landscape";
 
         /**
-         * @hide
-         */
-        public static final String SHOW_BATTERY_IMAGE = "status_bar_show_battery_image";
-
-        /**
          * How many columns to show in the qs panel when in portrait
          * @hide
          */

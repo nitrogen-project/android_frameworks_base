@@ -90,8 +90,4 @@
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="zen"
         android:title="@string/quick_settings_dnd_label" />
-
-    <com.android.systemui.tuner.StatusBarSwitch
-        android:key="battery"
-        android:title="@string/battery" />
 </PreferenceScreen>
