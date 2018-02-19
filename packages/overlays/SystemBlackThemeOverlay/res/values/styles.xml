@@ -224,4 +224,19 @@
         <item name="android:dialogTheme">@*android:style/Theme.Material.Settings.BaseDialog</item>
         <item name="android:alertDialogTheme">@*android:style/Theme.Material.Settings.Dialog.BaseAlert</item>
     </style>
+
+    <style name="Theme.DeviceDefault.Resolver" parent="@*android:style/Theme.Material">
+        <item name="android:backgroundTint">@*android:color/black</item>
+        <item name="android:windowBackground">@*android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
+        <item name="android:colorPrimary">@*android:color/black</item>
+        <item name="android:colorPrimaryDark">@*android:color/black</item>
+        <item name="android:colorAccent">@*android:color/accent_device_default_light</item>
+    </style>
 </resources>
