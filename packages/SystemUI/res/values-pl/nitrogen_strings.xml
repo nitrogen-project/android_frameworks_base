@@ -28,7 +28,7 @@
     <string name="global_action_screenrecord">Nagrywanie ekranu</string>
 
     <!-- Reboot/Recovery QS Tile -->
-    <string name="quick_settings_reboot_label">Uruchom ponownie</string>
+    <string name="quick_settings_reboot_label">Restart</string>
     <string name="quick_settings_reboot_recovery_label">Recovery</string>
 
     <string name="statusbar_items_title">Ikony paska stanu</string>
@@ -114,4 +114,9 @@
     <string name="accessibility_quick_settings_usb_tether_changed_off">Tethering USB wyłączony.</string>
     <string name="accessibility_quick_settings_usb_tether_changed_on">Tethering USB włączony.</string>
     <string name="quick_settings_usb_tether_label">Tethering USB</string>
+	
+	<!-- Caffeine tile -->
+    <string name="caffeine_info_title">Co to jest?</string>
+    <string name="caffeine_info_message">Kofeina to prosty przełącznik, który możesz włączyć, aby ekran był zawsze włączony.\n\nNależy pamiętać, że\'s stan przełącznika zostanie zresetowany po wyłączeniu ekranu.</string>
+</resources>
 </resources>
