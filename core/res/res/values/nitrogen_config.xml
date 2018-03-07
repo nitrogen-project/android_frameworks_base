@@ -86,4 +86,8 @@
     <bool name="config_canForceDozeNotifications">true</bool>
 
     <bool name="config_allowNotificationIconTextTinting">true</bool>
+
+    <!-- True if the notification's dynamic app icon/title tint should be optimised for dark
+    backgrounds (requires config_allowNotificationIconTextTinting to be true)-->
+    <bool name="config_useDarkBgNotificationIconTextTinting">false</bool>
 </resources>
