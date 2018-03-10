@@ -103,6 +103,8 @@
   <!-- True if the notification's dynamic app icon and text tint should be optimised for dark
        backgrounds -->
   <java-symbol type="bool" name="config_useDarkBgNotificationIconTextTinting" />
+  <java-symbol type="bool" name="config_useDarkBgNotificationTinting_override" />
+  <java-symbol type="bool" name="config_notificationTinting_override" />
 
   <!-- Notification icon tint -->
   <java-symbol type="color" name="notification_icon_default_color" />
