@@ -75,4 +75,8 @@
     <color name="notification_gear_color">#ff757575</color>
     <color name="notification_guts_bg_color">#f8f9fa</color>
     <color name="notification_snooze_text">#dd000000</color>
+
+    <!-- Auto fill -->
+    <color name="autofill_save_title_color">@color/primary_text_default_material_light</color>
+    <color name="autofill_autofill_save_custom_subtitle_color">@color/primary_text_default_material_light</color>
 </resources>
