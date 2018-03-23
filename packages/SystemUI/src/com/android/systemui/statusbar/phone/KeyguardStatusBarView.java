@@ -40,6 +40,7 @@ import com.android.systemui.Dependency;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
 import com.android.systemui.qs.QSPanel;
+import com.android.systemui.statusbar.SignalClusterView;
 import com.android.systemui.statusbar.phone.StatusBarIconController.IconManager;
 import com.android.systemui.statusbar.phone.StatusBarIconController.TintedIconManager;
 import com.android.systemui.statusbar.policy.BatteryController;
@@ -78,6 +79,8 @@ public class KeyguardStatusBarView extends RelativeLayout
     private View mSystemIconsContainer;
     private TintedIconManager mIconManager;
 
+    private SignalClusterView mSignalClusterView;
+
     public KeyguardStatusBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -92,6 +95,8 @@ public class KeyguardStatusBarView extends RelativeLayout
         mCarrierLabel = (TextView) findViewById(R.id.keyguard_carrier_text);
         mBatteryView = (BatteryMeterView) mSystemIconsContainer.findViewById(R.id.battery);
         mBatteryView.setIsQuickSbHeaderOrKeyguard(true);
+        mSignalClusterView = (SignalClusterView) findViewById(R.id.signal_cluster);
+        mSignalClusterView.setIsKeyguard(true);
 
         loadDimens();
         updateUserSwitcher();
