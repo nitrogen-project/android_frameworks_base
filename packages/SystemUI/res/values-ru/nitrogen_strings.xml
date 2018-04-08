@@ -95,4 +95,8 @@
 
     <!-- Screenrecord -->
     <string name="quick_settings_screenrecord_label">Запись экрана</string>
+
+    <!-- Smart Pixels QS Tile -->
+    <string name="quick_settings_smart_pixels">Smart Pixels</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Автомат. Smart Pixels</string>
 </resources>
