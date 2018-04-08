@@ -3,4 +3,8 @@
     <color name="condition_card_background">@*android:color/black</color>
     <color name="suggestion_condition_background">@*android:color/black</color>
     <color name="suggestion_tile_background">@*android:color/black</color>
+
+    <!-- Expanded desktop -->
+    <drawable name="expanded_item_bg_activated">@*android:color/black</drawable>
+    <drawable name="expanded_item_bg">@*android:color/black</drawable>
 </resources>
