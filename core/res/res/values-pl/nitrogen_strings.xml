@@ -46,5 +46,5 @@
     <string name="permdesc_toggleNavigationEditor">Zezwala aplikacji na kontrolowanie edytora paska nawigacyjnego.</string>
 	
     <!-- Pocket Lock -->
-    <string name="pocket_lock_message_long_press">Długo wciśnij przycisk zasilania w celu interakcji</string>
+    <string name="pocket_lock_message_long_press">Przytrzymaj przycisk zasilania w celu interakcji</string>
 </resources>
