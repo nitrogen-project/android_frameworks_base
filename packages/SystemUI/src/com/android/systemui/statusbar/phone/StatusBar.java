@@ -6354,10 +6354,10 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateTheme();
             setQsPanelOptions();
             setForceAmbient();
-            updateBatterySettings();
         }
     }
 
+    // Called from CollapsedStatusBarFragment observer
     public void updateBatterySettings() {
         if (mStatusBarView != null) {
             mStatusBarView.updateBatterySettings();
