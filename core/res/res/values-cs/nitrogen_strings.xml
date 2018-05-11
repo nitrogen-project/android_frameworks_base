@@ -19,9 +19,9 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="reboot_to_recovery_title">Recovery</string>
-    <string name="reboot_to_recovery_message">ReStart do Recovery</string>
+    <string name="reboot_to_recovery_message">Restartovat do recovery</string>
     <string name="reboot_to_bootloader_title">Bootloader</string>
-    <string name="reboot_to_bootloader_message">ReStart do Bootloadera</string>
+    <string name="reboot_to_bootloader_message">Restartovat do bootloadera</string>
     <string name="reboot_title">Restart</string>
     <string name="reboot_message">Restartování systému</string>
 
