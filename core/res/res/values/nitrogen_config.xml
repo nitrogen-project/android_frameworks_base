@@ -94,4 +94,8 @@
     <!-- for notification overlays to force what they need -->
     <bool name="config_useDarkBgNotificationTinting_override">false</bool>
     <bool name="config_notificationTinting_override">false</bool>
+
+    <!-- Full screen aspect ratio -->
+    <bool name="config_haveHigherAspectRatioScreen">false</bool>
+    <item name="config_screenAspectRatio" format="float" type="dimen">2.1</item>
 </resources>
