@@ -22,6 +22,7 @@ import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Looper;
 import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.util.ArraySet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,9 +45,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.android.internal.telephony.util.TelephonyExtUtils;
+import com.android.internal.telephony.util.TelephonyExtUtils.ProvisioningChangedListener;
 
 public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallback,
-        SecurityController.SecurityControllerCallback, Tunable {
+        SecurityController.SecurityControllerCallback, Tunable, ProvisioningChangedListener {
     private static final String TAG = "StatusBarSignalPolicy";
 
     private static final String SLOT_ROAMING = "roaming";
@@ -59,6 +62,7 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
     private final String mSlotRoaming;
 
     private final Context mContext;
+    private static Context ctx;
     private final StatusBarIconController mIconController;
     private final NetworkController mNetworkController;
     private final SecurityController mSecurityController;
@@ -82,6 +86,7 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
 
     public StatusBarSignalPolicy(Context context, StatusBarIconController iconController) {
         mContext = context;
+        ctx = context;
 
         mSlotAirplane = mContext.getString(com.android.internal.R.string.status_bar_airplane);
         mSlotMobile   = mContext.getString(com.android.internal.R.string.status_bar_mobile);
@@ -98,7 +103,26 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
         mNetworkController.addCallback(this);
         mSecurityController.addCallback(this);
 
+        TelephonyExtUtils.getInstance(context).addListener(this);
+
         Dependency.get(TunerService.class).addTunable(this, StatusBarIconController.ICON_BLACKLIST);
+    }
+
+    @Override
+    public void onProvisioningChanged(int slotId, boolean isProvisioned) {
+        int[] subId = SubscriptionManager.getSubId(slotId);
+        if (subId != null) {
+            MobileIconState state = getState(subId[0]);
+            if (state != null) {
+                state.mProvisioned = isProvisioned;
+                if (!isProvisioned) {
+                    state.visible = false;
+                }
+            }
+
+            mNetworkController.removeCallback(this);
+            mNetworkController.addCallback(this);
+        }
     }
 
     public void destroy() {
@@ -208,7 +232,7 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
         // Visibility of the data type indicator changed
         boolean typeChanged = statusType != state.typeId && (statusType == 0 || state.typeId == 0);
 
-        state.visible = statusIcon.visible && !mBlockMobile;
+        state.visible = statusIcon.visible && !mBlockMobile && state.mProvisioned;
         state.strengthId = statusIcon.icon;
         state.typeId = statusType;
         state.contentDescription = statusIcon.contentDescription;
@@ -409,10 +433,15 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
         public boolean roaming;
         public boolean needsLeadingPadding;
         public String typeContentDescription;
+        private boolean mProvisioned = true;
 
         private MobileIconState(int subId) {
             super();
             this.subId = subId;
+            TelephonyExtUtils extTelephony = TelephonyExtUtils.getInstance(ctx);
+            if (extTelephony.hasService()) {
+                mProvisioned = extTelephony.isSubProvisioned(subId);
+            }
         }
 
         @Override
