@@ -52,7 +52,7 @@
     <string name="quick_settings_sound_dnd">Nerušiť</string>
 
     <!-- Heads Up QS Tile -->
-    <string name="quick_settings_heads_up_label">Vyskakuj. upozornen.</string>
+    <string name="quick_settings_heads_up_label">Vyskakujúce upozornia</string>
     <string name="accessibility_quick_settings_heads_up_off">Vyskakujúce upozornenia sú vypnuté.</string>
     <string name="accessibility_quick_settings_heads_up_on">Vyskakujúce upozornenia sú zapnuté.</string>
     <string name="accessibility_quick_settings_heads_up_changed_off">Vyskakujúce upozornenia boli vypnuté.</string>
@@ -90,11 +90,24 @@
 
     <string name="status_bar_roaming">Roaming</string>
 
+    <string name="status_bar_data_saver">Šetrič dát</string>
+
     <!-- HW Keys Tile -->
     <string name="accessibility_quick_settings_hwkeys_on">Tlačidlá zap.</string>
     <string name="accessibility_quick_settings_hwkeys_off">Tlačidlá vyp.</string>
-    <string name="quick_settings_hwkeys_label">Hardvér. tlačidlá</string>
+    <string name="quick_settings_hwkeys_label">Hardvérové tlačidlá</string>
 
     <!-- Volume QS Tile -->
     <string name="quick_settings_volume_panel_label">Panel hlasitosti</string>
+
+    <string name="quick_settings_usb_tether_label">USB modem</string>
+
+    <!-- Caffeine tile -->
+    <string name="caffeine_info_title">Pomôcka</string>
+    <string name="caffeine_info_message">Kofeínová dlaždica je jednoduchá dlaždica, ktorú môžete zapnúť, aby zostala obrazovka trvale zapnutá.\n\nVšimnite si, že stav dlaždíc sa po vypnutí obrazovky sám vynuluje.</string>
+
+    <!-- Expanded desktop tile -->
+    <string name="quick_settings_expanded_desktop_label">Rozšírená plocha</string>
+    <string name="quick_settings_expanded_desktop">Rozšírená</string>
+    <string name="quick_settings_expanded_desktop_off">Normálna</string>
 </resources>

@@ -23,7 +23,7 @@
     <string name="lte_off">LTE VYP.</string>
 
     <!-- Caffeine Tile -->
-    <string name="quick_settings_caffeine_label">Kofeín</string>
+    <string name="quick_settings_caffeine_label">Kofein</string>
 
     <string name="global_action_restart_advanced">Rozšířený restart</string>
     <string name="global_action_screenrecord">Záznam obrazovky</string>
@@ -90,11 +90,24 @@
 
     <string name="status_bar_roaming">Roaming</string>
 
+    <string name="status_bar_data_saver">Spořič dat</string>
+
     <!-- HW Keys Tile -->
     <string name="accessibility_quick_settings_hwkeys_on">Tlačítka zap.</string>
     <string name="accessibility_quick_settings_hwkeys_off">Tlačítka vyp.</string>
-    <string name="quick_settings_hwkeys_label">Hardvér. tlačítka</string>
+    <string name="quick_settings_hwkeys_label">HW tlačítka</string>
 
     <!-- Volume QS Tile -->
     <string name="quick_settings_volume_panel_label">Panel hlasitosti</string>
+
+    <string name="quick_settings_usb_tether_label">USB modem</string>
+
+    <!-- Caffeine tile -->
+    <string name="caffeine_info_title">Pomůcka</string>
+    <string name="caffeine_info_message">Kofeinová dlaždice je jednoduchá dlaždice, kterou můžete zapnout, aby zůstala obrazovka trvale zapnutá.\n\nVšimnite si, že stav dlaždic se po vypnutí obrazovky sám vynuluje.</string>
+
+    <!-- Expanded desktop tile -->
+    <string name="quick_settings_expanded_desktop_label">Rozšířená plocha</string>
+    <string name="quick_settings_expanded_desktop">Rozšířená</string>
+    <string name="quick_settings_expanded_desktop_off">Normální</string>
 </resources>

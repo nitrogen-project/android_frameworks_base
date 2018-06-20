@@ -41,7 +41,7 @@
     <string name="permdesc_fakePackageSignature">Umožňuje aplikaci předstírat, že je jinou aplikací. Škodlivé aplikace mohou získat přístup k vašim datům. Používejte na vlastní riziko a riziko.</string>
 
     <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-    <string name="permlab_toggleNavigationEditor">ovládací prvek úpravy navigačního panelu</string>
+    <string name="permlab_toggleNavigationEditor">Ovládací prvek úpravy navigačního panelu</string>
     <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permdesc_toggleNavigationEditor">Povolit aplikaci spravovat úpravu navigačního panelu.</string>
 </resources>
