@@ -5254,6 +5254,13 @@ public final class Settings {
         public static final String VOLUME_BUTTON_MUSIC_CONTROL = "volume_button_music_control";
 
         /**
+         * Whether to show the battery info on the lockscreen while charging
+         * @hide
+         */
+        @Readable
+        public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
