@@ -79,6 +79,7 @@
     <string name="qs_menu_item_titles">Отображать подписи</string>
     <string name="qs_menu_item_rows">Ряды</string>
     <string name="qs_menu_item_rows_landscape">Ряды в ландш.</string>
+    <string name="qs_menu_item_qs_columns">Кол-во мал. плиток</string>
 
     <string name="status_bar_roaming">Роуминг</string>
     <string name="status_bar_data_saver">Экономия трафика</string>
