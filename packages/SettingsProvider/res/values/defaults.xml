@@ -321,4 +321,7 @@
 
     <!-- Whether vibrate icon is shown in the status bar by default. -->
     <integer name="def_statusBarVibrateIconEnabled">0</integer>
+
+    <!-- Default for Settings.Global.DEVELOPMENT_SETTINGS_ENABLED -->
+    <integer  name="def_development_settings">1</integer>
 </resources>
