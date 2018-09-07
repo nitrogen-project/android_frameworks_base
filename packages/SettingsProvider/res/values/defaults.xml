@@ -314,4 +314,7 @@
 
     <!-- Whether tilt to bright is enabled by default. -->
     <bool name="def_wearable_tiltToBrightEnabled">false</bool>
+
+    <!-- Default for Settings.Global.DEVELOPMENT_SETTINGS_ENABLED -->
+    <integer  name="def_development_settings">1</integer>
 </resources>
