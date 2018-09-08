@@ -284,6 +284,7 @@ public class NotificationPanelView extends PanelView implements
 
     private GestureDetector mLockscreenDoubleTapToSleep;
     private boolean mIsLockscreenDoubleTapEnabled;
+    private int mStatusBarHeaderHeight;
 
     public NotificationPanelView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -363,6 +364,8 @@ public class NotificationPanelView extends PanelView implements
                 R.dimen.keyguard_indication_bottom_padding);
         mQsNotificationTopPadding = getResources().getDimensionPixelSize(
                 R.dimen.qs_notification_padding);
+        mStatusBarHeaderHeight = getResources().getDimensionPixelSize(
+                R.dimen.status_bar_height);
     }
 
     public void updateResources() {
@@ -875,8 +878,11 @@ public class NotificationPanelView extends PanelView implements
         if (mBlockTouches || (mQs != null && mQs.isCustomizing())) {
             return false;
         }
+        final int h = getMeasuredHeight();
         if (mIsLockscreenDoubleTapEnabled
-                && mStatusBarState == StatusBarState.KEYGUARD) {
+                && mStatusBarState == StatusBarState.KEYGUARD
+                && (event.getY() < (h / 3) ||
+                event.getY() > (h - mStatusBarHeaderHeight * 5))) {
             mLockscreenDoubleTapToSleep.onTouchEvent(event);
         }
         initDownStates(event);
