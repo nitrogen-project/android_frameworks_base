@@ -1817,11 +1817,7 @@ public class Camera {
                     } catch (RemoteException e) {
                         Log.e(TAG, "Audio service is unavailable for queries");
                     }
-                    try {
-                        _enableShutterSound(false);
-                    } catch (Exception e) {
-                        Log.e(TAG, "Couldn't disable shutter sound");
-                    }
+                    _enableShutterSound(false);
                 } else {
                     enableShutterSound(mShutterSoundEnabledFromApp);
                 }
