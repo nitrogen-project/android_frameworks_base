@@ -1002,6 +1002,16 @@ public class Build {
     public static final String FINGERPRINT = deriveFingerprint();
 
     /**
+     * Nitrogen fingerprint
+     * @hide
+     */
+    public static final String PROP_NITROGEN_FINGERPRINT = "org.nitrogen.fingerprint";
+
+    /** @hide */
+    public static final String NITROGEN_FINGERPRINT = SystemProperties.get(PROP_NITROGEN_FINGERPRINT,
+            deriveFingerprint());
+
+    /**
      * Some devices split the fingerprint components between multiple
      * partitions, so we might derive the fingerprint at runtime.
      */
