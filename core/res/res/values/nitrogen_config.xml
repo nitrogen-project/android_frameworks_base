@@ -93,6 +93,13 @@
     <string-array name="config_vendorPlatformSignatures">
     </string-array>
 
+    <!-- Default value for proximity check on screen wake
+         NOTE ! - Enable for devices that have a fast response proximity sensor (ideally < 300ms)
+    -->
+    <bool name="config_proximityCheckOnWake">false</bool>
+    <integer name="config_proximityCheckTimeout">250</integer>
+    <bool name="config_proximityCheckOnWakeEnabledByDefault">false</bool>
+
     <!-- display for radio tech -->
     <bool name="config_display_rat">true</bool>
      <!-- config 2G/3G/4G RAT strings for carriers -->
