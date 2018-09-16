@@ -62,14 +62,37 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import com.android.internal.telephony.PhoneConstants;
+import com.android.internal.util.hwkeys.ActionHandler;
 import com.android.internal.util.hwkeys.ActionConstants.Defaults;
 import com.android.internal.util.hwkeys.Config.ActionConfig;
 import com.android.internal.util.hwkeys.Config.ButtonConfig;
 
 public final class ActionUtils {
-    public static final String ANDROIDNS = "http://schemas.android.com/apk/res/android";
     public static final String PACKAGE_SYSTEMUI = "com.android.systemui";
+    public static final String PACKAGE_SETTINGS = "com.android.settings";
+    public static final String CLASS_NAME_ICON_PICKER_GRID_ACTIVITY = "com.android.settings.smartnav.IconPackGridActivity";
+    public static final String CLASS_NAME_ICON_PICKER_ACTIVITY = "com.android.settings.smartnav.IconPickerActivity";
+    public static final String CLASS_NAME_ACTION_EDIT = "com.android.settings.smartnav.ActionPickerDialogActivity";
+    public static final String CLASS_NAME_GALLERY_PICKER = "com.android.settings.smartnav.IconPickerGallery";
     public static final String PACKAGE_ANDROID = "android";
+    public static final String INTENT_EXTRA_EXCLUDE_ACTIONS = "excluded_actions";
+    public static final String INTENT_ACTION_ACTION_PICKER = "intent_action_action_picker";
+    public static final String INTENT_EXTRA_RESULT = "result";
+    public static final String INTENT_EXTRA_URI = "uri";
+    public static final String INTENT_EXTRA_ACTION_STRING = "action_string";
+    public static final String INTENT_EXTRA_ACTION_CONFIG = "action_config";
+    public static final String INTENT_EXTRA_ACTION_DEFAULT = "default";
+    public static final String INTENT_EXTRA_ACTION_HAS_DEFAULTS = "has_defaults";
+    public static final String INTENT_EXTRA_ICON_PACKAGE_NAME = "icon_package_name";
+    public static final String INTENT_EXTRA_ICON_DATA_TYPE = "icon_data_type";
+    public static final String INTENT_EXTRA_ICON_DATA_TYPE_ICON_PACK = "iconpack";
+    public static final String INTENT_EXTRA_ICON_DATA_PACKAGE = "icon_data_package";
+    public static final String INTENT_EXTRA_ICON_DATA_NAME = "icon_data_name";
+    public static final String INTENT_ICON_PICKER = "intent_icon_picker";
+    public static final String INTENT_GALLERY_PICKER = "intent_gallery_picker";
+    public static final String INTENT_NAVBAR_EDIT_RESET_LAYOUT = "intent_navbar_edit_reset_layout";
+
+    public static final String ANDROIDNS = "http://schemas.android.com/apk/res/android";
     public static final String FORMAT_NONE = "none";
     public static final String FORMAT_FLOAT = "float";
 
@@ -83,6 +106,9 @@ public final class ActionUtils {
     public static final String BOOL = "bool";
     public static final String STRING = "string";
     public static final String ANIM = "anim";
+
+    public static final int SMARTNAV_ICON_MAX_WIDTH = 512;
+    public static final int SMARTNAV_ICON_MAX_HEIGHT = 512;
 
     // 10 inch tablets
     public static boolean isXLargeScreen() {
@@ -123,10 +149,6 @@ public final class ActionUtils {
             needsNav = true;
         }
         return needsNav;
-    }
-
-    public static boolean isHWKeysSupported(Context context) {
-        return getInt(context, "config_deviceHardwareKeys", PACKAGE_ANDROID) != 64;
     }
 
     public static boolean deviceSupportsLte(Context ctx) {
@@ -758,3 +780,4 @@ public final class ActionUtils {
         */
     }
 }
+

@@ -61,6 +61,7 @@ import android.widget.FrameLayout;
 import com.android.settingslib.Utils;
 import com.android.systemui.Dependency;
 import com.android.systemui.DockedStackExistsListener;
+import com.android.systemui.navigation.Navigator;
 import com.android.systemui.OverviewProxyService;
 import com.android.systemui.R;
 import com.android.systemui.RecentsComponent;
@@ -89,7 +90,7 @@ import static com.android.systemui.shared.system.NavigationBarCompat.FLAG_SHOW_O
 import static com.android.systemui.shared.system.NavigationBarCompat.HIT_TARGET_OVERVIEW;
 import static com.android.systemui.shared.system.NavigationBarCompat.HIT_TARGET_ROTATION;
 
-public class NavigationBarView extends FrameLayout implements PluginListener<NavGesture> {
+public class NavigationBarView extends FrameLayout implements Navigator {
     final static boolean DEBUG = false;
     final static String TAG = "StatusBar/NavBarView";
 
@@ -764,8 +765,12 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
     }
 
     public void updateSlippery() {
-        setSlippery(!isQuickStepSwipeUpEnabled() ||
-                (mPanelView != null && mPanelView.isFullyExpanded()));
+        // temp hax for null mPanelView
+        if (mPanelView == null) {
+            mPanelView = SysUiServiceProvider.getComponent(getContext(), StatusBar.class).getPanel();
+        }
+        final boolean isExpanded = mPanelView != null ? mPanelView.isFullyExpanded() : false;
+        setSlippery(!isQuickStepSwipeUpEnabled() || isExpanded);
     }
 
     private void setSlippery(boolean slippery) {
@@ -1241,4 +1246,14 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
         mDockedStackExists = exists;
         updateRecentsIcon();
     });
+
+    @Override
+    public View getBaseView() {
+        return this;
+    }
+
+    @Override
+    public void dispose() {
+        removeAllViews();
+    }
 }

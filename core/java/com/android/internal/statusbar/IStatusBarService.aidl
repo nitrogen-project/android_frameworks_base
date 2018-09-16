@@ -17,6 +17,7 @@
 package com.android.internal.statusbar;
 
 import android.content.ComponentName;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
@@ -111,4 +112,9 @@ interface IStatusBarService
     void preloadRecentApps();
     void cancelPreloadRecentApps();
     void startAssist(in Bundle args);
+    // Start SmartNav methods
+    void screenPinningStateChanged(boolean enabled);
+    void leftInLandscapeChanged(boolean isLeft);
+    void toggleNavigationEditor();
+    void dispatchNavigationEditorResults(in Intent intent);
 }
