@@ -6440,7 +6440,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 && event.getRepeatCount() == 0;
 
         if (!virtualKey) {
-            if (isHwKeysDisabled() || keyguardOn()) {
+            if (isHwKeysDisabled() || keyguardOn() || isDozeMode()) {
                 useHapticFeedback = false;
             }
         }
