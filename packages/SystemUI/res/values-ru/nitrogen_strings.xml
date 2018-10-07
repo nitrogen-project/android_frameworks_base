@@ -92,4 +92,7 @@
     <string name="quick_settings_expanded_desktop_label">Расширенный экран</string>
     <string name="quick_settings_expanded_desktop">Расширенный</string>
     <string name="quick_settings_expanded_desktop_off">Нормальный</string>
+
+    <!-- Screenrecord -->
+    <string name="quick_settings_screenrecord_label">Запись экрана</string>
 </resources>
