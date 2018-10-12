@@ -44,4 +44,7 @@
     <!-- Ambient notification icon tint -->
     <color name="notification_ambient_icon_default_color">@color/notification_icon_default_color</color>
 
+    <!-- Fastscroller -->
+    <color name="fastscroller_text_color">#FFFFFFFF</color>
+
 </resources>

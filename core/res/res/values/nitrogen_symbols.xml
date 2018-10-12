@@ -112,4 +112,7 @@
 
   <!-- Ambient notification icon tint -->
   <java-symbol type="color" name="notification_ambient_icon_default_color" />
+
+  <!-- Fastscroller -->
+  <java-symbol type="color" name="fastscroller_text_color" />
 </resources>
