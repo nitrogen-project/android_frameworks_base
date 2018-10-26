@@ -447,7 +447,10 @@ interface IWindowManager
      */
     void dontOverrideDisplayInfo(int displayId);
 
+    // ommni addition
     boolean isGestureButtonEnabled();
 
     boolean isGestureButtonRegion(int i, int i2);
+
+    boolean isKeyguardShowingAndNotOccluded();
 }
