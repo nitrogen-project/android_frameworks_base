@@ -27,9 +27,11 @@ import android.text.TextUtils;
 public class AmbientDisplayConfiguration {
 
     private final Context mContext;
+    private final boolean mAlwaysOnByDefault;
 
     public AmbientDisplayConfiguration(Context context) {
         mContext = context;
+        mAlwaysOnByDefault = mContext.getResources().getBoolean(R.bool.config_dozeAlwaysOnEnabled);
     }
 
     public boolean enabled(int user) {
