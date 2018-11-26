@@ -101,6 +101,8 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     private boolean mShowAutoBrightnessButton = false;
     private boolean mShowBrightnessSideButtons = false;
 
+    private boolean mBrightnessBottom;
+
     protected QSTileLayout mTileLayout;
 
     private QSCustomizer mCustomizePanel;
@@ -278,9 +280,11 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
             if (newValue == null || Integer.parseInt(newValue) == 0) {
                 removeView(mBrightnessView);
                 addView(mBrightnessView, 0);
+                mBrightnessBottom = false;
             } else {
                 removeView(mBrightnessView);
                 addView(mBrightnessView, getBrightnessViewPositionBottom());
+                mBrightnessBottom = true;
             }
         }
         if (QS_SHOW_AUTO_BRIGHTNESS_BUTTON.equals(key)) {
@@ -824,5 +828,9 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     }
     private void setBrightnessMinMax(boolean min) {
         mBrightnessController.setBrightnessFromSliderButtons(min ? 0 : GAMMA_SPACE_MAX);
+    }
+
+    public boolean isBrightnessViewBottom() {
+        return mBrightnessBottom;
     }
 }
