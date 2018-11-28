@@ -4779,6 +4779,19 @@ public final class Settings {
         private static final Validator WEATHER_LOCKSCREEN_UNIT_VALIDATOR =
                BOOLEAN_VALIDATOR;
 
+        /**
+        * @hide
+         * Whether to set a lower brightness level when enabling night mode
+         * 0: Disabled
+         * 1: Set the brightness to a very low value
+         * 2: Set the brightness to a low value
+         * 3: Set the brightness to a medium value
+         * @hide
+         */
+        public static final String NIGHT_BRIGHTNESS_VALUE = "night_brightness_value";
+        /** @hide */
+        private static final Validator NIGHT_BRIGHTNESS_VALUE_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
@@ -4909,6 +4922,7 @@ public final class Settings {
             SMART_PIXELS_ON_POWER_SAVE,
             ACCELEROMETER_ROTATION_ANGLES,
             WEATHER_LOCKSCREEN_UNIT,
+            NIGHT_BRIGHTNESS_VALUE,
         };
 
         /**
@@ -5093,6 +5107,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SMART_PIXELS_ON_POWER_SAVE);
             PRIVATE_SETTINGS.add(ACCELEROMETER_ROTATION_ANGLES);
             PRIVATE_SETTINGS.add(WEATHER_LOCKSCREEN_UNIT);
+            PRIVATE_SETTINGS.add(NIGHT_BRIGHTNESS_VALUE);
         }
 
         /**
@@ -5253,6 +5268,7 @@ public final class Settings {
             VALIDATORS.put(SMART_PIXELS_ON_POWER_SAVE, SMART_PIXELS_ON_POWER_SAVE_VALIDATOR);
             VALIDATORS.put(ACCELEROMETER_ROTATION_ANGLES, ACCELEROMETER_ROTATION_ANGLES_VALIDATOR);
             VALIDATORS.put(WEATHER_LOCKSCREEN_UNIT, WEATHER_LOCKSCREEN_UNIT_VALIDATOR);
+            VALIDATORS.put(NIGHT_BRIGHTNESS_VALUE, NIGHT_BRIGHTNESS_VALUE_VALIDATOR);
         }
 
         /**
