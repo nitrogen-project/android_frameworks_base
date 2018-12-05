@@ -7521,7 +7521,7 @@ public class NotificationManagerService extends SystemService {
         final int buzzBeepBlink = (buzz ? 1 : 0) | (beep ? 2 : 0) | (blink ? 4 : 0);
         if (buzzBeepBlink > 0) {
             // Ignore summary updates because we don't display most of the information.
-            if (record.getSbn().isGroup() && record.getSbn().getNotification().isGroupSummary()) {
+            if (!blink && record.getSbn().isGroup() && record.getSbn().getNotification().isGroupSummary()) {
                 if (DEBUG_INTERRUPTIVENESS) {
                     Slog.v(TAG, "INTERRUPTIVENESS: "
                             + record.getKey() + " is not interruptive: summary");
@@ -7571,7 +7571,7 @@ public class NotificationManagerService extends SystemService {
             return false;
         }
         // Suppressed because it's a silent update
-        final Notification notification = record.getNotification();
+/*        final Notification notification = record.getNotification();
         if (record.isUpdate && (notification.flags & FLAG_ONLY_ALERT_ONCE) != 0) {
             return false;
         }
@@ -7583,6 +7583,7 @@ public class NotificationManagerService extends SystemService {
         if (isInCall()) {
             return false;
         }
+*/
         // check current user
         if (!isNotificationForCurrentUser(record)) {
             return false;
