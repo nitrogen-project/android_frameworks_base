@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2014-2016 The Nitrogen Project
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="global_action_restart_advanced">Riavvio avanzato</string>
+
+    <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE acceso</string>
+    <string name="lte_off">LTE spento</string>
+
+    <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">Suono</string>
+    <string name="quick_settings_sound_ring">Suoneria</string>
+    <string name="quick_settings_sound_vibrate">Vibrazione</string>
+    <string name="quick_settings_sound_dnd">Non disturbare</string>
+
+    <!-- Caffeine QS Tile -->
+    <string name="quick_settings_caffeine_label">Caffeina</string>
+    <string name="accessibility_quick_settings_caffeine_off">Caffeina spenta</string>
+    <string name="accessibility_quick_settings_caffeine_on">Caffeina accesa</string>
+
+    <!-- Reboot/Recovery QS Tile -->
+    <string name="quick_settings_reboot_label">Riavvio</string>
+    <string name="quick_settings_reboot_recovery_label">Recovery</string>
+
+    <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Screenshot</string>
+    <string name="quick_settings_region_screenshot_label">Screenshot parziale</string>
+
+    <!-- Heads Up QS Tile -->
+    <string name="quick_settings_heads_up_label">Notifiche a comparsa</string>
+    <string name="accessibility_quick_settings_heads_up_off">Notifiche a comparsa spente.</string>
+    <string name="accessibility_quick_settings_heads_up_on">Notifiche a comparsa accese.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_off">Notifiche a comparsa disattivate.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_on">Notifiche a comparsa attivate.</string>
+
+    <!-- HW Keys Tile -->
+    <string name="accessibility_quick_settings_hwkeys_on">Tasti HW attivati</string>
+    <string name="accessibility_quick_settings_hwkeys_off">Tasti HW disattivati</string>
+    <string name="quick_settings_hwkeys_label">Tasti HW</string>
+
+    <!-- USB Tethering tile -->
+    <string name="accessibility_quick_settings_usb_tether_off">Tethering USB spento</string>
+    <string name="accessibility_quick_settings_usb_tether_on">Tethering USB acceso</string>
+    <string name="accessibility_quick_settings_usb_tether_changed_off">Tethering USB disattivato</string>
+    <string name="accessibility_quick_settings_usb_tether_changed_on">Tethering USB attivato</string>
+    <string name="quick_settings_usb_tether_label">USB tethering</string>
+
+    <string name="statusbar_items_title">Icona della barra di stato</string>
+
+    <!-- Lockscreen icons -->
+    <string name="lockscreen_tuner_title">Scorciatoie schermata di blocco</string>
+    <string name="lockscreen_default">Predefinito</string>
+    <string name="lockscreen_hidden">Nessuna</string>
+    <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
+    <string name="custom_hint">Scorri dall\'icona per avviare</string>
+
+    <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - La notifica è posticipata per 1 minuto.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Le notifiche saranno posticipate per <xliff:g id="number">%d</xliff:g> minuti.</string>
+
+    <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Ricarica rapida (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> al termine)</string>
+    <string name="keyguard_plugged_in_dash_charging">Ricarica Rapida</string>
+
+    <!-- QS Config -->
+    <string name="qs_menu_item_columns">Colonne</string>
+    <string name="qs_menu_item_columns_landscape">Colonne in orizzontale</string>
+    <string name="qs_menu_item_columns_three">3</string>
+    <string name="qs_menu_item_columns_four">4</string>
+    <string name="qs_menu_item_columns_five">5</string>
+    <string name="qs_menu_item_columns_six">6</string>
+    <string name="qs_menu_item_columns_seven">7</string>
+    <string name="qs_menu_item_columns_eight">8</string>
+    <string name="qs_menu_item_columns_nine">9</string>
+    <string name="qs_menu_item_reset">Ripristina</string>
+    <string name="qs_menu_item_titles">Mostra etichette</string>
+    <string name="qs_menu_item_rows">Righe</string>
+    <string name="qs_menu_item_rows_landscape">Righe in orizzontale</string>
+    <string name="qs_menu_item_rows_one">1</string>
+    <string name="qs_menu_item_rows_two">2</string>
+    <string name="qs_menu_item_rows_three">3</string>
+    <string name="qs_menu_item_rows_four">4</string>
+    <string name="qs_menu_item_qs_columns">Colonne della barra rapida</string>
+    <string name="qs_menu_item_columns_auto">Automatico</string>
+
+    <string name="status_bar_vpn">VPN</string>
+    <string name="status_bar_roaming">Roaming</string>
+    <string name="status_bar_data_saver">Risparmio dati</string>
+
+    <!-- SysUI Tuner: Button that controls inversion of layout of navigation bar [CHAR LIMIT=60] -->
+    <string name="nav_bar_layout_inverse">Inverti la disposizione</string>
+
+    <!-- Expanded Desktop QS Tile -->
+    <string name="quick_settings_expanded_desktop_label">Schermo esteso</string>
+    <string name="quick_settings_expanded_desktop">Esteso</string>
+    <string name="quick_settings_expanded_desktop_off">Normale</string>
+
+    <!-- Screenrecord -->
+    <string name="quick_settings_screenrecord_label">Registra schermo</string>
+
+    <!-- Smart Pixels QS Tile -->
+    <string name="quick_settings_smart_pixels">Smart Pixel</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Abilita automaticamente Smart Pixel</string>
+
+    <!-- Partial screenshot -->
+    <string name="screenshot_abort_title">Nessuno screenshot preso</string>
+    <string name="screenshot_abort_text">Operazione fallita.</string>
+</resources>
