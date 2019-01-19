@@ -101,11 +101,11 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
                 mTrafficVisible = false;
             } else {
                 // Get information for uplink ready so the line return can be added
-                String output = formatOutput(timeDelta, txData, symbol);
+                String output = formatOutput(timeDelta, txData, symbol)+ "\u25b2";
                 // Ensure text size is where it needs to be
                 output += "\n";
                 // Add information for downlink if it's called for
-                output += formatOutput(timeDelta, rxData, symbol);
+                output += formatOutput(timeDelta, rxData, symbol) + "\u25bc";
 
                 // Update view if there's anything new to show
                 if (! output.contentEquals(getText())) {
@@ -265,7 +265,6 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
                 lastUpdateTime = SystemClock.elapsedRealtime();
                 mTrafficHandler.sendEmptyMessage(1);
             }
-            updateTrafficDrawable();
             return;
         } else {
             clearHandlerCallbacks();
@@ -288,23 +287,6 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
         mTrafficHandler.removeMessages(1);
     }
 
-    private void updateTrafficDrawable() {
-        int intTrafficDrawable;
-        if (mIsEnabled) {
-            intTrafficDrawable = R.drawable.stat_sys_network_traffic_updown;
-        } else {
-            intTrafficDrawable = 0;
-        }
-        if (intTrafficDrawable != 0) {
-            Drawable d = getContext().getDrawable(intTrafficDrawable);
-            d.setColorFilter(mTintColor, Mode.MULTIPLY);
-            setCompoundDrawablePadding(txtImgPadding);
-            setCompoundDrawablesWithIntrinsicBounds(null, null, d, null);
-        } else {
-            setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-        }
-    }
-
     public void onDensityOrFontScaleChanged() {
         final Resources resources = getResources();
         txtSize = resources.getDimensionPixelSize(R.dimen.net_traffic_multi_text_size);
@@ -320,7 +302,6 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
         }
         mTintColor = DarkIconDispatcher.getTint(area, this, tint);
         setTextColor(mTintColor);
-        updateTrafficDrawable();
     }
 
     @Override
@@ -371,7 +352,6 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
         mColorIsStatic = true;
         mTintColor = color;
         setTextColor(mTintColor);
-        updateTrafficDrawable();
     }
 
     @Override
