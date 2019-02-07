@@ -3512,7 +3512,7 @@ public class Notification implements Parcelable
 
         /**
          * Set the small icon, which will be used to represent the notification in the
-         * status bar and content view (unless overriden there by a
+         * status bar and content view (unless overridden there by a
          * {@link #setLargeIcon(Bitmap) large icon}).
          *
          * @param icon An Icon object to use.
@@ -6242,7 +6242,7 @@ public class Notification implements Parcelable
         public abstract boolean areNotificationsVisiblyDifferent(Style other);
 
         /**
-         * @return the the text that should be displayed in the statusBar when heads-upped.
+         * @return the text that should be displayed in the statusBar when heads-upped.
          * If {@code null} is returned, the default implementation will be used.
          *
          * @hide
@@ -6729,7 +6729,7 @@ public class Notification implements Parcelable
         }
 
         /**
-         * @return the the text that should be displayed in the statusBar when heads upped.
+         * @return the text that should be displayed in the statusBar when heads upped.
          * If {@code null} is returned, the default implementation will be used.
          *
          * @hide
@@ -7385,7 +7385,7 @@ public class Notification implements Parcelable
             }
 
             /**
-             * Get the the Uri pointing to the content of the message. Can be null, in which case
+             * Get the Uri pointing to the content of the message. Can be null, in which case
              * {@see #getText()} is used.
              */
             public Uri getDataUri() {

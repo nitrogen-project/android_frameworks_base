@@ -9752,6 +9752,8 @@ public final class Settings {
             VALIDATORS.put(ADB_NOTIFY, ADB_NOTIFY_VALIDATOR);
             VALIDATORS.put(QUICK_SETTINGS_TILES_VIBRATE, QUICK_SETTINGS_TILES_VIBRATE_VALIDATOR);
             VALIDATORS.put(VOLUME_LINK_NOTIFICATION, VOLUME_LINK_NOTIFICATION_VALIDATOR);
+            VALIDATORS.put(LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS, BOOLEAN_VALIDATOR);
+            VALIDATORS.put(LOCK_SCREEN_SHOW_NOTIFICATIONS, BOOLEAN_VALIDATOR);
         }
 
         /**
@@ -14382,6 +14384,7 @@ public final class Settings {
          * Supported keys:
          * compatibility_wal_supported      (boolean)
          * wal_syncmode       (String)
+         * truncate_size      (int)
          *
          * @hide
          */
