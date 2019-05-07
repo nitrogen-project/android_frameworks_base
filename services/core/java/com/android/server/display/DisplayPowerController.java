@@ -56,6 +56,11 @@ import android.util.Slog;
 import android.util.TimeUtils;
 import android.view.Display;
 
+import com.android.internal.app.IBatteryStats;
+import com.android.server.LocalServices;
+import com.android.server.am.BatteryStatsService;
+import com.android.server.policy.WindowManagerPolicy;
+
 import java.io.PrintWriter;
 
 /**
@@ -432,14 +437,25 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                     com.android.internal.R.fraction.config_screenAutoBrightnessDozeScaleFactor,
                     1, 1);
 
-            int[] brightLevels = resources.getIntArray(
-                    com.android.internal.R.array.config_dynamicHysteresisBrightLevels);
-            int[] darkLevels = resources.getIntArray(
-                    com.android.internal.R.array.config_dynamicHysteresisDarkLevels);
-            int[] luxHysteresisLevels = resources.getIntArray(
-                    com.android.internal.R.array.config_dynamicHysteresisLuxLevels);
-            HysteresisLevels hysteresisLevels = new HysteresisLevels(
-                    brightLevels, darkLevels, luxHysteresisLevels);
+            int[] ambientBrighteningThresholds = resources.getIntArray(
+                    com.android.internal.R.array.config_ambientBrighteningThresholds);
+            int[] ambientDarkeningThresholds = resources.getIntArray(
+                    com.android.internal.R.array.config_ambientDarkeningThresholds);
+            int[] ambientThresholdLevels = resources.getIntArray(
+                    com.android.internal.R.array.config_ambientThresholdLevels);
+            HysteresisLevels ambientBrightnessThresholds = new HysteresisLevels(
+                    ambientBrighteningThresholds, ambientDarkeningThresholds,
+                    ambientThresholdLevels);
+
+            int[] screenBrighteningThresholds = resources.getIntArray(
+                    com.android.internal.R.array.config_screenBrighteningThresholds);
+            int[] screenDarkeningThresholds = resources.getIntArray(
+                    com.android.internal.R.array.config_screenDarkeningThresholds);
+            int[] screenThresholdLevels = resources.getIntArray(
+                    com.android.internal.R.array.config_screenThresholdLevels);
+            HysteresisLevels screenBrightnessThresholds = new HysteresisLevels(
+                    screenBrighteningThresholds, screenDarkeningThresholds, screenThresholdLevels);
+
 
             long brighteningLightDebounce = resources.getInteger(
                     com.android.internal.R.integer.config_autoBrightnessBrighteningLightDebounce);
@@ -469,7 +485,8 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                         lightSensorWarmUpTimeConfig, mScreenBrightnessRangeMinimum,
                         mScreenBrightnessRangeMaximum, dozeScaleFactor, lightSensorRate,
                         initialLightSensorRate, brighteningLightDebounce, darkeningLightDebounce,
-                        autoBrightnessResetAmbientLuxAfterWarmUp, hysteresisLevels);
+                        autoBrightnessResetAmbientLuxAfterWarmUp, ambientBrightnessThresholds,
+                        screenBrightnessThresholds);
             } else {
                 mUseSoftwareAutoBrightnessConfig = false;
             }
@@ -807,9 +824,6 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                     && mAutomaticBrightnessController != null;
 
         final boolean userSetBrightnessChanged = updateUserSetScreenBrightness();
-        if (userSetBrightnessChanged) {
-            mTemporaryScreenBrightness = -1;
-        }
 
         // Use the temporary screen brightness if there isn't an override, either from
         // WindowManager or based on the display state.
@@ -1539,11 +1553,13 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
         }
         if (mCurrentScreenBrightnessSetting == mPendingScreenBrightnessSetting) {
             mPendingScreenBrightnessSetting = -1;
+            mTemporaryScreenBrightness = -1;
             return false;
         }
         mCurrentScreenBrightnessSetting = mPendingScreenBrightnessSetting;
         mLastUserSetScreenBrightness = mPendingScreenBrightnessSetting;
         mPendingScreenBrightnessSetting = -1;
+        mTemporaryScreenBrightness = -1;
         return true;
     }
 
