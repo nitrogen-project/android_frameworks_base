@@ -5750,6 +5750,13 @@ public final class Settings {
         public static final String VOWIFI_ICON_STYLE = "vowifi_icon_style";
 
         /**
+         * Swipe to screenshot
+         * @hide
+         */
+        @Readable
+        public static final String SWIPE_TO_SCREENSHOT = "swipe_to_screenshot";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -5902,6 +5909,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DOUBLE_TAP_SLEEP_LOCKSCREEN);
             PRIVATE_SETTINGS.add(DOUBLE_TAP_SLEEP_GESTURE);
             PRIVATE_SETTINGS.add(AMBIENT_WAKE_GESTURES);
+            PRIVATE_SETTINGS.add(SWIPE_TO_SCREENSHOT);
         }
 
         /**
