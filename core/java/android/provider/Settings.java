@@ -4774,42 +4774,6 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
-         * Whether to enable Smart Pixels
-         * @hide
-         */
-        public static final String SMART_PIXELS_ENABLE = "smart_pixels_enable";
-        /** @hide */
-        private static final Validator SMART_PIXELS_ENABLE_VALIDATOR =
-                BOOLEAN_VALIDATOR;
-
-        /**
-         * Smart Pixels pattern
-         * @hide
-         */
-        public static final String SMART_PIXELS_PATTERN = "smart_pixels_pattern";
-        /** @hide */
-        private static final Validator SMART_PIXELS_PATTERN_VALIDATOR =
-                ANY_INTEGER_VALIDATOR;
-
-        /**
-         * Smart Pixels Shift Timeout
-         * @hide
-         */
-        public static final String SMART_PIXELS_SHIFT_TIMEOUT = "smart_pixels_shift_timeout";
-        /** @hide */
-        private static final Validator SMART_PIXELS_SHIFT_TIMEOUT_VALIDATOR =
-                ANY_INTEGER_VALIDATOR;
-
-        /**
-         * Whether Smart Pixels should enable on power saver mode
-         * @hide
-         */
-        public static final String SMART_PIXELS_ON_POWER_SAVE = "smart_pixels_on_power_save";
-        /** @hide */
-        private static final Validator SMART_PIXELS_ON_POWER_SAVE_VALIDATOR =
-                BOOLEAN_VALIDATOR;
-
-        /**
          * Weather lockscreen temperature scale
          * @hide
          */
@@ -4984,10 +4948,6 @@ public final class Settings {
             LOCKSCREEN_MEDIA_METADATA,
             SCREENSHOT_SOUND,
             NOTIFICATION_SOUND_VIB_SCREEN_ON,
-            SMART_PIXELS_ENABLE,
-            SMART_PIXELS_PATTERN,
-            SMART_PIXELS_SHIFT_TIMEOUT,
-            SMART_PIXELS_ON_POWER_SAVE,
             ACCELEROMETER_ROTATION_ANGLES,
             WEATHER_LOCKSCREEN_UNIT,
             NIGHT_BRIGHTNESS_VALUE,
@@ -5175,10 +5135,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(LOCKSCREEN_MEDIA_METADATA);
             PRIVATE_SETTINGS.add(SCREENSHOT_SOUND);
             PRIVATE_SETTINGS.add(NOTIFICATION_SOUND_VIB_SCREEN_ON);
-            PRIVATE_SETTINGS.add(SMART_PIXELS_ENABLE);
-            PRIVATE_SETTINGS.add(SMART_PIXELS_PATTERN);
-            PRIVATE_SETTINGS.add(SMART_PIXELS_SHIFT_TIMEOUT);
-            PRIVATE_SETTINGS.add(SMART_PIXELS_ON_POWER_SAVE);
             PRIVATE_SETTINGS.add(ACCELEROMETER_ROTATION_ANGLES);
             PRIVATE_SETTINGS.add(WEATHER_LOCKSCREEN_UNIT);
             PRIVATE_SETTINGS.add(NIGHT_BRIGHTNESS_VALUE);
@@ -5344,10 +5300,6 @@ public final class Settings {
             VALIDATORS.put(LOCKSCREEN_MEDIA_METADATA, LOCKSCREEN_MEDIA_METADATA_VALIDATOR);
             VALIDATORS.put(SCREENSHOT_SOUND, SCREENSHOT_SOUND_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_SOUND_VIB_SCREEN_ON, NOTIFICATION_SOUND_VIB_SCREEN_ON_VALIDATOR);
-            VALIDATORS.put(SMART_PIXELS_ENABLE, SMART_PIXELS_ENABLE_VALIDATOR);
-            VALIDATORS.put(SMART_PIXELS_PATTERN, SMART_PIXELS_PATTERN_VALIDATOR);
-            VALIDATORS.put(SMART_PIXELS_SHIFT_TIMEOUT, SMART_PIXELS_SHIFT_TIMEOUT_VALIDATOR);
-            VALIDATORS.put(SMART_PIXELS_ON_POWER_SAVE, SMART_PIXELS_ON_POWER_SAVE_VALIDATOR);
             VALIDATORS.put(ACCELEROMETER_ROTATION_ANGLES, ACCELEROMETER_ROTATION_ANGLES_VALIDATOR);
             VALIDATORS.put(WEATHER_LOCKSCREEN_UNIT, WEATHER_LOCKSCREEN_UNIT_VALIDATOR);
             VALIDATORS.put(NIGHT_BRIGHTNESS_VALUE, NIGHT_BRIGHTNESS_VALUE_VALIDATOR);
@@ -12658,30 +12610,6 @@ public final class Settings {
          * @hide
          */
         public static final String KEEP_PROFILE_IN_BACKGROUND = "keep_profile_in_background";
-
-        /**
-         * Whether or not to use aggressive device idle constants and ignore motion.
-         * Type: int (0 for false, 1 for true)
-         * Default: 0
-         * @hide
-         */
-        public static final String AGGRESSIVE_IDLE_ENABLED = "aggressive_idle_enabled";
-
-        /**
-         * Whether or not to use aggressive app idle constants.
-         * Type: int (0 for false, 1 for true)
-         * Default: 0
-         * @hide
-         */
-        public static final String AGGRESSIVE_STANDBY_ENABLED = "aggressive_standby_enabled";
-
-        /**
-         * Flag to automatically enable Aggressive Idle and Standby with battery saver.
-         * Type: int (0 for false, 1 for true)
-         * Default: 0
-         * @hide
-         */
-        public static final String AGGRESSIVE_BATTERY_SAVER = "aggressive_battery_saver";
 
         /**
          * Get the key that retrieves a bluetooth headset's priority.

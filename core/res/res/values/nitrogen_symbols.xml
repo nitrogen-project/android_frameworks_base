@@ -75,9 +75,6 @@
   <java-symbol type="string" name="config_rat_3g" />
   <java-symbol type="string" name="config_rat_4g" />
 
-  <!-- Whether the device supports Smart Pixels -->
-  <java-symbol type="bool" name="config_enableSmartPixels" />
-
   <java-symbol type="drawable" name="weather_clear_night" />
   <java-symbol type="drawable" name="weather_cloudy" />
   <java-symbol type="drawable" name="weather_foggy" />

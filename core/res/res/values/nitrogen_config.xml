@@ -97,9 +97,6 @@
     <string name="config_rat_3g" translatable="false">3G</string>
     <string name="config_rat_4g" translatable="false">4G</string>
 
-    <!-- Whether the device supports Smart Pixels -->
-    <bool name="config_enableSmartPixels">false</bool>
-
     <!-- True if the notification's should dynamically tint the app icon and text -->
     <bool name="config_allowNotificationIconTextTinting">true</bool>
 
