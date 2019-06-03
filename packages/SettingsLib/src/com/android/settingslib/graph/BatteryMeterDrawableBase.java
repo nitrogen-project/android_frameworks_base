@@ -619,7 +619,11 @@ public class BatteryMeterDrawableBase extends Drawable {
 
         // draw colored arc representing charge level
         if (level > 0) {
-            c.drawArc(mFrame, 270, 3.6f * level, false, mBatteryPaint);
+            if (!mCharging && mPowerSaveEnabled && mPowerSaveAsColorError) {
+                c.drawArc(mFrame, 270, 3.6f * level, false, mPowersavePaint);
+            } else {
+                c.drawArc(mFrame, 270, 3.6f * level, false, mBatteryPaint);
+            }
         }
 
         // calculate Y position for text
@@ -649,12 +653,6 @@ public class BatteryMeterDrawableBase extends Drawable {
                     // draw the warning text
                     c.drawText(mWarningString, x, y, mWarningTextPaint);
                 }
-            }
-        }
-        // Draw the powersave outline last
-        if (!mCharging && mPowerSaveEnabled && mPowerSaveAsColorError) {
-            if (level > 0) {
-                c.drawArc(mFrame, 270, 3.6f * level, false, mPowersavePaint);
             }
         }
     }
