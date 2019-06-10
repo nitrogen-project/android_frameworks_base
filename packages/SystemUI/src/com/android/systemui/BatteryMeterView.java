@@ -311,6 +311,16 @@ public class BatteryMeterView extends LinearLayout implements
                                 LayoutParams.WRAP_CONTENT,
                                 LayoutParams.MATCH_PARENT));
             }
+            if (mBatteryPercentView != null) {
+                if (mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_TEXT
+                        || mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_HIDDEN) {
+                    mBatteryPercentView.setPaddingRelative(0, 0, 0, 0);
+                } else {
+                    Resources res = getContext().getResources();
+                    mBatteryPercentView.setPaddingRelative(
+                            res.getDimensionPixelSize(R.dimen.battery_level_padding_start), 0, 0, 0);
+                }
+            }
             if (showingInside && !showingText && !mForceShowPercent && !forcePercentageQsHeader()) {
                 mDrawable.setShowPercent(true);
                 removeView(mBatteryPercentView);
