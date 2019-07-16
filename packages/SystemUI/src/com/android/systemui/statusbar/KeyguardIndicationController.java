@@ -401,6 +401,11 @@ public class KeyguardIndicationController {
         int chargingId;
         if (mPowerPluggedInWired) {
             switch (mChargingSpeed) {
+                case KeyguardUpdateMonitor.BatteryStatus.CHARGING_DASH:
+                    chargingId = hasChargingTime
+                            ? R.string.keyguard_indication_dash_charging_time
+                            : R.string.keyguard_plugged_in_dash_charging;
+                    break;
                 case KeyguardUpdateMonitor.BatteryStatus.CHARGING_FAST:
                     chargingId = hasChargingTime
                             ? R.string.keyguard_indication_charging_time_fast
