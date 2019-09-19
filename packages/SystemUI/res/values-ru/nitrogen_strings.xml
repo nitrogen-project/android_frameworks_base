@@ -35,4 +35,9 @@
 
     <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
     <string name="custom_hint">Проведите пальцем от иконки в сторону центра экрана</string>
+
+    <!-- QS Config -->
+    <string name="qs_menu_item_columns">Столбцы</string>
+    <string name="qs_menu_item_columns_landscape">Столбцы в ландш.</string>
+    <string name="qs_menu_item_reset">Сброс</string>
 </resources>
