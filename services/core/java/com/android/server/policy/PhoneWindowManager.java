@@ -1179,7 +1179,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mPowerKeyHandled = true;
             mHandler.removeMessages(MSG_POWER_LONG_PRESS);
             // See if we deferred screen wake because long press power for torch is enabled
-            if (mResolvedLongPressOnPowerBehavior == LONG_PRESS_POWER_TORCH && !isScreenOn()) {
+            if (mResolvedLongPressOnPowerBehavior == LONG_PRESS_POWER_TORCH &&
+                    (!isScreenOn() || isDozeMode())) {
                 wakeUpFromPowerKey(SystemClock.uptimeMillis());
             }
         }
@@ -5920,7 +5921,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mTorchOffPendingIntent = null;
         }
     }
-     private void toggleTorch() {
+
+    private void toggleTorch() {
         cancelTorchOff();
         final boolean origEnabled = mTorchEnabled;
         try {
@@ -5942,19 +5944,23 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     SystemClock.elapsedRealtime() + mTorchTimeout * 1000, mTorchOffPendingIntent);
         }
     }
-     private String getRearFlashCameraId() throws CameraAccessException {
+
+    private String getRearFlashCameraId() throws CameraAccessException {
         if (mRearFlashCameraId != null) return mRearFlashCameraId;
         for (final String id : mCameraManager.getCameraIdList()) {
             CameraCharacteristics c = mCameraManager.getCameraCharacteristics(id);
-            boolean flashAvailable = c.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
-            int lensDirection = c.get(CameraCharacteristics.LENS_FACING);
-            if (flashAvailable && lensDirection == CameraCharacteristics.LENS_FACING_BACK) {
+            Boolean flashAvailable = c.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
+            Integer lensFacing = c.get(CameraCharacteristics.LENS_FACING);
+            if (flashAvailable != null && flashAvailable
+                    && lensFacing != null && lensFacing == CameraCharacteristics.LENS_FACING_BACK) {
                 mRearFlashCameraId = id;
+                break;
             }
         }
         return mRearFlashCameraId;
     }
-     private class TorchModeCallback extends CameraManager.TorchCallback {
+
+    private class TorchModeCallback extends CameraManager.TorchCallback {
         @Override
         public void onTorchModeChanged(String cameraId, boolean enabled) {
             if (!cameraId.equals(mRearFlashCameraId)) return;
