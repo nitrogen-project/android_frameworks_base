@@ -128,10 +128,8 @@ public class NotificationIconContainer extends AlphaOptimizedFrameLayout {
         }
     }.setDuration(CONTENT_FADE_DURATION);
 
-    private final int MAX_VISIBLE_ICONS_WHEN_DARK =
-            getResources().getInteger(R.integer.config_maxVisibleNotificationIconsWhenDark);
-    public final int MAX_STATIC_ICONS =
-            getResources().getInteger(R.integer.config_maxVisibleNotificationIcons);
+    private static final int MAX_VISIBLE_ICONS_ON_LOCK = 5;
+    public static final int MAX_STATIC_ICONS = 4;
     private static final int MAX_DOTS = 1;
 
     private boolean mIsStaticLayout = true;
@@ -143,7 +141,8 @@ public class NotificationIconContainer extends AlphaOptimizedFrameLayout {
     private int mActualLayoutWidth = NO_VALUE;
     private float mActualPaddingEnd = NO_VALUE;
     private float mActualPaddingStart = NO_VALUE;
-    private boolean mDark;
+    private boolean mDozing;
+    private boolean mOnLockScreen;
     private boolean mChangingViewPositions;
     private int mAddAnimationStartIndex = -1;
     private int mCannedAnimationStartIndex = -1;
@@ -290,7 +289,7 @@ public class NotificationIconContainer extends AlphaOptimizedFrameLayout {
             }
         }
         if (child instanceof StatusBarIconView) {
-            ((StatusBarIconView) child).setDark(mDark, false, 0);
+            ((StatusBarIconView) child).setDozing(mDozing, false, 0);
         }
     }
 
@@ -321,7 +320,7 @@ public class NotificationIconContainer extends AlphaOptimizedFrameLayout {
         if (child instanceof StatusBarIconView) {
             boolean isReplacingIcon = isReplacingIcon(child);
             final StatusBarIconView icon = (StatusBarIconView) child;
-            if (mAnimationsEnabled && icon.getVisibleState() != StatusBarIconView.STATE_HIDDEN
+            if (areAnimationsEnabled(icon) && icon.getVisibleState() != StatusBarIconView.STATE_HIDDEN
                     && child.getVisibility() == VISIBLE && isReplacingIcon) {
                 int animationStartIndex = findFirstViewIndexAfter(icon.getTranslationX());
                 if (mAddAnimationStartIndex < 0) {
@@ -332,7 +331,7 @@ public class NotificationIconContainer extends AlphaOptimizedFrameLayout {
             }
             if (!mChangingViewPositions) {
                 mIconStates.remove(child);
-                if (mAnimationsEnabled && !isReplacingIcon) {
+                if (areAnimationsEnabled(icon) && !isReplacingIcon) {
                     addTransientView(icon, 0);
                     boolean isIsolatedIcon = child == mIsolatedIcon;
                     icon.setVisibleState(StatusBarIconView.STATE_HIDDEN, true /* animate */,
@@ -341,6 +340,10 @@ public class NotificationIconContainer extends AlphaOptimizedFrameLayout {
                 }
             }
         }
+    }
+
+    private boolean areAnimationsEnabled(StatusBarIconView icon) {
+        return mAnimationsEnabled || icon == mIsolatedIcon;
     }
 
     /**
@@ -375,7 +378,7 @@ public class NotificationIconContainer extends AlphaOptimizedFrameLayout {
         float translationX = getActualPaddingStart();
         int firstOverflowIndex = -1;
         int childCount = getChildCount();
-        int maxVisibleIcons = mDark ? MAX_VISIBLE_ICONS_WHEN_DARK :
+        int maxVisibleIcons = mOnLockScreen ? MAX_VISIBLE_ICONS_ON_LOCK :
                 mIsStaticLayout ? MAX_STATIC_ICONS : childCount;
         float layoutEnd = getLayoutEnd();
         float overflowStart = getMaxOverflowStart();
@@ -392,8 +395,8 @@ public class NotificationIconContainer extends AlphaOptimizedFrameLayout {
             boolean forceOverflow = mSpeedBumpIndex != -1 && i >= mSpeedBumpIndex
                     && iconState.iconAppearAmount > 0.0f || i >= maxVisibleIcons;
             boolean noOverflowAfter = i == childCount - 1;
-            float drawingScale = mDark && view instanceof StatusBarIconView
-                    ? ((StatusBarIconView) view).getIconScaleFullyDark()
+            float drawingScale = mOnLockScreen && view instanceof StatusBarIconView
+                    ? ((StatusBarIconView) view).getIconScaleIncreased()
                     : 1f;
             if (mOpenedAmount != 0.0f) {
                 noOverflowAfter = noOverflowAfter && !hasAmbient && !forceOverflow;
@@ -440,7 +443,7 @@ public class NotificationIconContainer extends AlphaOptimizedFrameLayout {
             mFirstVisibleIconState = mIconStates.get(getChildAt(0));
         }
 
-        boolean center = mDark;
+        boolean center = mOnLockScreen;
         if (center && translationX < getLayoutEnd()) {
             float initialTranslation =
                     mFirstVisibleIconState == null ? 0 : mFirstVisibleIconState.xTranslation;
@@ -560,13 +563,13 @@ public class NotificationIconContainer extends AlphaOptimizedFrameLayout {
         mChangingViewPositions = changingViewPositions;
     }
 
-    public void setDark(boolean dark, boolean fade, long delay) {
-        mDark = dark;
+    public void setDozing(boolean dozing, boolean fade, long delay) {
+        mDozing = dozing;
         mDisallowNextAnimation |= !fade;
         for (int i = 0; i < getChildCount(); i++) {
             View view = getChildAt(i);
             if (view instanceof StatusBarIconView) {
-                ((StatusBarIconView) view).setDark(dark, fade, delay);
+                ((StatusBarIconView) view).setDozing(dozing, fade, delay);
             }
         }
     }
@@ -670,6 +673,10 @@ public class NotificationIconContainer extends AlphaOptimizedFrameLayout {
         }
     }
 
+    public void setOnLockScreen(boolean onLockScreen) {
+        mOnLockScreen = onLockScreen;
+    }
+
     public class IconState extends ViewState {
         public static final int NO_VALUE = NotificationIconContainer.NO_VALUE;
         public float iconAppearAmount = 1.0f;
@@ -692,7 +699,7 @@ public class NotificationIconContainer extends AlphaOptimizedFrameLayout {
                 StatusBarIconView icon = (StatusBarIconView) view;
                 boolean animate = false;
                 AnimationProperties animationProperties = null;
-                boolean animationsAllowed = mAnimationsEnabled && !mDisallowNextAnimation
+                boolean animationsAllowed = areAnimationsEnabled(icon) && !mDisallowNextAnimation
                         && !noAnimations;
                 if (animationsAllowed) {
                     if (justAdded || justReplaced) {
