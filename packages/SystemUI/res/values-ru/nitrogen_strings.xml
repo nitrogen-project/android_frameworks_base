@@ -81,5 +81,6 @@
     <string name="screenrecord_stopdot_label">Отображать индикатор записи</string>
     <string name="screenrecord_low_quality_label">Низ. качество</string>
     <!-- Power menu item for taking a screenshot [CHAR LIMIT=20]-->
-    <string name="global_action_screenshot_cust">"Скриншот/Запись"</string>
+    <string name="global_action_screenshot_cust">Снимок экрана</string>
+    <string name="global_action_screenrecord">Запись экрана</string>
 </resources>
