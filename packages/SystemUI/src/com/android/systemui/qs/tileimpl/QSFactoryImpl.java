@@ -37,6 +37,7 @@ import com.android.systemui.qs.tiles.CellularTile;
 import com.android.systemui.qs.tiles.ColorCorrectionTile;
 import com.android.systemui.qs.tiles.ColorInversionTile;
 import com.android.systemui.qs.tiles.DataSaverTile;
+import com.android.systemui.qs.tiles.DataSwitchTile;
 import com.android.systemui.qs.tiles.DeviceControlsTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
@@ -98,6 +99,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<QuickAccessWalletTile> mQuickAccessWalletTileProvider;
     private final Provider<QRCodeScannerTile> mQRCodeScannerTileProvider;
     private final Provider<OneHandedModeTile> mOneHandedModeTileProvider;
+    private final Provider<DataSwitchTile> mDataSwitchTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
     private final Provider<CustomTile.Builder> mCustomTileBuilderProvider;
@@ -135,7 +137,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<QuickAccessWalletTile> quickAccessWalletTileProvider,
             Provider<QRCodeScannerTile> qrCodeScannerTileProvider,
             Provider<OneHandedModeTile> oneHandedModeTileProvider,
-            Provider<ColorCorrectionTile> colorCorrectionTileProvider) {
+            Provider<ColorCorrectionTile> colorCorrectionTileProvider),
+            Provider<DataSwitchTile> dataSwitchTileProvider) {
         mQsHostLazy = qsHostLazy;
         mCustomTileBuilderProvider = customTileBuilderProvider;
 
@@ -169,6 +172,7 @@ public class QSFactoryImpl implements QSFactory {
         mQRCodeScannerTileProvider = qrCodeScannerTileProvider;
         mOneHandedModeTileProvider = oneHandedModeTileProvider;
         mColorCorrectionTileProvider = colorCorrectionTileProvider;
+        mDataSwitchTileProvider = dataSwitchTileProvider;
     }
 
     /** Creates a tile with a type based on {@code tileSpec} */
@@ -244,6 +248,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mOneHandedModeTileProvider.get();
             case "color_correction":
                 return mColorCorrectionTileProvider.get();
+            case "dataswitch":
+                return mDataSwitchTileProvider.get();
         }
 
         // Custom tiles
