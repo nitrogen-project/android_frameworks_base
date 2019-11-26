@@ -27,4 +27,9 @@
 
     <string name="statusbar_items_title">Редактирование иконок</string>
     <string name="status_bar_call_strength">Уровень сигнала</string>
+
+    <!-- DataSwitch Tile -->
+    <string name="qs_data_switch_label">Переключить SIM на</string>
+    <string name="qs_data_switch_changed_1">Используется SIM 1 для передачи данных</string>
+    <string name="qs_data_switch_changed_2">Используется SIM 2 для передачи данных</string>
 </resources>
