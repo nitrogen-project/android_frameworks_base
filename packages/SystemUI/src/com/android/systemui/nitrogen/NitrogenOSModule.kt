@@ -18,6 +18,7 @@
 package com.android.systemui.nitrogen
 
 import com.android.systemui.qs.tileimpl.QSTileImpl
+import com.android.systemui.qs.tiles.DataSwitchTile
 import com.android.systemui.qs.tiles.SoundTile
 
 import dagger.Binds
@@ -27,6 +28,12 @@ import dagger.multibindings.StringKey
 
 @Module
 interface NitrogenOSModule {
+
+    /** Inject DataSwitchTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(DataSwitchTile.TILE_SPEC)
+    fun bindDataSwitchTile(dataSwitchTile: DataSwitchTile): QSTileImpl<*>
 
     /** Inject SoundTile into tileMap in QSModule */
     @Binds

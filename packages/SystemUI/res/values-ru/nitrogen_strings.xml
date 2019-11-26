@@ -26,4 +26,9 @@
     <string name="global_action_restart_advanced">Расшир. перезагрузка</string>
 
     <string name="statusbar_items_title">Редактирование иконок</string>
+
+    <!-- DataSwitch Tile -->
+    <string name="qs_data_switch_label">Переключить SIM на</string>
+    <string name="qs_data_switch_changed_1">Используется SIM 1 для передачи данных</string>
+    <string name="qs_data_switch_changed_2">Используется SIM 2 для передачи данных</string>
 </resources>
