@@ -38,6 +38,8 @@ import com.android.systemui.util.ViewController;
 
 import javax.inject.Inject;
 
+import static android.provider.Settings.Secure.STATUS_BAR_BATTERY_STYLE;
+
 /** Controller for {@link BatteryMeterView}. **/
 public class BatteryMeterViewController extends ViewController<BatteryMeterView> {
     private final ConfigurationController mConfigurationController;
@@ -48,6 +50,13 @@ public class BatteryMeterViewController extends ViewController<BatteryMeterView>
     private final String mSlotBattery;
     private final SettingObserver mSettingObserver;
     private final CurrentUserTracker mCurrentUserTracker;
+
+    private static final int BATTERY_STYLE_PORTRAIT = 0;
+    private static final int BATTERY_STYLE_CIRCLE = 1;
+    private static final int BATTERY_STYLE_TEXT = 2;
+
+    private int mBatteryStyle = BATTERY_STYLE_PORTRAIT;
+    private boolean mBatteryHidden;
 
     private final ConfigurationController.ConfigurationListener mConfigurationListener =
             new ConfigurationController.ConfigurationListener() {
@@ -63,7 +72,11 @@ public class BatteryMeterViewController extends ViewController<BatteryMeterView>
             if (StatusBarIconController.ICON_HIDE_LIST.equals(key)) {
                 ArraySet<String> icons = StatusBarIconController.getIconHideList(
                         getContext(), newValue);
-                mView.setVisibility(icons.contains(mSlotBattery) ? View.GONE : View.VISIBLE);
+                mBatteryHidden = icons.contains(mSlotBattery);
+                mView.setVisibility(mBatteryHidden ? View.GONE : View.VISIBLE);
+            } else if (STATUS_BAR_BATTERY_STYLE.equals(key)) {
+                mBatteryStyle = TunerService.parseInteger(newValue, BATTERY_STYLE_PORTRAIT);
+                mView.tunerBatteryStyle(mBatteryStyle);
             }
         }
     };
@@ -156,7 +169,7 @@ public class BatteryMeterViewController extends ViewController<BatteryMeterView>
             return;
         }
 
-        mTunerService.addTunable(mTunable, StatusBarIconController.ICON_HIDE_LIST);
+        mTunerService.addTunable(mTunable, StatusBarIconController.ICON_HIDE_LIST, STATUS_BAR_BATTERY_STYLE);
         mIsSubscribedForTunerUpdates = true;
     }
 
