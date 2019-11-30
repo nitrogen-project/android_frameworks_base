@@ -102,8 +102,7 @@
         android:summary="%s"
         android:entries="@array/clock_options" />
 
-    <com.android.systemui.tuner.BatteryPreference
-        android:title="@string/battery"
-        android:summary="%s"
-        android:entries="@array/battery_options" />
+    <com.android.systemui.tuner.StatusBarSwitch
+        android:key="battery"
+        android:title="@string/status_bar_battery" />
 </PreferenceScreen>
