@@ -83,4 +83,6 @@
     <!-- Power menu item for taking a screenshot [CHAR LIMIT=20]-->
     <string name="global_action_screenshot_cust">Снимок экрана</string>
     <string name="global_action_screenrecord">Запись экрана</string>
+    <!-- Name of the battery status bar icon. -->
+    <string name="status_bar_battery">Батарея</string>
 </resources>

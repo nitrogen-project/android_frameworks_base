@@ -24,4 +24,7 @@
     <dimen name="qs_tile_height_wo_label">48dp</dimen>
 
     <dimen name="screenrecord_dot_size">48dp</dimen>
+
+    <!-- Width of the battery icon in the status bar when set to circle style. -->
+    <dimen name="status_bar_battery_icon_circle_width">14.5dp</dimen>
 </resources>
