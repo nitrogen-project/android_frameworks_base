@@ -153,6 +153,7 @@ public class DataSwitchTile extends QSTileImpl<BooleanState> {
                     mContext.getString(R.string.qs_data_switch_toast_1),
                     Toast.LENGTH_LONG).show();
         } else {
+            mHost.collapsePanels();
             AsyncTask.execute(new Runnable() {
                 public final void run() {
                     toggleMobileDataEnabled();
