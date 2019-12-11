@@ -22,11 +22,12 @@ import android.view.MenuItem;
 
 import com.android.systemui.Dependency;
 import com.android.systemui.fragments.FragmentService;
+import com.android.systemui.SystemUIFactory;
 
 public class StatusbarItemsActivity extends Activity {
 
     protected void onCreate(Bundle savedInstanceState) {
-        Dependency.initDependencies(this);
+        Dependency.initDependencies(SystemUIFactory.getInstance().getRootComponent());
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction().replace(android.R.id.content, new StatusbarItems())
                 .commit();
