@@ -17,6 +17,6 @@
  */
 -->
 <resources>
-    <color name="accent_device_default_light">#725AFF</color>
-    <color name="accent_device_default_dark">#B5A9FC</color>
+    <color name="accent_device_default_light">#FF725AFF</color>
+    <color name="accent_device_default_dark">#FF725AFF</color>
 </resources>
