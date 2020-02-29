@@ -7441,5 +7441,8 @@ message MetricsEvent {
     // NitrogenSettings constant
     NITROGEN_SETTINGS = 1999;
 
+    // Panel for Mobile Data
+    PANEL_MOBILE_DATA = 2002;
+
   }
 }
