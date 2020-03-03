@@ -79,8 +79,6 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-import com.android.internal.util.custom.OverlayUtils;
-
 /**
  * Keeps track of information about all installed applications, lazy-loading
  * as needed.
@@ -1825,7 +1823,7 @@ public class ApplicationsState {
 
         @Override
         public boolean filterApp(AppEntry entry) {
-            return !Arrays.asList(OverlayUtils.AllPackages).contains(entry.info.packageName);
+            return true;
         }
     };
 

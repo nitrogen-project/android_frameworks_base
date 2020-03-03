@@ -205,4 +205,6 @@ interface INotificationManager
 
     void forceShowLedLight(int color);
     void forcePulseLedLight(int color, int onTime, int offTime);
+
+    long pullStats(long startNs, int report, boolean doAgg, out List<ParcelFileDescriptor> stats);
 }
