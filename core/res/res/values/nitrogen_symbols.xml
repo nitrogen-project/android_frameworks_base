@@ -35,4 +35,7 @@
   <java-symbol type="string" name="config_certifiedModel" />
   <java-symbol type="string" name="config_stockFingerprint" />
   <java-symbol type="bool" name="config_spoofGoogleApps" />
+
+  <!-- Enable face auth only when swiping security view -->
+  <java-symbol type="bool" name="config_faceAuthOnlyOnSecurityView" />
 </resources>
