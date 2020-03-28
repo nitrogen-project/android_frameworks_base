@@ -29,4 +29,7 @@
   <java-symbol type="string" name="reboot_to_bootloader_message" />
   <java-symbol type="string" name="reboot_title" />
   <java-symbol type="string" name="reboot_message" />
+
+  <!-- Enable face auth only when swiping security view -->
+  <java-symbol type="bool" name="config_faceAuthOnlyOnSecurityView" />
 </resources>
