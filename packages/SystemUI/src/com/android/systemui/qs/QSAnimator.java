@@ -14,6 +14,7 @@
 
 package com.android.systemui.qs;
 
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnAttachStateChangeListener;
@@ -44,6 +45,8 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
 
     public static final float EXPANDED_TILE_DELAY = .86f;
 
+    private static final String QS_SHOW_BRIGHTNESS_SLIDER =
+                                Settings.Secure.QS_SHOW_BRIGHTNESS_SLIDER;
 
     private final ArrayList<View> mAllViews = new ArrayList<>();
     /**
@@ -77,6 +80,8 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
     private float mLastPosition;
     private QSTileHost mHost;
     private boolean mShowCollapsedOnKeyguard;
+
+    private boolean mIsQuickQsBrightnessEnabled;
 
     public QSAnimator(QS qs, QuickQSPanel quickPanel, QSPanel panel) {
         mQs = qs;
@@ -145,6 +150,7 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
     public void onViewAttachedToWindow(View v) {
         Dependency.get(TunerService.class).addTunable(this, ALLOW_FANCY_ANIMATION,
                 MOVE_FULL_ROWS);
+        Dependency.get(TunerService.class).addTunable(this, QS_SHOW_BRIGHTNESS_SLIDER);
     }
 
     @Override
@@ -164,6 +170,8 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
             }
         } else if (MOVE_FULL_ROWS.equals(key)) {
             mFullRows = TunerService.parseIntegerSwitch(newValue, true);
+        } else if (QS_SHOW_BRIGHTNESS_SLIDER.equals(key)) {
+            mIsQuickQsBrightnessEnabled = TunerService.parseInteger(newValue, 0) > 1;
         }
         updateAnimators();
     }
@@ -282,7 +290,7 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
             if (brightness != null) {
                 firstPageBuilder.addFloat(brightness, "translationY", heightDiff, 0);
                 mBrightnessAnimator = new TouchAnimator.Builder()
-                        .addFloat(brightness, "alpha", 0, 1)
+                        .addFloat(brightness, "alpha", mIsQuickQsBrightnessEnabled ? 1 : 0, 1)
                         .setStartDelay(.5f)
                         .build();
                 mAllViews.add(brightness);
