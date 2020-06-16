@@ -18,6 +18,7 @@ package com.android.systemui.biometrics;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.SystemProperties;
 import android.util.Slog;
 import android.view.View;
 
@@ -32,6 +33,7 @@ import javax.inject.Singleton;
 @Singleton
 public class FODCircleViewImpl extends SystemUI implements CommandQueue.Callbacks {
     private static final String TAG = "FODCircleViewImpl";
+    private static final String FOD_DISABLED_BY_PROP = "ro.fingerprint.inscreen_disabled";
 
     private FODCircleView mFodCircleView;
     private final CommandQueue mCommandQueue;
@@ -45,7 +47,8 @@ public class FODCircleViewImpl extends SystemUI implements CommandQueue.Callback
     @Override
     public void start() {
         PackageManager packageManager = mContext.getPackageManager();
-        if (!packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)) {
+        if (!packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT) ||
+                SystemProperties.getBoolean(FOD_DISABLED_BY_PROP, true)) {
             return;
         }
         mCommandQueue.addCallback(this);
