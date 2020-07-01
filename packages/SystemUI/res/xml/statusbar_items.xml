@@ -95,4 +95,9 @@
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="battery"
         android:title="@string/status_bar_battery" />
+
+    <com.android.systemui.tuner.TunerSwitch
+        android:key="show_volte_icon"
+        android:title="@string/status_bar_volte"
+        sysui:defValue="false" />
 </PreferenceScreen>
