@@ -106,4 +106,5 @@
     <!-- Name of the battery status bar icon. -->
     <string name="status_bar_battery">Battery</string>
     <string name="status_bar_volte">VoLTE</string>
+    <string name="status_bar_vowifi">VoWiFi</string>
 </resources>
