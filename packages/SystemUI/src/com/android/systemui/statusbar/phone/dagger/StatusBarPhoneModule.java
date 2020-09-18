@@ -92,6 +92,7 @@ import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.ExtensionController;
+import com.android.systemui.statusbar.policy.FlashlightController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.RemoteInputQuickSettingsDisabler;
@@ -181,6 +182,7 @@ public interface StatusBarPhoneModule {
             PluginManager pluginManager,
             Optional<Divider> dividerOptional,
             LightsOutNotifController lightsOutNotifController,
+            FlashlightController flashlightController,
             StatusBarNotificationActivityStarter.Builder
                     statusBarNotificationActivityStarterBuilder,
             ShadeController shadeController,
@@ -260,6 +262,7 @@ public interface StatusBarPhoneModule {
                 pluginManager,
                 dividerOptional,
                 lightsOutNotifController,
+                flashlightController,
                 statusBarNotificationActivityStarterBuilder,
                 shadeController,
                 superStatusBarViewFactory,
