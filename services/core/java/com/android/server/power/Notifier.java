@@ -791,9 +791,6 @@ public class Notifier {
     };
 
     private void playChargingStartedFeedback(@UserIdInt int userId, boolean wireless) {
-        if (!isChargingFeedbackEnabled(userId)) {
-            return;
-        }
 
         // vibrate
         final boolean vibrate = Settings.Secure.getIntForUser(mContext.getContentResolver(),
@@ -802,16 +799,18 @@ public class Notifier {
             mVibrator.vibrate(CHARGING_VIBRATION_EFFECT, VIBRATION_ATTRIBUTES);
         }
 
-        // play sound
-        final String soundPath = Settings.Global.getString(mContext.getContentResolver(),
-                wireless ? Settings.Global.WIRELESS_CHARGING_STARTED_SOUND
-                        : Settings.Global.CHARGING_STARTED_SOUND);
-        final Uri soundUri = Uri.parse("file://" + soundPath);
-        if (soundUri != null) {
-            final Ringtone sfx = RingtoneManager.getRingtone(mContext, soundUri);
-            if (sfx != null) {
-                sfx.setStreamType(AudioManager.STREAM_SYSTEM);
-                sfx.play();
+        if (isChargingFeedbackEnabled(userId)) {
+            // play sound
+            final String soundPath = Settings.Global.getString(mContext.getContentResolver(),
+                    wireless ? Settings.Global.WIRELESS_CHARGING_STARTED_SOUND
+                            : Settings.Global.CHARGING_STARTED_SOUND);
+            final Uri soundUri = Uri.parse("file://" + soundPath);
+            if (soundUri != null) {
+                final Ringtone sfx = RingtoneManager.getRingtone(mContext, soundUri);
+                if (sfx != null) {
+                    sfx.setStreamType(AudioManager.STREAM_SYSTEM);
+                    sfx.play();
+                }
             }
         }
     }
