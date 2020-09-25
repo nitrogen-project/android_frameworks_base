@@ -2760,7 +2760,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         // if keyguard is showing and secure, don't intercept and let aosp keycode
         // implementation handle event
         if (mKeyHandler != null && !keyguardOn && !virtualKey) {
-            boolean handled = mKeyHandler.handleKeyEvent(win, keyCode, repeatCount, down, canceled,
+            boolean handled = mKeyHandler.handleKeyEvent(focusedToken, keyCode, repeatCount, down, canceled,
                     longPress, keyguardOn);
             if (handled)
                 return -1;
