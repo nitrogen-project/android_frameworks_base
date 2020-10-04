@@ -24,11 +24,13 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.service.quicksettings.Tile;
 import com.android.systemui.R;
+import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.internal.statusbar.IStatusBarService;
+import com.android.systemui.statusbar.policy.KeyguardStateController;
 
 import javax.inject.Inject;
 
@@ -37,9 +39,21 @@ public class RebootTile extends QSTileImpl<BooleanState> {
     private boolean mRebootToRecovery = false;
     private IStatusBarService mBarService;
 
+    private final ActivityStarter mActivityStarter;
+    private final KeyguardStateController mKeyguard;
+
     @Inject
-    public RebootTile(QSHost host) {
+    public RebootTile(QSHost host, ActivityStarter activityStarter, KeyguardStateController keyguardStateController) {
         super(host);
+        mActivityStarter = activityStarter;
+        mKeyguard = keyguardStateController;
+        final KeyguardStateController.Callback callback = new KeyguardStateController.Callback() {
+            @Override
+            public void onKeyguardShowingChanged() {
+                refreshState();
+            }
+        };
+        mKeyguard.observe(this, callback);
     }
 
     @Override
@@ -58,8 +72,7 @@ public class RebootTile extends QSTileImpl<BooleanState> {
         refreshState();
     }
 
-    @Override
-    protected void handleLongClick() {
+    private void handleLongClickInner() {
         mHost.collapsePanels();
         mBarService = IStatusBarService.Stub.asInterface(
                 ServiceManager.getService(Context.STATUS_BAR_SERVICE));
@@ -75,6 +88,18 @@ public class RebootTile extends QSTileImpl<BooleanState> {
                 }
             }
         }, 500);
+    }
+
+    @Override
+    protected void handleLongClick() {
+        if (mKeyguard.isMethodSecure() && mKeyguard.isShowing()) {
+            mActivityStarter.postQSRunnableDismissingKeyguard(() -> {
+                mHost.openPanels();
+                handleLongClickInner();
+            });
+            return;
+        }
+        handleLongClickInner();
     }
 
     @Override
