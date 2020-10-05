@@ -1445,7 +1445,7 @@ public class PackageManagerServiceUtils {
         // identify cached items. In particular, changing the value of certain
         // feature flags should cause us to invalidate any caches.
         final String cacheName = FORCE_PACKAGE_PARSED_CACHE_ENABLED ? "debug"
-                : PackagePartitions.FINGERPRINT;
+                : SystemProperties.digestOf(String.valueOf(Build.TIME));
 
         // Reconcile cache directories, keeping only what we'd actually use.
         for (File cacheDir : FileUtils.listFilesOrEmpty(cacheBaseDir)) {
@@ -1474,7 +1474,7 @@ public class PackageManagerServiceUtils {
         // NOTE: When no BUILD_NUMBER is set by the build system, it defaults to a build
         // that starts with "eng." to signify that this is an engineering build and not
         // destined for release.
-        if (isUserDebugBuild && incrementalVersion.startsWith("eng.")) {
+        /*if (isUserDebugBuild && incrementalVersion.startsWith("eng.")) {
             Slog.w(TAG, "Wiping cache directory because the system partition changed.");
 
             // Heuristic: If the /system directory has been modified recently due to an "adb sync"
@@ -1487,7 +1487,7 @@ public class PackageManagerServiceUtils {
                 FileUtils.deleteContents(cacheBaseDir);
                 cacheDir = FileUtils.createDir(cacheBaseDir, cacheName);
             }
-        }
+        }*/
 
         return cacheDir;
     }

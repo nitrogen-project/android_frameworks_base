@@ -5692,7 +5692,7 @@ public final class Settings implements Watchable, Snappable, ResilientAtomicFile
         }
 
         private String getExtendedFingerprint(long version) {
-            return PackagePartitions.FINGERPRINT + "?pc_version=" + version;
+            return Build.TIME + "?pc_version=" + version;
         }
 
         private static long uniformRandom(double low, double high) {
