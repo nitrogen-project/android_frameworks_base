@@ -914,7 +914,8 @@ public class ScreenshotController {
             try {
                 MediaPlayer player = mCameraSound.get();
                 if (player != null) {
-                    player.start();
+                    if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.SCREENSHOT_SOUND, 1) == 1)
+                        player.start();
                 }
             } catch (InterruptedException | ExecutionException e) {
             }
