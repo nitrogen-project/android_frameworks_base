@@ -5301,6 +5301,7 @@ public final class Settings {
          *
          * @hide
          */
+        @Readable
         public static final String HEADS_UP_STOPLIST_VALUES = "heads_up_stoplist_values";
 
          /**
@@ -5308,19 +5309,30 @@ public final class Settings {
          *
          * @hide
          */
+        @Readable
         public static final String HEADS_UP_BLACKLIST_VALUES = "heads_up_blacklist_values";
 
         /**
          * Wheter to show network traffic indicator in statusbar
          * @hide
          */
+        @Readable
         public static final String NETWORK_TRAFFIC_STATE = "network_traffic_state";
 
         /**
          * Network traffic inactivity threshold (default is 1 kBs)
          * @hide
          */
+        @Readable
         public static final String NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD = "network_traffic_autohide_threshold";
+
+        /**
+         * Enable/Disable screenshot sound
+         * @hide
+         */
+        @Readable
+        public static final String SCREENSHOT_SOUND = "screenshot_sound";
+
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
