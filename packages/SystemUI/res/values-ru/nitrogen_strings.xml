@@ -35,6 +35,7 @@
     <string name="qs_menu_item_reset">Сброс</string>
     <string name="qs_menu_item_qs_columns">Кол-во мал. плиток</string>
     <string name="qs_menu_item_columns_auto">Авто</string>
+    <string name="qs_menu_item_titles">Отображать подписи</string>
 
     <!-- QuickSettings: Sound [CHAR LIMIT=NONE] -->
     <string name="quick_settings_sound_label">Звук</string>

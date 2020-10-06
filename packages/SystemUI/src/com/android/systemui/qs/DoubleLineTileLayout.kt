@@ -123,6 +123,14 @@ class DoubleLineTileLayout(
         setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), height)
     }
 
+    override fun isShowTitles(): Boolean {
+        return false
+    }
+
+    override fun getNumColumns(): Int {
+        return 6
+    }
+
     private fun calculateMaxColumns(availableWidth: Int): Int {
         if (smallTileSize + cellMarginHorizontal == 0) {
             return 0
