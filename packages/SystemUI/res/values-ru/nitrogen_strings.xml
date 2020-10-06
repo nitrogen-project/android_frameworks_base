@@ -33,6 +33,8 @@
     <string name="qs_menu_item_columns">Столбцы</string>
     <string name="qs_menu_item_columns_landscape">Столбцы в альбомном режиме</string>
     <string name="qs_menu_item_reset">Сброс</string>
+    <string name="qs_menu_item_qs_columns">Кол-во мал. плиток</string>
+    <string name="qs_menu_item_columns_auto">Авто</string>
 
     <!-- QuickSettings: Sound [CHAR LIMIT=NONE] -->
     <string name="quick_settings_sound_label">Звук</string>
