@@ -2364,8 +2364,13 @@ public final class PowerManagerService extends SystemService
                             if (mHardwareKeysDisable) {
                                 buttonBrightness = PowerManager.BRIGHTNESS_OFF_FLOAT;
                             } else {
-                                if (isValidButtonBrightness(mButtonBrightnessOverrideFromWindowManager)) {
-                                    buttonBrightness = mButtonBrightnessOverrideFromWindowManager;
+                                if (isValidBrightness(
+                                        mButtonBrightnessOverrideFromWindowManager)) {
+                                    if (mButtonBrightnessOverrideFromWindowManager >
+                                            PowerManager.BRIGHTNESS_MIN) {
+                                        buttonBrightness =
+                                                mButtonBrightnessOverrideFromWindowManager;
+                                    }
                                 } else if (isValidButtonBrightness(mButtonBrightness)) {
                                     buttonBrightness = mButtonBrightness;
                                 }
