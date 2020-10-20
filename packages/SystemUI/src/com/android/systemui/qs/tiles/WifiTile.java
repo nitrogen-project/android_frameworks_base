@@ -172,6 +172,7 @@ public class WifiTile extends QSTileImpl<SignalState> {
             });
             return;
         }
+        showDetail(true);
         if (!mState.value) {
             mController.setWifiEnabled(true);
         }
