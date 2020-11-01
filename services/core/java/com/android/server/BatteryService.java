@@ -179,6 +179,7 @@ public final class BatteryService extends SystemService {
 
     //Battery light color customization
     private boolean mLightEnabled = false;
+    private boolean mFullBatteryLight = true;
     private boolean mAllowBatteryLightOnDnd;
     private boolean mIsDndActive;
     private boolean mLowBatteryBlinking;
@@ -293,6 +294,9 @@ public final class BatteryService extends SystemService {
                     Settings.System.BATTERY_LIGHT_ENABLED),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BATTERY_FULL_LIGHT_ENABLED),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.BATTERY_LIGHT_ALLOW_ON_DND),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(
@@ -330,6 +334,8 @@ public final class BatteryService extends SystemService {
             // Battery light enabled
             mLightEnabled = Settings.System.getInt(resolver,
                     Settings.System.BATTERY_LIGHT_ENABLED, 1) != 0;
+            mFullBatteryLight = Settings.System.getInt(resolver,
+                    Settings.System.BATTERY_FULL_LIGHT_ENABLED, 1) != 0;
             mAllowBatteryLightOnDnd = Settings.System.getInt(resolver,
                     Settings.System.BATTERY_LIGHT_ALLOW_ON_DND, 0) == 1;
             mIsDndActive = Settings.Global.getInt(resolver,
@@ -1282,7 +1288,7 @@ public final class BatteryService extends SystemService {
             }
             final int level = mHealthInfo.batteryLevel;
             final int status = mHealthInfo.batteryStatus;
-            if (!mLightEnabled || (mIsDndActive && !mAllowBatteryLightOnDnd)) {
+            if (!mLightEnabled || (mIsDndActive && !mAllowBatteryLightOnDnd) || (!mFullBatteryLight && level == 100)) {
                 mBatteryLight.turnOff();
             } else if (level < mLowBatteryWarningLevel) {
                 if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
