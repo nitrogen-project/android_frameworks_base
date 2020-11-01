@@ -4897,6 +4897,13 @@ public final class Settings {
          */
         public static final String BATTERY_LIGHT_ENABLED = "battery_light_enabled";
 
+        /**
+         * Whether the full battery light should be enabled
+         * The value is boolean (1 or 0).
+         * @hide
+         */
+       public static final String BATTERY_FULL_LIGHT_ENABLED = "battery_full_light_enabled";
+
        /**
         * Whether to show battery light when DND mode is active
         * @hide
