@@ -344,10 +344,10 @@ public class BatteryMeterView extends LinearLayout implements
         mCircleDrawable.setBatteryLevel(level);
         mDottedCircleDrawable.setBatteryLevel(level);
         mThemedDrawable.setBatteryLevel(level);
-        mCharging = pluggedIn;
         mLevel = level;
         updatePercentText();
-        if (pluggedIn) {
+        if (mCharging != pluggedIn) {
+            mCharging = pluggedIn;
             updateShowPercent();
         }
     }
@@ -417,7 +417,7 @@ public class BatteryMeterView extends LinearLayout implements
         final boolean drawPercentInside = mShowPercentMode == MODE_DEFAULT &&
                 showBatteryPercent == 1;
         final boolean drawPercentOnly = mShowPercentMode == MODE_ESTIMATE ||
-                showBatteryPercent == 2;
+                showBatteryPercent == 2 || mCharging;
 
         if (drawPercentOnly && (!drawPercentInside || mCharging) ||
                 mBatteryStyle == BATTERY_STYLE_TEXT) {
