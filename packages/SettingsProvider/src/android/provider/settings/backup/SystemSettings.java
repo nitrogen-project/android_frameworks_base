@@ -119,5 +119,6 @@ public class SystemSettings {
         Settings.System.FINGERPRINT_SUCCESS_VIB,
         Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN,
         Settings.System.DOUBLE_TAP_SLEEP_GESTURE,
+        Settings.System.AMBIENT_WAKE_GESTURES
     };
 }
