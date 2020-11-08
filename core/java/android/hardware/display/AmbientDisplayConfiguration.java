@@ -335,4 +335,10 @@ public class AmbientDisplayConfiguration {
     private void putDozeSetting(String name, String value, int userId) {
         Settings.Secure.putStringForUser(mContext.getContentResolver(), name, value, userId);
     }
+
+    /** {@hide} */
+    public boolean isAmbientGestureEnabled(int user) {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.AMBIENT_WAKE_GESTURES, 0, user) != 0;
+    }
 }
