@@ -5755,6 +5755,7 @@ public final class Settings {
           * 2 - Volume up/down moves cursor right/left
           * @hide
           */
+        @Readable
         public static final String VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
 
         /**
@@ -5767,6 +5768,14 @@ public final class Settings {
          */
         @Readable
         public static final String TORCH_POWER_BUTTON_GESTURE = "torch_power_button_gesture";
+
+        /** Whether to show ambient or lockscreen if AoD is disabled
+         * and we do a wake gesture like lift to wake or double tap
+         *
+         * @hide
+         */
+        @Readable
+        public static final String AMBIENT_WAKE_GESTURES = "ambient_wake_gestures";
 
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
@@ -5906,6 +5915,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SCREEN_FLASH_NOTIFICATION);
             PRIVATE_SETTINGS.add(SCREEN_FLASH_NOTIFICATION_COLOR);
             PRIVATE_SETTINGS.add(VOLUME_KEY_CURSOR_CONTROL);
+            PRIVATE_SETTINGS.add(AMBIENT_WAKE_GESTURES);
         }
 
         /**
