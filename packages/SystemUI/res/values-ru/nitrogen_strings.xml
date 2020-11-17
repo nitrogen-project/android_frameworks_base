@@ -74,7 +74,7 @@
     <string name="status_bar_battery">Батарея</string>
 
     <!-- DataSwitch Tile -->
-    <string name="qs_data_switch_label">Поменять SIM для передачи данных</string>
+    <string name="qs_data_switch_label">Переключить SIM на</string>
     <string name="qs_data_switch_toast_0">Нет SIM карт</string>
     <string name="qs_data_switch_toast_1">Установлена только одна SIM карта</string>
     <string name="qs_data_switch_changed_1">Используется SIM 1 для передачи данных</string>
