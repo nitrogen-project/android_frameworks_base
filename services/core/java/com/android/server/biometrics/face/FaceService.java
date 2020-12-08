@@ -149,7 +149,8 @@ public class FaceService extends BiometricServiceBase {
                     for (byte b : token) {
                         token_AL.add(new Byte(b));
                     }
-                    FaceService.super.handleAuthenticated(face, token_AL);
+                    final boolean authenticated = faceId != 0;
+                    FaceService.super.handleAuthenticated(authenticated, face, token_AL);
                 }
             });
         }
@@ -1182,8 +1183,9 @@ public class FaceService extends BiometricServiceBase {
         public void onAuthenticated(final long deviceId, final int faceId, final int userId,
                 ArrayList<Byte> token) {
             mHandler.post(() -> {
-                Face face = new Face("", faceId, deviceId);
-                FaceService.super.handleAuthenticated(face, token);
+                final Face face = new Face("", faceId, deviceId);
+                final boolean authenticated = faceId != 0;
+                FaceService.super.handleAuthenticated(authenticated, face, token);
             });
         }
 
