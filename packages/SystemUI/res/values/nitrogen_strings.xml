@@ -22,9 +22,6 @@
     <string name="lte_on">LTE ON </string>
     <string name="lte_off">LTE OFF</string>
 
-    <!-- Allow devices override audio panel location to the left side -->
-    <bool name="config_audioPanelOnLeftSide">false</bool>
-
     <string name="statusbar_items_title">Statusbar icon</string>
     <string name="global_action_restart_advanced">Advanced reboot</string>
 
