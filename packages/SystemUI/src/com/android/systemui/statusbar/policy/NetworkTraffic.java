@@ -102,11 +102,11 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
                 mTrafficVisible = false;
             } else {
                 // Get information for uplink ready so the line return can be added
-                String output = formatOutput(timeDelta, txData, symbol)+ "\u25b2";
+                String output = formatOutput(timeDelta, txData, symbol);
                 // Ensure text size is where it needs to be
                 output += "\n";
                 // Add information for downlink if it's called for
-                output += formatOutput(timeDelta, rxData, symbol) + "\u25bc";
+                output += formatOutput(timeDelta, rxData, symbol);
 
                 // Update view if there's anything new to show
                 if (! output.contentEquals(getText())) {
@@ -199,7 +199,6 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
         super(context, attrs, defStyle);
         final Resources resources = getResources();
         txtSize = resources.getDimensionPixelSize(R.dimen.net_traffic_multi_text_size);
-        txtImgPadding = resources.getDimensionPixelSize(R.dimen.net_traffic_txt_img_padding);
         mTintColor = resources.getColor(android.R.color.white);
         Handler mHandler = new Handler();
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
@@ -291,7 +290,6 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
     public void onDensityOrFontScaleChanged() {
         final Resources resources = getResources();
         txtSize = resources.getDimensionPixelSize(R.dimen.net_traffic_multi_text_size);
-        txtImgPadding = resources.getDimensionPixelSize(R.dimen.net_traffic_multi_text_size);
         setTextSize(TypedValue.COMPLEX_UNIT_PX, (float)txtSize);
         setCompoundDrawablePadding(txtImgPadding);
     }
