@@ -5068,6 +5068,12 @@ public final class Settings {
          */
         public static final String POWERMENU_LOCKSCREEN = "powermenu_lockscreen";
 
+         /**
+         * Whether to reboot to fastbootd mode instead of bootloader
+         * @hide
+         */
+        public static final String POWERMENU_REBOOT_FASTBOOT = "powermenu_reboot_fastboot";
+
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add

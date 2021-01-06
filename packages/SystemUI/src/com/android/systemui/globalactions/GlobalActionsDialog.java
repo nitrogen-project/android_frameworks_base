@@ -1033,7 +1033,9 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 
         @Override
         public boolean onLongPress() {
-            mWindowManagerFuncs.advancedReboot(PowerManager.REBOOT_BOOTLOADER);
+            boolean rebootToFastboot = Settings.System.getInt(
+                        mContext.getContentResolver(), Settings.System.POWERMENU_REBOOT_FASTBOOT, 0) == 1;
+            mWindowManagerFuncs.advancedReboot(rebootToFastboot ? PowerManager.REBOOT_FASTBOOT : PowerManager.REBOOT_BOOTLOADER);
             return true;
         }
 

@@ -660,6 +660,13 @@ public final class PowerManager {
     public static final String REBOOT_BOOTLOADER = "bootloader";
 
     /**
+     * The value to pass as the 'reason' argument to reboot() to
+     * reboot into fastboot mode
+     * @hide
+     */
+    public static final String REBOOT_FASTBOOT = "fastboot";
+
+    /**
      * The value to pass as the 'reason' argument to reboot() to reboot into
      * recovery mode for applying system updates.
      * <p>
