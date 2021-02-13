@@ -65,17 +65,17 @@ public class NetworkTrafficSB extends NetworkTraffic implements DarkReceiver, St
     @Override
     protected void setSpacingAndFonts() {
         setTextAppearance(R.style.TextAppearance_QS_Status);
-        setLineSpacing(0.75f, 0.75f);
+        setLineSpacing(0.83f, 0.83f);
     }
 
     @Override
     protected RelativeSizeSpan getSpeedRelativeSizeSpan() {
-        return new RelativeSizeSpan(0.75f);
+        return new RelativeSizeSpan(0.70f);
     }
 
     @Override
     protected RelativeSizeSpan getUnitRelativeSizeSpan() {
-        return new RelativeSizeSpan(0.7f);
+        return new RelativeSizeSpan(0.60f);
     }
 
     @Override
