@@ -16,6 +16,8 @@
 
 package com.android.systemui.statusbar;
 
+import static com.android.systemui.classifier.Classifier.NOTIFICATION_DRAG_DOWN;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
@@ -194,7 +196,7 @@ public class DragDownHelper implements Gefingerpoken {
         if (!mDragDownCallback.isFalsingCheckNeeded()) {
             return false;
         }
-        return mFalsingManager.isFalseTouch() || !mDraggedFarEnough;
+        return mFalsingManager.isFalseTouch(NOTIFICATION_DRAG_DOWN) || !mDraggedFarEnough;
     }
 
     private void captureStartingChild(float x, float y) {
