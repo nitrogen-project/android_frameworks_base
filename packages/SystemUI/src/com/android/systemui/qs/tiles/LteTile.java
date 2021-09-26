@@ -60,7 +60,10 @@ public class LteTile extends QSTileImpl<BooleanState> {
 
     @Override
     public Intent getLongClickIntent() {
-        return MOBILE_NETWORK_SETTINGS;
+        if (getState().state == Tile.STATE_UNAVAILABLE) {
+            return MOBILE_NETWORK_SETTINGS;
+        }
+        return getCellularSettingIntent();
     }
 
     @Override
@@ -126,6 +129,15 @@ public class LteTile extends QSTileImpl<BooleanState> {
         return Settings.Global.getInt(mContext.getContentResolver(),
                 Settings.Global.PREFERRED_NETWORK_MODE + subId, -1);
     }
+
+    static Intent getCellularSettingIntent() {
+        Intent intent = new Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS);
+        int dataSub = SubscriptionManager.getDefaultDataSubscriptionId();
+        if (dataSub != SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
+            intent.putExtra(Settings.EXTRA_SUB_ID,
+                    SubscriptionManager.getDefaultDataSubscriptionId());
+        }
+        return intent;
+    }
+
 }
-
-
