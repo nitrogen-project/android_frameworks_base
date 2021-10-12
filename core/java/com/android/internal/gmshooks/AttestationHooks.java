@@ -24,6 +24,7 @@ import android.util.Log;
 import com.android.internal.gmshooks.GmsInfo;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 
 /** @hide */
 public final class AttestationHooks {
@@ -31,6 +32,8 @@ public final class AttestationHooks {
 
     private static final String PRODUCT_STOCK_FINGERPRINT =
             SystemProperties.get("ro.build.stock_fingerprint");
+
+    private static volatile boolean sIsGms = false;
 
     private AttestationHooks() { }
 
@@ -59,7 +62,20 @@ public final class AttestationHooks {
 
     public static void initApplicationBeforeOnCreate(Application app) {
         if (GmsInfo.PACKAGE_GMS.equals(app.getPackageName())) {
+            sIsGms = true;
             spoofBuildGms();
+        }
+    }
+
+    private static boolean isCallerSafetyNet() {
+        return Arrays.stream(Thread.currentThread().getStackTrace())
+                .anyMatch(elem -> elem.getClassName().contains("DroidGuard"));
+    }
+
+    public static void onEngineGetCertificateChain() {
+        // Check stack for SafetyNet
+        if (sIsGms && isCallerSafetyNet()) {
+            throw new UnsupportedOperationException();
         }
     }
 }
