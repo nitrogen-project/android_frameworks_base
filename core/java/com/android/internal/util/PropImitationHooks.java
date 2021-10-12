@@ -59,6 +59,7 @@ public class PropImitationHooks {
         if (!sCertifiedFp.isEmpty() && (sIsGms || sIsFinsky)) {
             dlog("Setting certified fingerprint for: " + packageName);
             setPropValue("FINGERPRINT", sCertifiedFp);
+            setPropValue("MODEL", Build.MODEL + "\u200b");
         } else if (!sStockFp.isEmpty() && packageName.equals(PACKAGE_ARCORE)) {
             dlog("Setting stock fingerprint for: " + packageName);
             setPropValue("FINGERPRINT", sStockFp);
