@@ -125,6 +125,10 @@ android_library {
     ],
     manifest: "AndroidManifest.xml",
 
+    libs: [
+        "ims-common",
+    ],
+
     kotlincflags: ["-Xjvm-default=enable"],
 
     plugins: ["dagger2-compiler"],
@@ -240,6 +244,7 @@ android_library {
     libs: [
         "android.test.runner",
         "android.test.base",
+        "ims-common",
     ],
     kotlincflags: ["-Xjvm-default=enable"],
     aaptflags: [
@@ -296,6 +301,10 @@ android_app {
     system_ext_specific: true,
     certificate: "platform",
     privileged: true,
+
+    libs: [
+        "ims-common",
+    ],
 
     kotlincflags: ["-Xjvm-default=enable"],
 
