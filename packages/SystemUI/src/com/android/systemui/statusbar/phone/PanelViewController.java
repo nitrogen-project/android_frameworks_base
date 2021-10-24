@@ -196,6 +196,8 @@ public abstract class PanelViewController {
     private final InteractionJankMonitor mInteractionJankMonitor;
     protected final SystemClock mSystemClock;
 
+    protected boolean mIsSbDoubleTapEnabled;
+
     protected abstract void onExpandingFinished();
 
     protected void onExpandingStarted() {
@@ -1355,7 +1357,7 @@ public abstract class PanelViewController {
                         onTrackingStarted();
                     }
                     if (isFullyCollapsed() && !mHeadsUpManager.hasPinnedHeadsUp()
-                            && !mCentralSurfaces.isBouncerShowing()) {
+                            && !mCentralSurfaces.isBouncerShowing() && !mIsSbDoubleTapEnabled) {
                         startOpening(event);
                     }
                     break;

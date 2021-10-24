@@ -4004,27 +4004,30 @@ public class CentralSurfacesImpl extends CoreStartable implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_GESTURE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             super.onChange(selfChange, uri);
             if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN))) {
-                setLockscreenDoubleTapToSleep();
+                    Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN))
+                    || uri.equals(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_GESTURE))) {
+                setDoubleTapToSleepGesture();
             }
         }
 
         public void update() {
-            setLockscreenDoubleTapToSleep();
+            setDoubleTapToSleepGesture();
         }
     }
 
-    private void setLockscreenDoubleTapToSleep() {
-        boolean isDoubleTapLockscreenEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN, 0, UserHandle.USER_CURRENT) == 1;
-        if (mNotificationPanelViewController != null) {
-            mNotificationPanelViewController.setLockscreenDoubleTapToSleep(isDoubleTapLockscreenEnabled);
+    private void setDoubleTapToSleepGesture() {
+        if (mNotificationShadeWindowViewController != null) {
+            mNotificationShadeWindowViewController.setDoubleTapToSleepGesture();
         }
     }
 
