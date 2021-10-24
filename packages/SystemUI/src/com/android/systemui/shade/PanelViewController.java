@@ -203,6 +203,7 @@ public abstract class PanelViewController {
     protected final SystemClock mSystemClock;
 
     protected final ShadeLogger mShadeLog;
+    protected boolean mIsSbDoubleTapEnabled;
 
     protected abstract void onExpandingFinished();
 
@@ -1354,7 +1355,7 @@ public abstract class PanelViewController {
                         onTrackingStarted();
                     }
                     if (isFullyCollapsed() && !mHeadsUpManager.hasPinnedHeadsUp()
-                            && !mCentralSurfaces.isBouncerShowing()) {
+                            && !mCentralSurfaces.isBouncerShowing() && !mIsSbDoubleTapEnabled) {
                         startOpening(event);
                     }
                     break;
