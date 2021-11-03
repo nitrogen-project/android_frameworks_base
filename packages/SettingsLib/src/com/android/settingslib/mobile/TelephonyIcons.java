@@ -348,7 +348,7 @@ public class TelephonyIcons {
             TelephonyIcons.ICON_VOWIFI_CALLING,
             false);
 
-    static final MobileIconGroup VOWIFI_MOTO = new MobileIconGroup(
+    public static final MobileIconGroup VOWIFI_MOTO = new MobileIconGroup(
             "VoWIFI_Moto",
             null,
             null,
@@ -361,7 +361,7 @@ public class TelephonyIcons {
             TelephonyIcons.ICON_VOWIFI_MOTO,
             false);
 
-    static final MobileIconGroup VOWIFI_ASUS = new MobileIconGroup(
+    public static final MobileIconGroup VOWIFI_ASUS = new MobileIconGroup(
             "VoWIFI_ASUS",
             null,
             null,
@@ -374,7 +374,7 @@ public class TelephonyIcons {
             TelephonyIcons.ICON_VOWIFI_ASUS,
             false);
 
-    static final MobileIconGroup VOWIFI_ONEPLUS = new MobileIconGroup(
+    public static final MobileIconGroup VOWIFI_ONEPLUS = new MobileIconGroup(
             "VoWIFI_OnePlus",
             null,
             null,
@@ -387,7 +387,7 @@ public class TelephonyIcons {
             TelephonyIcons.ICON_VOWIFI_ONEPLUS,
             false);
 
-    static final MobileIconGroup VOWIFI_EMUI = new MobileIconGroup(
+    public static final MobileIconGroup VOWIFI_EMUI = new MobileIconGroup(
             "VoWIFI_Emui",
             null,
             null,
@@ -400,7 +400,7 @@ public class TelephonyIcons {
             TelephonyIcons.ICON_VOWIFI_EMUI,
             false);
 
-    static final MobileIconGroup VOWIFI_Simple1 = new MobileIconGroup(
+    public static final MobileIconGroup VOWIFI_Simple1 = new MobileIconGroup(
             "VoWIFI_Simple1",
             null,
             null,
@@ -413,7 +413,7 @@ public class TelephonyIcons {
             TelephonyIcons.ICON_VOWIFI_Simple1,
             false);
 
-    static final MobileIconGroup VOWIFI_Simple2 = new MobileIconGroup(
+    public static final MobileIconGroup VOWIFI_Simple2 = new MobileIconGroup(
             "VoWIFI_Simple2",
             null,
             null,
@@ -426,7 +426,7 @@ public class TelephonyIcons {
             TelephonyIcons.ICON_VOWIFI_Simple2,
             false);
 
-    static final MobileIconGroup VOWIFI_Simple3 = new MobileIconGroup(
+    public static final MobileIconGroup VOWIFI_Simple3 = new MobileIconGroup(
             "VoWIFI_Simple3",
             null,
             null,
@@ -439,7 +439,7 @@ public class TelephonyIcons {
             TelephonyIcons.ICON_VOWIFI_Simple3,
             false);
 
-    static final MobileIconGroup VOWIFI_VIVO = new MobileIconGroup(
+    public static final MobileIconGroup VOWIFI_VIVO = new MobileIconGroup(
             "VoWIFI_VIVO",
             null,
             null,
@@ -452,7 +452,7 @@ public class TelephonyIcons {
             TelephonyIcons.ICON_VOWIFI_VIVO,
             false);
 
-    static final MobileIconGroup VOWIFI_Margaritov = new MobileIconGroup(
+    public static final MobileIconGroup VOWIFI_Margaritov = new MobileIconGroup(
             "VoWIFI_Syberia",
             null,
             null,
