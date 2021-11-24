@@ -5514,6 +5514,7 @@ public final class Settings {
           * 2 - Volume up/down moves cursor right/left
           * @hide
           */
+        @Readable
         public static final String VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
 
         /**
@@ -5528,6 +5529,7 @@ public final class Settings {
          * The value is boolean (1 or 0).
          * @hide
          */
+        @Readable
         public static final String BATTERY_LIGHT_ENABLED = "battery_light_enabled";
 
         /**
@@ -5535,42 +5537,49 @@ public final class Settings {
          * The value is boolean (1 or 0).
          * @hide
          */
+       @Readable
        public static final String BATTERY_FULL_LIGHT_ENABLED = "battery_full_light_enabled";
 
        /**
         * Whether to show battery light when DND mode is active
         * @hide
         */
+       @Readable
        public static final String BATTERY_LIGHT_ALLOW_ON_DND = "battery_light_allow_on_dnd";
 
         /**
         * Whether to show blinking light when battery is low
         * @hide
         */
+       @Readable
        public static final String BATTERY_LIGHT_LOW_BLINKING = "battery_light_low_blinking";
 
         /**
         * Low battery charging color
         * @hide
         */
+       @Readable
        public static final String BATTERY_LIGHT_LOW_COLOR = "battery_light_low_color";
 
         /**
         * Medium battery charging color
         * @hide
         */
+       @Readable
        public static final String BATTERY_LIGHT_MEDIUM_COLOR = "battery_light_medium_color";
 
         /**
         * Full battery charging color
         * @hide
         */
+       @Readable
        public static final String BATTERY_LIGHT_FULL_COLOR = "battery_light_full_color";
 
         /**
         * Really full 100 battery charging color
         * @hide
         */
+       @Readable
        public static final String BATTERY_LIGHT_REALLYFULL_COLOR = "battery_light_reallyfull_color";
 
         /**
