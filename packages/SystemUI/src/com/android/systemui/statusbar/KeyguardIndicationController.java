@@ -67,6 +67,7 @@ import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.ViewClippingUtil;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
+import com.android.settingslib.Utils;
 import com.android.settingslib.fuelgauge.BatteryStatus;
 import com.android.systemui.R;
 import com.android.systemui.animation.Interpolators;
@@ -338,7 +339,7 @@ public class KeyguardIndicationController {
                 info = mLockPatternUtils.getOwnerInfo(KeyguardUpdateMonitor.getCurrentUser());
             }
         }
-        if (info != null) {
+        if (!TextUtils.isEmpty(info)) {
             mRotateTextViewController.updateIndication(
                     INDICATION_TYPE_OWNER_INFO,
                     new KeyguardIndication.Builder()
@@ -436,7 +437,7 @@ public class KeyguardIndicationController {
     }
 
     private void updateResting() {
-        if (mRestingIndication != null
+        if (!TextUtils.isEmpty(mRestingIndication)
                 && !mRotateTextViewController.hasIndications()) {
             mRotateTextViewController.updateIndication(
                     INDICATION_TYPE_RESTING,
@@ -459,7 +460,8 @@ public class KeyguardIndicationController {
                     new KeyguardIndication.Builder()
                             .setMessage(mContext.getResources().getString(
                                     com.android.internal.R.string.global_action_logout))
-                            .setTextColor(mInitialTextColorState)
+                            .setTextColor(Utils.getColorAttr(
+                                    mContext, com.android.internal.R.attr.textColorOnAccent))
                             .setBackground(mContext.getDrawable(
                                     com.android.systemui.R.drawable.logout_button_background))
                             .setClickListener((view) -> {
@@ -727,15 +729,13 @@ public class KeyguardIndicationController {
     }
 
     protected String computePowerIndication() {
-        if (mPowerCharged) {
-            return mContext.getResources().getString(R.string.keyguard_charged);
-        }
-
         int chargingId;
-        String percentage = NumberFormat.getPercentInstance().format(mBatteryLevel / 100f);
         if (mBatteryOverheated) {
             chargingId = R.string.keyguard_plugged_in_charging_limited;
+            String percentage = NumberFormat.getPercentInstance().format(mBatteryLevel / 100f);
             return mContext.getResources().getString(chargingId, percentage);
+        } else if (mPowerCharged) {
+            return mContext.getResources().getString(R.string.keyguard_charged);
         }
 
         final boolean hasChargingTime = mChargingTimeRemaining > 0;
@@ -792,6 +792,7 @@ public class KeyguardIndicationController {
             }
         }
 
+        String percentage = NumberFormat.getPercentInstance().format(mBatteryLevel / 100f);
         if (hasChargingTime) {
             String chargingTimeFormatted = Formatter.formatShortElapsedTimeRoundingUpToMinutes(
                     mContext, mChargingTimeRemaining);
@@ -834,7 +835,9 @@ public class KeyguardIndicationController {
      * Show message on the keyguard for how the user can unlock/enter their device.
      */
     public void showActionToUnlock() {
-        if (mDozing) {
+        if (mDozing
+                && !mKeyguardUpdateMonitor.getUserCanSkipBouncer(
+                        KeyguardUpdateMonitor.getCurrentUser())) {
             return;
         }
 
@@ -845,13 +848,13 @@ public class KeyguardIndicationController {
                 String message = mContext.getString(R.string.keyguard_retry);
                 mStatusBarKeyguardViewManager.showBouncerMessage(message, mInitialTextColorState);
             }
-        } else if (mKeyguardUpdateMonitor.isScreenOn()) {
+        } else {
             showTransientIndication(mContext.getString(R.string.keyguard_unlock),
                     false /* isError */, true /* hideOnScreenOff */);
         }
     }
 
-    private void showTryFingerprintMsg() {
+    private void showTryFingerprintMsg(String a11yString) {
         if (mKeyguardUpdateMonitor.isUdfpsAvailable()) {
             // if udfps available, there will always be a tappable affordance to unlock
             // For example, the lock icon
@@ -862,6 +865,11 @@ public class KeyguardIndicationController {
             }
         } else {
             showTransientIndication(R.string.keyguard_try_fingerprint);
+        }
+
+        // Although we suppress face auth errors visually, we still announce them for a11y
+        if (!TextUtils.isEmpty(a11yString)) {
+            mLockScreenIndicationView.announceForAccessibility(a11yString);
         }
     }
 
@@ -946,7 +954,7 @@ public class KeyguardIndicationController {
             } else if (mKeyguardUpdateMonitor.isScreenOn()) {
                 if (biometricSourceType == BiometricSourceType.FACE
                         && shouldSuppressFaceMsgAndShowTryFingerprintMsg()) {
-                    showTryFingerprintMsg();
+                    showTryFingerprintMsg(helpString);
                     return;
                 }
                 showTransientIndication(helpString, false /* isError */, showActionToUnlock);
@@ -966,7 +974,7 @@ public class KeyguardIndicationController {
                     && shouldSuppressFaceMsgAndShowTryFingerprintMsg()
                     && !mStatusBarKeyguardViewManager.isBouncerShowing()
                     && mKeyguardUpdateMonitor.isScreenOn()) {
-                showTryFingerprintMsg();
+                showTryFingerprintMsg(errString);
                 return;
             }
             if (msgId == FaceManager.FACE_ERROR_TIMEOUT) {
@@ -975,7 +983,7 @@ public class KeyguardIndicationController {
                 if (!mStatusBarKeyguardViewManager.isBouncerShowing()
                         && mKeyguardUpdateMonitor.isUdfpsEnrolled()
                         && mKeyguardUpdateMonitor.isFingerprintDetectionRunning()) {
-                    showTryFingerprintMsg();
+                    showTryFingerprintMsg(errString);
                 } else if (mStatusBarKeyguardViewManager.isShowingAlternateAuth()) {
                     mStatusBarKeyguardViewManager.showBouncerMessage(
                             mContext.getResources().getString(R.string.keyguard_unlock_press),
