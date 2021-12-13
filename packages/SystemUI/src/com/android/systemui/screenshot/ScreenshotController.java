@@ -53,6 +53,8 @@ import android.graphics.Rect;
 import android.hardware.display.DisplayManager;
 import android.media.AudioManager;
 import android.media.MediaActionSound;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -258,7 +260,7 @@ public class ScreenshotController {
     private final WindowManager.LayoutParams mWindowLayoutParams;
     private final AccessibilityManager mAccessibilityManager;
     private final AudioManager mAudioManager;
-    private final MediaActionSound mCameraSound;
+    private final Ringtone  mScreenshotSound;
     private final ScrollCaptureClient mScrollCaptureClient;
     private final PhoneWindow mWindow;
     private final DisplayManager mDisplayManager;
@@ -385,9 +387,9 @@ public class ScreenshotController {
         mConfigChanges.applyNewConfig(context.getResources());
         reloadAssets();
 
-        // Setup the Camera shutter sound
-        mCameraSound = new MediaActionSound();
-        mCameraSound.load(MediaActionSound.SHUTTER_CLICK);
+        // Setup the Screenshot sound
+        mScreenshotSound= RingtoneManager.getRingtone(mContext,
+                    Uri.parse("file://" + "/product/media/audio/ui/camera_click.ogg"));
 
         // Grab system services needed for screenshot sound
         mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
@@ -487,7 +489,6 @@ public class ScreenshotController {
      */
     void releaseContext() {
         mContext.release();
-        mCameraSound.release();
         mBgExecutor.shutdownNow();
     }
 
@@ -838,7 +839,7 @@ public class ScreenshotController {
                     break;
                 case AudioManager.RINGER_MODE_NORMAL:
                     // Play the shutter sound to notify that we've taken a screenshot
-                    mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
+                    mScreenshotSound.play();
                     break;
             }
         }
