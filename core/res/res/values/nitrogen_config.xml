@@ -27,4 +27,7 @@
     <!-- The list of components which should be forced to be enabled. -->
     <string-array name="config_forceEnabledComponents" translatable="false">
     </string-array>
+
+    <!-- Whether to cancel fingerprint operation if not idle -->
+    <bool name="config_fpCancelIfNotIdle">false</bool>
 </resources>
