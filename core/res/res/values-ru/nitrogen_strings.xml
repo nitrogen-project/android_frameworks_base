@@ -24,4 +24,6 @@
     <string name="reboot_to_bootloader_message">Перезагрузка в загрузчик</string>
     <string name="reboot_title">Перезагрузка</string>
     <string name="reboot_message">Перезагрузка системы</string>
+    <!-- Face unlock -->
+    <string name="face_unlock_disabled_idle">Разблокировка по лицу выключена из-за бездействия</string>
 </resources>
