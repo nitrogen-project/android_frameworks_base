@@ -39,4 +39,9 @@
     <!-- Whether to spoof device as pixel for certain google apps, to
          unlock pixel-exclusive features -->
     <bool name="config_spoofGoogleApps">true</bool>
+
+    <!-- Array containing custom error messages from vendor. -->
+    <string-array name="face_error_vendor" translatable="false">
+        <item>@string/face_unlock_disabled_idle</item>
+    </string-array>
 </resources>
