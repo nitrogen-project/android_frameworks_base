@@ -16,6 +16,8 @@
 
 package com.android.server.biometrics.sensors.face.custom;
 
+import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.app.ActivityManager;
 import android.app.SynchronousUserSwitchObserver;
 import android.content.BroadcastReceiver;
@@ -33,6 +35,7 @@ import android.hardware.biometrics.ITestSessionCallback;
 import android.hardware.face.Face;
 import android.hardware.face.FaceSensorPropertiesInternal;
 import android.hardware.face.IFaceServiceReceiver;
+import android.hardware.fingerprint.FingerprintManager;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
@@ -292,7 +295,8 @@ public class CustomFaceProvider implements ServiceProvider {
     }
 
     @Override
-    public void scheduleEnroll(int sensorId, IBinder token, byte[] hardwareAuthToken, int userId, IFaceServiceReceiver receiver, String opPackageName, int[] disabledFeatures, Surface previewSurface, boolean debugConsent) {
+    public long scheduleEnroll(int sensorId, IBinder token, byte[] hardwareAuthToken, int userId, IFaceServiceReceiver receiver, String opPackageName, int[] disabledFeatures, Surface previewSurface, boolean debugConsent) {
+        final long id = mRequestCounter.incrementAndGet();
         mHandler.post(() -> {
             if (getDaemon() == null) {
                 bindFaceAuthService(mCurrentUserId);
@@ -315,11 +319,12 @@ public class CustomFaceProvider implements ServiceProvider {
                 });
             }
         });
+        return id;
     }
 
     @Override
-    public void cancelEnrollment(int sensorId, IBinder token) {
-        mHandler.post(() -> mScheduler.cancelEnrollment(token));
+    public void cancelEnrollment(int sensorId, IBinder token, long requestId) {
+        mHandler.post(() -> mScheduler.cancelEnrollment(token, requestId));
     }
 
     @Override
