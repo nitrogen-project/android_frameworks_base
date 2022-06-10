@@ -20,8 +20,6 @@ import android.animation.ValueAnimator;
 import android.util.FloatProperty;
 import android.view.Choreographer;
 
-import com.android.internal.display.BrightnessSynchronizer;
-
 /**
  * A custom animator that progressively updates a property value at
  * a given variable rate until it reaches a particular target value.
@@ -170,10 +168,10 @@ class RampAnimator<T> {
             }
             final float oldCurrentValue = mCurrentValue;
             mCurrentValue = mAnimatedValue;
-            if (!BrightnessSynchronizer.floatEquals(oldCurrentValue, mCurrentValue)) {
-                mProperty.setValue(mObject, mCurrentValue);
+            if (oldCurrentValue != mCurrentValue) {
+                setPropertyValue(mCurrentValue);
             }
-            if (!BrightnessSynchronizer.floatEquals(mTargetValue, mCurrentValue)) {
+            if (mTargetValue != mCurrentValue) {
                 postAnimationCallback();
             } else {
                 mAnimating = false;
