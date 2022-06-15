@@ -351,7 +351,7 @@ public class NetworkTraffic extends TextView {
     }
 
     protected void setSpacingAndFonts() {
-        setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
+        setTextAppearance(R.style.TextAppearance_QS_Status);
         setLineSpacing(0.80f, 0.80f);
     }
 
