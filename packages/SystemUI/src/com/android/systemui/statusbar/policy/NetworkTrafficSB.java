@@ -138,6 +138,7 @@ public class NetworkTrafficSB extends NetworkTraffic implements DarkReceiver, St
 
     @Override
     public void setDecorColor(int color) {
+        setTintColor(color);
     }
 
     private void maybeRestoreVisibility() {
