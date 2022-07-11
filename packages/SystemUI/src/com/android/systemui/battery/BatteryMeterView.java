@@ -95,7 +95,6 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
     private Drawable mUnknownStateDrawable;
 
     private boolean mBatteryHidden;
-    private int mBatteryStyle = BATTERY_STYLE_PORTRAIT;
 
     private DualToneHandler mDualToneHandler;
 
@@ -128,9 +127,11 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         setupLayoutTransition();
 
         mBatteryIconView = new ImageView(context);
-        mBatteryIconView.setImageDrawable(mThemedDrawable);
+        updateDrawable();
         final MarginLayoutParams mlp = new MarginLayoutParams(
-                getResources().getDimensionPixelSize(R.dimen.status_bar_battery_icon_width),
+                getBatteryStyle() == BATTERY_STYLE_PORTRAIT ? getResources().getDimensionPixelSize(
+                R.dimen.status_bar_battery_icon_width) : getResources().getDimensionPixelSize(
+                R.dimen.status_bar_battery_icon_circle_width),
                 getResources().getDimensionPixelSize(R.dimen.status_bar_battery_icon_height));
         mlp.setMargins(0, 0, 0,
                 getResources().getDimensionPixelOffset(R.dimen.battery_margin_bottom));
@@ -166,6 +167,12 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         setLayoutTransition(transition);
     }
 
+    protected void updateBatteryStyle() {
+        updateDrawable();
+        scaleBatteryMeterViews();
+        updatePercentView();
+    }
+
     public void setForceShowPercent(boolean show) {
         setPercentShowMode(show ? MODE_ON : MODE_DEFAULT);
     }
@@ -188,7 +195,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        updatePercentView();
+        updateBatteryStyle();
     }
 
     public void setColorsFromContext(Context context) {
@@ -313,7 +320,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
                 showBatteryPercent == 2 || mCharging;
 
         if (drawPercentOnly && (!drawPercentInside || mCharging) ||
-                mBatteryStyle == BATTERY_STYLE_TEXT) {
+                getBatteryStyle() == BATTERY_STYLE_TEXT) {
             mCircleDrawable.setShowPercent(false);
             mDottedCircleDrawable.setShowPercent(false);
             mThemedDrawable.setShowPercent(false);
@@ -329,7 +336,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
                                 LayoutParams.WRAP_CONTENT,
                                 LayoutParams.MATCH_PARENT));
             }
-            if (mBatteryStyle == BATTERY_STYLE_TEXT) {
+            if (getBatteryStyle() == BATTERY_STYLE_TEXT) {
                 mBatteryPercentView.setPaddingRelative(0, 0, 0, 0);
             } else {
                 Resources res = getContext().getResources();
@@ -363,7 +370,12 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
 
         mBatteryStateUnknown = isUnknown;
 
-        updateBatteryStyle(isUnknown);
+        if (mBatteryStateUnknown) {
+            mBatteryIconView.setImageDrawable(getUnknownStateDrawable());
+        } else {
+            updateDrawable();
+        }
+
         updateShowPercent();
     }
 
@@ -378,7 +390,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         float iconScaleFactor = typedValue.getFloat();
 
         int batteryHeight = res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_height);
-        int batteryWidth = (mBatteryStyle == BATTERY_STYLE_CIRCLE || mBatteryStyle == BATTERY_STYLE_DOTTED_CIRCLE) ?
+        int batteryWidth = (getBatteryStyle() == BATTERY_STYLE_CIRCLE || getBatteryStyle() == BATTERY_STYLE_DOTTED_CIRCLE) ?
                 res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_circle_width) :
                 res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_width);
         int marginBottom = res.getDimensionPixelSize(R.dimen.battery_margin_bottom);
@@ -390,40 +402,31 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         mBatteryIconView.setLayoutParams(scaledLayoutParams);
     }
 
-    public void updateBatteryStyle(boolean isUnknown) {
-        switch (mBatteryStyle) {
+    private void updateDrawable()  {
+        switch (getBatteryStyle()) {
             case BATTERY_STYLE_PORTRAIT:
-                mBatteryIconView.setImageDrawable(isUnknown ? getUnknownStateDrawable(): mThemedDrawable);
+                mBatteryIconView.setImageDrawable(mThemedDrawable);
                 mBatteryIconView.setVisibility(View.VISIBLE);
-                scaleBatteryMeterViews();
                 break;
             case BATTERY_STYLE_CIRCLE:
-                mBatteryIconView.setImageDrawable(isUnknown ? getUnknownStateDrawable(): mCircleDrawable);
+                mBatteryIconView.setImageDrawable(mCircleDrawable);
                 mBatteryIconView.setVisibility(View.VISIBLE);
-                scaleBatteryMeterViews();
                 break;
             case BATTERY_STYLE_DOTTED_CIRCLE:
                 mBatteryIconView.setImageDrawable(mDottedCircleDrawable);
                 mBatteryIconView.setVisibility(View.VISIBLE);
-                scaleBatteryMeterViews();
                 break;
             case BATTERY_STYLE_TEXT:
                 mBatteryIconView.setVisibility(View.GONE);
                 mBatteryIconView.setImageDrawable(null);
                 break;
         }
-        setVisibility(mBatteryHidden ? View.GONE : View.VISIBLE);
     }
 
-   public void tunerBatteryStyle(int batteryStyle) {
-        if (mBatteryStyle == batteryStyle) {
-            return;
-        }
-
-        mBatteryStyle = batteryStyle;
-
-        updateBatteryStyle(false);
-        updateShowPercent();
+    private int getBatteryStyle() {
+        return Settings.Secure.getIntForUser(getContext().getContentResolver(),
+                Settings.Secure.STATUS_BAR_BATTERY_STYLE, BATTERY_STYLE_PORTRAIT,
+                UserHandle.USER_CURRENT);
     }
 
     @Override
