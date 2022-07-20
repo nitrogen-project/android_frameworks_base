@@ -52,6 +52,8 @@ import com.android.wm.shell.sysui.ShellInterface;
 import com.android.wm.shell.taskview.TaskViewFactory;
 import com.android.wm.shell.transition.ShellTransitions;
 
+import com.google.android.systemui.smartspace.KeyguardSmartspaceController;
+
 import dagger.BindsInstance;
 import dagger.Subcomponent;
 
@@ -258,4 +260,10 @@ public interface SysUIComponent {
      * Member injection into the supplied argument.
      */
     void inject(PeopleProvider peopleProvider);
+
+    /**
+     * Creates a KeyguardSmartspaceController.
+     */
+    @SysUISingleton
+    KeyguardSmartspaceController createKeyguardSmartspaceController();
 }
