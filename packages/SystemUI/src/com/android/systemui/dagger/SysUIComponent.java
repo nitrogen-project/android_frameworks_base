@@ -51,6 +51,8 @@ import com.android.wm.shell.startingsurface.StartingSurface;
 import com.android.wm.shell.sysui.ShellInterface;
 import com.android.wm.shell.transition.ShellTransitions;
 
+import com.google.android.systemui.smartspace.KeyguardSmartspaceController;
+
 import java.util.Map;
 import java.util.Optional;
 
@@ -254,4 +256,10 @@ public interface SysUIComponent {
      * Member injection into the supplied argument.
      */
     void inject(PeopleProvider peopleProvider);
+
+    /**
+     * Creates a KeyguardSmartspaceController.
+     */
+    @SysUISingleton
+    KeyguardSmartspaceController createKeyguardSmartspaceController();
 }
