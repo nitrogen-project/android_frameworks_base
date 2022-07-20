@@ -161,6 +161,10 @@ public class SystemUIFactory {
         // really need to ensure the Dependency gets initialized early on.
         Dependency dependency = mSysUIComponent.createDependency();
         dependency.start();
+
+        if (mInitializeComponents) {
+            mSysUIComponent.createKeyguardSmartspaceController();
+        }
     }
 
     /**
