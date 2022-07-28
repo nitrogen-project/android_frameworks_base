@@ -104,6 +104,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     // VoWiFi Icon Style
     private int mVoWiFistyle;
     private boolean mIsVowifiAvailable;
+    private final Handler mHandler = new Handler();
     private int mCallState = TelephonyManager.CALL_STATE_IDLE;
 
     private final MobileStatusTracker.Callback mMobileCallback =
@@ -444,6 +445,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
 
     @Override
     public void notifyListeners(SignalCallback callback) {
+        mHandler.post(() -> {
         // If the device is on carrier merged WiFi, we should let WifiSignalController to control
         // the SysUI states.
         if (mNetworkController.isCarrierMergedWifi(mSubscriptionInfo.getSubscriptionId())) {
@@ -488,6 +490,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
                 sbInfo.showTriangle,
                 volteId);
         callback.setMobileDataIndicators(mobileDataIndicators);
+        });
     }
 
     private QsInfo getQsInfo(String contentDescription, int dataTypeIcon) {
