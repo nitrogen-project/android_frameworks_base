@@ -305,6 +305,20 @@ public class BcSmartspaceView extends FrameLayout
         mAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public final int getCurrentCardTopPadding() {
+        BcSmartspaceCard card = mAdapter.getCardAtPosition(getSelectedPage());
+        if (card != null) {
+            return card.getPaddingTop();
+        }
+        return 0;
+    }
+
+    @Override
+    public final int getSelectedPage() {
+        return mViewPager.getCurrentItem();
+    }
+
     public void logSmartspaceEvent(
             SmartspaceTarget smartspaceTarget, int i, BcSmartspaceEvent bcSmartspaceEvent) {
         int i2;
@@ -412,6 +426,11 @@ public class BcSmartspaceView extends FrameLayout
             return;
         }
         logCurrentDisplayedCardSeen();
+    }
+
+    @Override
+    public void setIsDreaming(boolean z) {
+        mAdapter.setIsDreaming(z);
     }
 
     @Override

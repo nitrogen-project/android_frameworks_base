@@ -42,6 +42,7 @@ public class CardPagerAdapter extends PagerAdapter {
     private String mNextAlarmDescription = null;
     private Drawable mNextAlarmImage = null;
     private SmartspaceTarget mHolidayAlarmsTarget = null;
+    private boolean mIsDreaming = false;
 
     public CardPagerAdapter(View view) {
         mRoot = view;
@@ -296,6 +297,14 @@ public class CardPagerAdapter extends PagerAdapter {
 
     public SmartspaceTarget getHolidayAlarmsTarget() {
         return mHolidayAlarmsTarget;
+    }
+
+    public void setIsDreaming(boolean z) {
+        mIsDreaming = z;
+    }
+
+    public boolean getIsDreaming() {
+        return mIsDreaming;
     }
 
     private void refreshCards() {
