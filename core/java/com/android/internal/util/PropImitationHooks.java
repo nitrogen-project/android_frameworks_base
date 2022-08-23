@@ -35,6 +35,8 @@ public class PropImitationHooks {
 
     private static final String sCertifiedFp =
             Resources.getSystem().getString(R.string.config_certifiedFingerprint);
+    private static final String sCertifiedModel =
+            Resources.getSystem().getString(R.string.config_certifiedModel);
 
     private static final String sStockFp =
             Resources.getSystem().getString(R.string.config_stockFingerprint);
@@ -96,10 +98,10 @@ public class PropImitationHooks {
         sIsFinsky = packageName.equals(PACKAGE_FINSKY);
         sIsPhotos = sSpoofGapps && packageName.equals(PACKAGE_GPHOTOS);
 
-        if (!sCertifiedFp.isEmpty() && (sIsGms || sIsFinsky)) {
-            dlog("Setting certified fingerprint for: " + packageName);
+        if (!sCertifiedFp.isEmpty() && sIsGms) {
+            dlog("Setting certified fingerprint/model for GMS");
             setPropValue("FINGERPRINT", sCertifiedFp);
-            setPropValue("MODEL", Build.MODEL + "\u200b");
+            setPropValue("MODEL", sCertifiedModel);
         } else if (!sStockFp.isEmpty() && packageName.equals(PACKAGE_ARCORE)) {
             dlog("Setting stock fingerprint for: " + packageName);
             setPropValue("FINGERPRINT", sStockFp);
