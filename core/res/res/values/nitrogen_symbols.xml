@@ -29,4 +29,8 @@
   <java-symbol type="string" name="reboot_to_bootloader_message" />
   <java-symbol type="string" name="reboot_title" />
   <java-symbol type="string" name="reboot_message" />
+
+  <!-- PropImitationHooks -->
+  <java-symbol type="string" name="config_certifiedFingerprint" />
+  <java-symbol type="string" name="config_stockFingerprint" />
 </resources>
