@@ -82,7 +82,7 @@ public final class KeyguardMediaViewController {
     }
 
     public final void setSmartspaceView(BcSmartspaceDataPlugin.SmartspaceView smartspaceView) {
-        smartspaceView = smartspaceView;
+        this.smartspaceView = smartspaceView;
     }
 
     public final void init() {
