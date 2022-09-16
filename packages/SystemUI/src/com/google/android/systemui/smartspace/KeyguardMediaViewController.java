@@ -82,7 +82,7 @@ public final class KeyguardMediaViewController {
     }
 
     public final void setSmartspaceView(BcSmartspaceDataPlugin.SmartspaceView smartspaceView) {
-        smartspaceView = smartspaceView;
+        this.smartspaceView = smartspaceView;
     }
 
     public final void init() {
@@ -159,7 +159,7 @@ public final class KeyguardMediaViewController {
                                     "deviceMedia",
                                     mediaComponent,
                                     UserHandle.of(currentUserTracker.getCurrentUserId()))
-                            .setFeatureType(41)
+                            .setFeatureType(SmartspaceTarget.FEATURE_MEDIA)
                             .setHeaderAction(build)
                             .build();
             BcSmartspaceDataPlugin.SmartspaceView smartspaceView = getSmartspaceView();
