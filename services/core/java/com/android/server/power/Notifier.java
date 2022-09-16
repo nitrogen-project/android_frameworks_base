@@ -828,9 +828,6 @@ public class Notifier {
     };
 
     private void playChargingStartedFeedback(@UserIdInt int userId, boolean wireless) {
-        if (!isChargingFeedbackEnabled(userId)) {
-            return;
-        }
 
         if (!mIsPlayingChargingStartedFeedback.compareAndSet(false, true)) {
             // there's already a charging started feedback Runnable scheduled to run on the
@@ -848,6 +845,7 @@ public class Notifier {
                         HARDWARE_FEEDBACK_VIBRATION_ATTRIBUTES);
             }
 
+        if (isChargingFeedbackEnabled(userId)) {
             // play sound
             final String soundPath = Settings.Global.getString(mContext.getContentResolver(),
                     wireless ? Settings.Global.WIRELESS_CHARGING_STARTED_SOUND
@@ -860,6 +858,7 @@ public class Notifier {
                     sfx.play();
                 }
             }
+        }
             mIsPlayingChargingStartedFeedback.set(false);
         });
     }
