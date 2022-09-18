@@ -25,6 +25,8 @@ import com.android.internal.R;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PropImitationHooks {
 
@@ -42,8 +44,45 @@ public class PropImitationHooks {
     private static final String PACKAGE_GMS = "com.google.android.gms";
     private static final String PROCESS_GMS_UNSTABLE = PACKAGE_GMS + ".unstable";
 
+    private static final String PACKAGE_GPHOTOS = "com.google.android.apps.photos";
+    private static final Map<String, Object> sP1Props = new HashMap<>();
+    static {
+        sP1Props.put("BRAND", "google");
+        sP1Props.put("MANUFACTURER", "Google");
+        sP1Props.put("DEVICE", "marlin");
+        sP1Props.put("PRODUCT", "marlin");
+        sP1Props.put("MODEL", "Pixel XL");
+        sP1Props.put("FINGERPRINT", "google/marlin/marlin:10/QP1A.191005.007.A3/5972272:user/release-keys");
+    }
+    private static final String[] sFeaturesBlacklist = {
+        "PIXEL_2017_PRELOAD",
+        "PIXEL_2018_PRELOAD",
+        "PIXEL_2019_MIDYEAR_PRELOAD",
+        "PIXEL_2019_PRELOAD",
+        "PIXEL_2020_EXPERIENCE",
+        "PIXEL_2020_MIDYEAR_EXPERIENCE",
+        "PIXEL_2021_EXPERIENCE",
+        "PIXEL_2021_MIDYEAR_EXPERIENCE"
+    };
+
+    private static final String PACKAGE_VELVET = "com.google.android.quicksearchbox";
+    private static final String PACKAGE_WALLPAPERS = "com.google.android.apps.wallpaper";
+    private static final Map<String, Object> sP6Props = new HashMap<>();
+    static {
+        sP6Props.put("BRAND", "google");
+        sP6Props.put("MANUFACTURER", "Google");
+        sP6Props.put("DEVICE", "raven");
+        sP6Props.put("PRODUCT", "raven");
+        sP6Props.put("MODEL", "Pixel 6 Pro");
+        sP6Props.put("FINGERPRINT", "google/raven/raven:13/TP1A.220624.021/8877034:user/release-keys");
+    }
+
+    private static final boolean sSpoofGapps =
+            Resources.getSystem().getBoolean(R.bool.config_spoofGoogleApps);
+
     private static volatile boolean sIsGms = false;
     private static volatile boolean sIsFinsky = false;
+    private static volatile boolean sIsPhotos = false;
 
     public static void setProps(Application app) {
         final String packageName = app.getPackageName();
@@ -55,6 +94,7 @@ public class PropImitationHooks {
 
         sIsGms = packageName.equals(PACKAGE_GMS) && processName.equals(PROCESS_GMS_UNSTABLE);
         sIsFinsky = packageName.equals(PACKAGE_FINSKY);
+        sIsPhotos = sSpoofGapps && packageName.equals(PACKAGE_GPHOTOS);
 
         if (!sCertifiedFp.isEmpty() && (sIsGms || sIsFinsky)) {
             dlog("Setting certified fingerprint for: " + packageName);
@@ -63,6 +103,13 @@ public class PropImitationHooks {
         } else if (!sStockFp.isEmpty() && packageName.equals(PACKAGE_ARCORE)) {
             dlog("Setting stock fingerprint for: " + packageName);
             setPropValue("FINGERPRINT", sStockFp);
+        } else if (sIsPhotos) {
+            dlog("Spoofing Pixel XL for Google Photos");
+            sP1Props.forEach((k, v) -> setPropValue(k, v));
+        } else if (sSpoofGapps && (packageName.equals(PACKAGE_VELVET)
+                || packageName.equals(PACKAGE_WALLPAPERS))) {
+            dlog("Spoofing Pixel 6 Pro for: " + packageName);
+            sP6Props.forEach((k, v) -> setPropValue(k, v));
         }
     }
 
@@ -89,6 +136,15 @@ public class PropImitationHooks {
             dlog("Blocked key attestation sIsGms=" + sIsGms + " sIsFinsky=" + sIsFinsky);
             throw new UnsupportedOperationException();
         }
+    }
+
+    public static boolean hasSystemFeature(String name, boolean def) {
+        if (sIsPhotos && def &&
+                Arrays.stream(sFeaturesBlacklist).anyMatch(name::contains)) {
+            dlog("Blocked system feature " + name + " for Google Photos");
+            return false;
+        }
+        return def;
     }
 
     public static void dlog(String msg) {
