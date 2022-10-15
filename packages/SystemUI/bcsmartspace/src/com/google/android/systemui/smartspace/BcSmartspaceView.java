@@ -319,6 +319,11 @@ public class BcSmartspaceView extends FrameLayout
         return mViewPager.getCurrentItem();
     }
 
+    public void setSelectedPage(int page) {
+        mViewPager.setCurrentItem(page, false);
+        mPageIndicator.setPageOffset(page, 0.0f);
+    }
+
     public void logSmartspaceEvent(
             SmartspaceTarget smartspaceTarget, int i, BcSmartspaceEvent bcSmartspaceEvent) {
         int i2;
