@@ -29,17 +29,6 @@
          Used to decide if we show pulse settings -->
     <bool name="config_ledCanPulse">true</bool>
 
-    <!-- Build fingerprint and model from a GMS certified device -->
-    <string name="config_certifiedFingerprint" translatable="false">google/angler/angler:6.0/MDB08L/2343525:user/release-keys</string>
-    <string name="config_certifiedModel" translatable="false">Nexus 6P</string>
-
-    <!-- Build fingerprint from stock ROM -->
-    <string name="config_stockFingerprint" translatable="false"></string>
-
-    <!-- Whether to spoof device as pixel for certain google apps, to
-         unlock pixel-exclusive features -->
-    <bool name="config_spoofGoogleApps">true</bool>
-
     <!-- Array containing custom error messages from vendor. -->
     <string-array name="face_error_vendor" translatable="false">
         <item>@string/face_unlock_disabled_idle</item>
