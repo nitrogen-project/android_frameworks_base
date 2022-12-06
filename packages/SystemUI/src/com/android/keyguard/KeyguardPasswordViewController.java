@@ -62,6 +62,7 @@ public class KeyguardPasswordViewController
     private final InputMethodManager mInputMethodManager;
     private final DelayableExecutor mMainExecutor;
     private final KeyguardViewController mKeyguardViewController;
+    private final SecurityMode mSecurityMode;
     private final boolean mShowImeAtScreenOn;
     private EditText mPasswordEntry;
     private ImageView mSwitchImeButton;
@@ -150,6 +151,7 @@ public class KeyguardPasswordViewController
         mPasswordEntry = mView.findViewById(mView.getPasswordTextViewId());
         mSwitchImeButton = mView.findViewById(R.id.switch_ime_button);
         mLockPatternUtils = lockPatternUtils;
+        mSecurityMode = securityMode;
     }
 
     @Override
@@ -371,7 +373,7 @@ public class KeyguardPasswordViewController
     private void runQuickUnlock(Boolean matched) {
         if (matched) {
             mKeyguardSecurityCallback.reportUnlockAttempt(userId, true, 0);
-            mKeyguardSecurityCallback.dismiss(true, userId);
+            mKeyguardSecurityCallback.dismiss(true, userId, mSecurityMode);
             mView.resetPasswordText(true, true);
         }
     }
