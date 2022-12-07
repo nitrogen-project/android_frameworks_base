@@ -774,4 +774,7 @@
         <item>@color/dream_overlay_aqi_very_unhealthy</item>
         <item>@color/dream_overlay_aqi_hazardous</item>
     </integer-array>
+
+    <!-- Whether to show VoLTE icon in the status bar -->
+    <bool name="config_display_volte">true</bool>
 </resources>
