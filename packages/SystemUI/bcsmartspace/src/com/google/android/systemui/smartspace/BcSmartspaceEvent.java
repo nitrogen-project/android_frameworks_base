@@ -8,15 +8,15 @@ public enum BcSmartspaceEvent implements EventEnum {
     SMARTSPACE_CARD_SEEN(800),
     ENABLED_SMARTSPACE(822),
     DISABLED_SMARTSPACE(823);
-
+    
     private final int mId;
 
-    BcSmartspaceEvent(int i) {
-        mId = i;
+    BcSmartspaceEvent(int id) {
+        this.mId = id;
     }
 
-    @Override
+    @Override // com.google.android.systemui.smartspace.EventEnum
     public int getId() {
-        return mId;
+        return this.mId;
     }
 }
