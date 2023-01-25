@@ -7,19 +7,16 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.android.systemui.bcsmartspace.R;
 import com.android.systemui.plugins.BcSmartspaceDataPlugin;
-
 import com.google.android.systemui.smartspace.logging.BcSmartspaceCardLoggingInfo;
 
 public class BcSmartspaceCardLoyalty extends BcSmartspaceCardGenericImage {
-    private TextView mCardPromptView;
-    private ImageView mLoyaltyProgramLogoView;
-    private TextView mLoyaltyProgramNameView;
+    public TextView mCardPromptView;
+    public ImageView mLoyaltyProgramLogoView;
+    public TextView mLoyaltyProgramNameView;
 
     public BcSmartspaceCardLoyalty(Context context) {
         super(context);
@@ -29,74 +26,82 @@ public class BcSmartspaceCardLoyalty extends BcSmartspaceCardGenericImage {
         super(context, attributeSet);
     }
 
-    @Override
-    public boolean setSmartspaceActions(
-            SmartspaceTarget smartspaceTarget,
-            BcSmartspaceDataPlugin.SmartspaceEventNotifier smartspaceEventNotifier,
-            BcSmartspaceCardLoggingInfo bcSmartspaceCardLoggingInfo) {
-        super.setSmartspaceActions(
-                smartspaceTarget, smartspaceEventNotifier, bcSmartspaceCardLoggingInfo);
+    @Override // com.google.android.systemui.smartspace.BcSmartspaceCardGenericImage, com.google.android.systemui.smartspace.BcSmartspaceCardSecondary
+    public final void setTextColor(int i) {
+        this.mLoyaltyProgramNameView.setTextColor(i);
+        this.mCardPromptView.setTextColor(i);
+    }
+
+    @Override // com.google.android.systemui.smartspace.BcSmartspaceCardGenericImage
+    public final void onFinishInflate() {
+        super.onFinishInflate();
+        this.mLoyaltyProgramLogoView = (ImageView) findViewById(R.id.loyalty_program_logo);
+        this.mLoyaltyProgramNameView = (TextView) findViewById(R.id.loyalty_program_name);
+        this.mCardPromptView = (TextView) findViewById(R.id.card_prompt);
+    }
+
+    @Override // com.google.android.systemui.smartspace.BcSmartspaceCardGenericImage, com.google.android.systemui.smartspace.BcSmartspaceCardSecondary
+    public final void resetUi() {
+        super.resetUi();
+        BcSmartspaceTemplateDataUtils.updateVisibility(this.mImageView, 8);
+        BcSmartspaceTemplateDataUtils.updateVisibility(this.mLoyaltyProgramLogoView, 8);
+        BcSmartspaceTemplateDataUtils.updateVisibility(this.mLoyaltyProgramNameView, 8);
+        BcSmartspaceTemplateDataUtils.updateVisibility(this.mCardPromptView, 8);
+    }
+
+    @Override // com.google.android.systemui.smartspace.BcSmartspaceCardGenericImage
+    public final void setImageBitmap(Bitmap bitmap) {
+        super.setImageBitmap(bitmap);
+        this.mLoyaltyProgramLogoView.setImageBitmap(bitmap);
+    }
+
+    @Override // com.google.android.systemui.smartspace.BcSmartspaceCardGenericImage, com.google.android.systemui.smartspace.BcSmartspaceCardSecondary
+    public final boolean setSmartspaceActions(SmartspaceTarget smartspaceTarget, BcSmartspaceDataPlugin.SmartspaceEventNotifier smartspaceEventNotifier, BcSmartspaceCardLoggingInfo bcSmartspaceCardLoggingInfo) {
+        Bundle extras;
+        super.setSmartspaceActions(smartspaceTarget, smartspaceEventNotifier, bcSmartspaceCardLoggingInfo);
         SmartspaceAction baseAction = smartspaceTarget.getBaseAction();
-        Bundle extras = baseAction == null ? null : baseAction.getExtras();
-        mImageView.setVisibility(View.GONE);
-        mLoyaltyProgramLogoView.setVisibility(View.GONE);
-        mLoyaltyProgramNameView.setVisibility(View.GONE);
-        mCardPromptView.setVisibility(View.GONE);
-        if (extras != null) {
-            boolean containsKey = extras.containsKey("imageBitmap");
-            if (extras.containsKey("cardPrompt")) {
-                setCardPrompt(extras.getString("cardPrompt"));
-                mCardPromptView.setVisibility(View.VISIBLE);
-                if (containsKey) {
-                    mImageView.setVisibility(View.VISIBLE);
-                }
-                return true;
-            } else if (!extras.containsKey("loyaltyProgramName")) {
-                if (containsKey) {
-                    mLoyaltyProgramLogoView.setVisibility(View.VISIBLE);
-                }
-                return containsKey;
+        if (baseAction == null) {
+            extras = null;
+        } else {
+            extras = baseAction.getExtras();
+        }
+        if (extras == null) {
+            return false;
+        }
+        boolean containsKey = extras.containsKey("imageBitmap");
+        if (extras.containsKey("cardPrompt")) {
+            String string = extras.getString("cardPrompt");
+            TextView textView = this.mCardPromptView;
+            if (textView == null) {
+                Log.w("BcSmartspaceCardLoyalty", "No card prompt view to update");
             } else {
-                setLoyaltyProgramName(extras.getString("loyaltyProgramName"));
-                mLoyaltyProgramNameView.setVisibility(View.VISIBLE);
-                if (containsKey) {
-                    mLoyaltyProgramLogoView.setVisibility(View.VISIBLE);
-                }
+                textView.setText(string);
+            }
+            BcSmartspaceTemplateDataUtils.updateVisibility(this.mCardPromptView, 0);
+            if (containsKey) {
+                BcSmartspaceTemplateDataUtils.updateVisibility(this.mImageView, 0);
                 return true;
             }
-        }
-        return false;
-    }
-
-    @Override
-    public void onFinishInflate() {
-        super.onFinishInflate();
-        mLoyaltyProgramLogoView = (ImageView) findViewById(R.id.loyalty_program_logo);
-        mLoyaltyProgramNameView = (TextView) findViewById(R.id.loyalty_program_name);
-        mCardPromptView = (TextView) findViewById(R.id.card_prompt);
-    }
-
-    @Override
-    public void setImageBitmap(Bitmap bitmap) {
-        super.setImageBitmap(bitmap);
-        mLoyaltyProgramLogoView.setImageBitmap(bitmap);
-    }
-
-    void setCardPrompt(String str) {
-        TextView textView = mCardPromptView;
-        if (textView == null) {
-            Log.w("BcSmartspaceCardLoyalty", "No card prompt view to update");
+            return true;
+        } else if (extras.containsKey("loyaltyProgramName")) {
+            String string2 = extras.getString("loyaltyProgramName");
+            TextView textView2 = this.mLoyaltyProgramNameView;
+            if (textView2 == null) {
+                Log.w("BcSmartspaceCardLoyalty", "No loyalty program name view to update");
+            } else {
+                textView2.setText(string2);
+            }
+            BcSmartspaceTemplateDataUtils.updateVisibility(this.mLoyaltyProgramNameView, 0);
+            if (containsKey) {
+                BcSmartspaceTemplateDataUtils.updateVisibility(this.mLoyaltyProgramLogoView, 0);
+                return true;
+            }
+            return true;
         } else {
-            textView.setText(str);
-        }
-    }
-
-    void setLoyaltyProgramName(String str) {
-        TextView textView = mLoyaltyProgramNameView;
-        if (textView == null) {
-            Log.w("BcSmartspaceCardLoyalty", "No loyalty program name view to update");
-        } else {
-            textView.setText(str);
+            if (containsKey) {
+                BcSmartspaceTemplateDataUtils.updateVisibility(this.mLoyaltyProgramLogoView, 0);
+            }
+            return containsKey;
         }
     }
 }
