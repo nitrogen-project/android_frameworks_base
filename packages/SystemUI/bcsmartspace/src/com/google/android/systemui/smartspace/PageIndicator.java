@@ -5,148 +5,143 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import androidx.appcompat.content.res.AppCompatResources;
-
 import com.android.systemui.bcsmartspace.R;
 
 public class PageIndicator extends LinearLayout {
-    private int mPrimaryColor = getAttrColor(getContext(), 16842806);
-    private int mCurrentPageIndex = -1;
-    private int mNumPages = -1;
+    public int mCurrentPageIndex;
+    public int mNumPages;
+    public int mPrimaryColor;
 
     public PageIndicator(Context context) {
         super(context);
+        this.mPrimaryColor = getAttrColor(getContext(), 16842806);
+        this.mCurrentPageIndex = -1;
+        this.mNumPages = -1;
     }
 
-    public PageIndicator(Context context, AttributeSet attributeSet) {
-        super(context, attributeSet);
+    public PageIndicator(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        this.mPrimaryColor = getAttrColor(getContext(), 16842806);
+        this.mCurrentPageIndex = -1;
+        this.mNumPages = -1;
     }
 
-    public PageIndicator(Context context, AttributeSet attributeSet, int i) {
-        super(context, attributeSet, i);
+    public PageIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        this.mPrimaryColor = getAttrColor(getContext(), 16842806);
+        this.mCurrentPageIndex = -1;
+        this.mNumPages = -1;
     }
 
-    public PageIndicator(Context context, AttributeSet attributeSet, int i, int i2) {
-        super(context, attributeSet, i, i2);
+    public PageIndicator(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        this.mPrimaryColor = getAttrColor(getContext(), 16842806);
+        this.mCurrentPageIndex = -1;
+        this.mNumPages = -1;
     }
 
-    public void setNumPages(int i) {
-        if (i <= 0) {
-            Log.w("PageIndicator", "Total number of pages invalid: " + i + ". Assuming 1 page.");
-            i = 1;
+    public static int getAttrColor(Context context, int attr) {
+        TypedArray obtainStyledAttributes = context.obtainStyledAttributes(new int[]{attr});
+        int color = obtainStyledAttributes.getColor(0, 0);
+        obtainStyledAttributes.recycle();
+        return color;
+    }
+
+    public void setNumPages(int pages) {
+        if (pages <= 0) {
+            Log.w("PageIndicator", "Total number of pages invalid: " + pages + ". Assuming 1 page.");
+            pages = 1;
         }
-        if (i < 2) {
-            setVisibility(View.GONE);
+        if (pages < 2) {
+            BcSmartspaceTemplateDataUtils.updateVisibility(this, 8);
             return;
         }
-        setVisibility(View.VISIBLE);
-        if (i == mNumPages) {
-            return;
+        BcSmartspaceTemplateDataUtils.updateVisibility(this, 0);
+        if (pages != this.mNumPages) {
+            this.mNumPages = pages;
+            initializePageIndicators();
         }
-        mNumPages = i;
-        initializePageIndicators();
     }
 
-    public void setPageOffset(int i, float f) {
-        int i2 = (f > 0.0f ? 1 : (f == 0.0f ? 0 : -1));
-        if (!(i2 == 0 && i == mCurrentPageIndex) && i >= 0 && i < getChildCount() - 1) {
-            ImageView imageView = (ImageView) getChildAt(i);
-            int i3 = i + 1;
-            ImageView imageView2 = (ImageView) getChildAt(i3);
-            if (imageView == null || imageView2 == null) {
-                return;
+    public void setPrimaryColor(int color) {
+        this.mPrimaryColor = color;
+        for (int i = 0; i < getChildCount(); i++) {
+            ((ImageView) getChildAt(i)).getDrawable().setTint(this.mPrimaryColor);
+        }
+    }
+
+    public void setPageOffset(int position, float positionOffset) {
+        int i4 = Float.compare(positionOffset, 0.0f);
+        if ((i4 != 0 || position != this.mCurrentPageIndex) && position >= 0 && position < getChildCount() - 1) {
+            ImageView imageView = (ImageView) getChildAt(position);
+            int childIndex = position + 1;
+            ImageView imageView2 = (ImageView) getChildAt(childIndex);
+            if (imageView != null && imageView2 != null) {
+                if (i4 == 0 || positionOffset >= 0.99f) {
+                    if (this.mCurrentPageIndex >= 0 && this.mCurrentPageIndex < getChildCount()) {
+                        getChildAt(this.mCurrentPageIndex).setAlpha(0.4f);
+                    }
+                    this.mCurrentPageIndex = i4 == 0 ? position : childIndex;
+                }
+                imageView.setAlpha(((1.0f - positionOffset) * 0.6f) + 0.4f);
+                imageView2.setAlpha((0.6f * positionOffset) + 0.4f);
+                if (positionOffset >= 0.5d) {
+                    childIndex = position + 2;
+                }
+                Object[] offset = {Integer.valueOf(childIndex), Integer.valueOf(this.mNumPages)};
+                setContentDescription(getContext().getString(R.string.accessibility_smartspace_page, offset));
             }
-            imageView.setAlpha(((1.0f - f) * 0.6f) + 0.4f);
-            imageView2.setAlpha((0.6f * f) + 0.4f);
-            Context context = getContext();
-            int i4 = R.string.accessibility_smartspace_page;
-            Object[] objArr = new Object[2];
-            objArr[0] = Integer.valueOf(((double) f) < 0.5d ? i3 : i + 2);
-            objArr[1] = Integer.valueOf(mNumPages);
-            setContentDescription(context.getString(i4, objArr));
-            if (i2 != 0 && f < 0.99f) {
-                return;
-            }
-            if (i2 != 0) {
-                i = i3;
-            }
-            mCurrentPageIndex = i;
         }
     }
 
     private void initializePageIndicators() {
-        LinearLayout.LayoutParams layoutParams;
-        int childCount = getChildCount() - mNumPages;
+        LinearLayout.LayoutParams lp;
+        int childCount = getChildCount() - this.mNumPages;
         for (int i = 0; i < childCount; i++) {
             removeViewAt(0);
         }
-        int dimensionPixelSize =
-                getContext()
-                        .getResources()
-                        .getDimensionPixelSize(R.dimen.page_indicator_dot_margin);
+        int dimensionPixelSize = getContext().getResources().getDimensionPixelSize(R.dimen.page_indicator_dot_margin);
         int i2 = 0;
-        while (i2 < mNumPages) {
-            ImageView imageView =
-                    i2 < getChildCount() ? (ImageView) getChildAt(i2) : new ImageView(getContext());
+        while (i2 < this.mNumPages) {
+            ImageView imageView = i2 < getChildCount() ? (ImageView) getChildAt(i2) : new ImageView(getContext());
             if (i2 < getChildCount()) {
-                layoutParams = (LinearLayout.LayoutParams) imageView.getLayoutParams();
+                lp = (LinearLayout.LayoutParams) imageView.getLayoutParams();
             } else {
-                layoutParams = new LinearLayout.LayoutParams(-2, -2);
+                lp = new LinearLayout.LayoutParams(-2, -2);
             }
             if (i2 == 0) {
-                layoutParams.setMarginStart(0);
+                lp.setMarginStart(0);
             } else {
-                layoutParams.setMarginStart(dimensionPixelSize);
+                lp.setMarginStart(dimensionPixelSize);
             }
-            if (i2 == mNumPages - 1) {
-                layoutParams.setMarginEnd(0);
+            if (i2 == this.mNumPages - 1) {
+                lp.setMarginEnd(0);
             } else {
-                layoutParams.setMarginEnd(dimensionPixelSize);
+                lp.setMarginEnd(dimensionPixelSize);
             }
             if (i2 < getChildCount()) {
-                imageView.setLayoutParams(layoutParams);
+                imageView.setLayoutParams(lp);
             } else {
-                Drawable drawable =
-                        AppCompatResources.getDrawable(getContext(), R.drawable.page_indicator_dot);
-                drawable.setTint(mPrimaryColor);
+                Drawable drawable = getContext().getResources().getDrawable(R.drawable.page_indicator_dot, getContext().getTheme());
+                drawable.setTint(this.mPrimaryColor);
                 imageView.setImageDrawable(drawable);
-                addView(imageView, layoutParams);
+                addView(imageView, lp);
             }
-            int i3 = mCurrentPageIndex;
-            if (i3 < 0) {
-                mCurrentPageIndex = 0;
+            int index = this.mCurrentPageIndex;
+            if (index < 0) {
+                this.mCurrentPageIndex = 0;
             } else {
-                int i4 = mNumPages;
-                if (i3 >= i4) {
-                    mCurrentPageIndex = i4 - 1;
+                int numPages = this.mNumPages;
+                if (index >= numPages) {
+                    this.mCurrentPageIndex = numPages - 1;
                 }
             }
-            imageView.setAlpha(i2 == mCurrentPageIndex ? 1.0f : 0.4f);
+            imageView.setAlpha(i2 == this.mCurrentPageIndex ? 1.0f : 0.4f);
             i2++;
         }
-        setContentDescription(
-                getContext()
-                        .getString(
-                                R.string.accessibility_smartspace_page,
-                                1,
-                                Integer.valueOf(mNumPages)));
-    }
-
-    public void setPrimaryColor(int i) {
-        mPrimaryColor = i;
-        for (int i2 = 0; i2 < getChildCount(); i2++) {
-            ((ImageView) getChildAt(i2)).getDrawable().setTint(mPrimaryColor);
-        }
-    }
-
-    public static int getAttrColor(Context context, int i) {
-        TypedArray obtainStyledAttributes = context.obtainStyledAttributes(new int[] {i});
-        int color = obtainStyledAttributes.getColor(0, 0);
-        obtainStyledAttributes.recycle();
-        return color;
+        setContentDescription(getContext().getString(R.string.accessibility_smartspace_page, 1, Integer.valueOf(this.mNumPages)));
     }
 }
