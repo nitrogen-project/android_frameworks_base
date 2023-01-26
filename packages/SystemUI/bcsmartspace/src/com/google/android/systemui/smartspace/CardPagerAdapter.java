@@ -439,7 +439,7 @@ public class CardPagerAdapter extends PagerAdapter {
                     TapAction build = new TapAction.Builder(uuid2).setIntent(BcSmartSpaceUtil.getOpenCalendarIntent()).build();
                     bcNextAlarmData = bcNextAlarmData2;
                     i5 = 8;
-                    BcSmartSpaceUtil.setOnClickListener(baseTemplateCard, baseTemplateCard.mTarget, build, eventNotifier, "SsBaseTemplateCard", bcSmartspaceCardLoggingInfo2, 0);
+                    BcSmartSpaceUtil.setOnClickListener(baseTemplateCard.mDateView, baseTemplateCard.mTarget, build, eventNotifier, "SsBaseTemplateCard", bcSmartspaceCardLoggingInfo2, 0);
                 }
                 baseTemplateCard.setUpTextView(baseTemplateCard.mTitleTextView, baseTemplateCard.mTemplateData.getPrimaryItem(), eventNotifier);
                 baseTemplateCard.setUpTextView(baseTemplateCard.mSubtitleTextView, baseTemplateCard.mTemplateData.getSubtitleItem(), eventNotifier);
