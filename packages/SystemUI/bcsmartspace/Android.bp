@@ -1,5 +1,5 @@
 android_library {
-    name: "bcsmartspace-res",
+    name: "bcsmartspacegoogle-res",
 
     static_libs: [
         "androidx.cardview_cardview",
@@ -14,14 +14,14 @@ android_library {
 }
 
 android_library {
-    name: "bcsmartspace-google",
+    name: "bcsmartspacegoogle",
     srcs: [
         "src/**/*.kt",
         "src/**/*.java",
         "src/**/I*.aidl",
     ],
     static_libs: [
-        "bcsmartspace-res",
+        "bcsmartspacegoogle-res",
         "smartspace-proto-java",
         "SystemUIPluginLib",
         "SystemUISharedLib",
