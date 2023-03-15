@@ -39,6 +39,7 @@ public class BaseTemplateCard extends ConstraintLayout {
     public int mFeatureType;
     public int mIconTintColor;
     public boolean mIsDreaming;
+    public String mUiSurface;
     public BcSmartspaceCardLoggingInfo mLoggingInfo;
     public ImageView mNextAlarmImageView;
     public DoubleShadowTextView mNextAlarmTextView;

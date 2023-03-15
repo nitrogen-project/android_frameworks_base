@@ -83,6 +83,8 @@ import com.android.systemui.screenrecord.ScreenRecordModule;
 import com.android.systemui.screenshot.dagger.ScreenshotModule;
 import com.android.systemui.security.data.repository.SecurityRepositoryModule;
 import com.android.systemui.settings.DisplayTracker;
+import com.android.systemui.settings.dagger.MultiUserUtilsModule;
+import com.android.systemui.settings.UserTracker;
 import com.android.systemui.shade.ShadeController;
 import com.android.systemui.shade.ShadeModule;
 import com.android.systemui.shade.transition.LargeScreenShadeInterpolator;
@@ -394,8 +396,8 @@ public abstract class SystemUIModule {
     @Provides
     @SysUISingleton
     static KeyguardMediaViewController provideKeyguardMediaViewController(Context context, BcSmartspaceDataPlugin bcSmartspaceDataPlugin,
-            @Main DelayableExecutor delayableExecutor, NotificationMediaManager notificationMediaManager, BroadcastDispatcher broadcastDispatcher) {
-        return new KeyguardMediaViewController(context, bcSmartspaceDataPlugin, delayableExecutor, notificationMediaManager, broadcastDispatcher);
+            @Main DelayableExecutor delayableExecutor, NotificationMediaManager notificationMediaManager, BroadcastDispatcher broadcastDispatcher, UserTracker userTracker) {
+        return new KeyguardMediaViewController(context, bcSmartspaceDataPlugin, delayableExecutor, notificationMediaManager, broadcastDispatcher, userTracker);
     }
 
     @Provides
