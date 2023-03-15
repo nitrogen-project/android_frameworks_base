@@ -13,7 +13,7 @@ import com.android.systemui.R;
 import com.android.systemui.broadcast.BroadcastDispatcher;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.plugins.BcSmartspaceDataPlugin;
-import com.android.systemui.settings.CurrentUserTracker;
+import com.android.systemui.settings.UserTracker;
 import com.android.systemui.statusbar.NotificationMediaManager;
 import com.android.systemui.util.concurrency.DelayableExecutor;
 
@@ -51,7 +51,7 @@ public final class KeyguardMediaViewController {
     private BcSmartspaceDataPlugin.SmartspaceView smartspaceView;
     private CharSequence title;
     private final DelayableExecutor uiExecutor;
-    private CurrentUserTracker userTracker;
+    private UserTracker userTracker;
 
     @Inject
     public KeyguardMediaViewController(
@@ -59,7 +59,8 @@ public final class KeyguardMediaViewController {
             BcSmartspaceDataPlugin plugin,
             DelayableExecutor uiExecutor,
             NotificationMediaManager mediaManager,
-            BroadcastDispatcher broadcastDispatcher) {
+            BroadcastDispatcher broadcastDispatcher,
+            UserTracker userTracker) {
         Intrinsics.checkNotNullParameter(context, "context");
         Intrinsics.checkNotNullParameter(plugin, "plugin");
         Intrinsics.checkNotNullParameter(uiExecutor, "uiExecutor");
@@ -70,6 +71,7 @@ public final class KeyguardMediaViewController {
         this.uiExecutor = uiExecutor;
         this.mediaManager = mediaManager;
         this.broadcastDispatcher = broadcastDispatcher;
+        this.userTracker = userTracker;
         mediaComponent = new ComponentName(context, KeyguardMediaViewController.class);
     }
 
@@ -110,13 +112,6 @@ public final class KeyguardMediaViewController {
                         notificationMediaManager.removeCallback(keyguardMediaViewController);
                     }
                 });
-        userTracker =
-                new CurrentUserTracker(broadcastDispatcher) {
-                    @Override
-                    public void onUserSwitched(int i) {
-                        reset();
-                    }
-                };
     }
 
     public final void updateMediaInfo(MediaMetadata mediaMetadata, int i) {
@@ -149,8 +144,7 @@ public final class KeyguardMediaViewController {
                             .setSubtitle(artist)
                             .setIcon(mediaManager.getMediaIcon())
                             .build();
-            CurrentUserTracker currentUserTracker = userTracker;
-            if (currentUserTracker == null) {
+            if (userTracker == null) {
                 Intrinsics.throwUninitializedPropertyAccessException("userTracker");
                 throw null;
             }
@@ -158,7 +152,7 @@ public final class KeyguardMediaViewController {
                     new SmartspaceTarget.Builder(
                                     "deviceMedia",
                                     mediaComponent,
-                                    UserHandle.of(currentUserTracker.getCurrentUserId()))
+                                    UserHandle.of(userTracker.getUserId()))
                             .setFeatureType(SmartspaceTarget.FEATURE_MEDIA)
                             .setHeaderAction(build)
                             .build();

@@ -36,7 +36,7 @@ public final class BcSmartspaceCardLogger {
     }
 
     static void writeLog(EventEnum eventEnum, BcSmartspaceCardLoggingInfo cardInfo, byte[] subcards) {
-        SysUiStatsLog.write(352, eventEnum.getId(), cardInfo.mInstanceId, 0, cardInfo.mDisplaySurface, cardInfo.mRank, cardInfo.mCardinality, cardInfo.mFeatureType, cardInfo.mUid, 0, 0, cardInfo.mReceivedLatency, subcards);
+        SysUiStatsLog.write(352, eventEnum.getId(), cardInfo.mInstanceId, 0, cardInfo.mDisplaySurface, cardInfo.mRank, cardInfo.mCardinality, cardInfo.mFeatureType, cardInfo.mUid, 0, 0, cardInfo.mReceivedLatency, subcards, subcards);
         if (IS_VERBOSE) {
             Log.d(TAG, String.format("\nLogged Smartspace event(%s), info(%s), callers=%s", eventEnum, cardInfo.toString(), Debug.getCallers(5)));
         }
