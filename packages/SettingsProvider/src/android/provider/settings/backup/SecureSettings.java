@@ -223,6 +223,7 @@ public class SecureSettings {
         Settings.Secure.BLUETOOTH_LE_BROADCAST_CODE,
         Settings.Secure.BLUETOOTH_LE_BROADCAST_APP_SOURCE_NAME,
         Settings.Secure.LOCK_SCREEN_WEATHER_ENABLED,
-        Settings.Secure.ACCESSIBILITY_FONT_SCALING_HAS_BEEN_CHANGED
+        Settings.Secure.ACCESSIBILITY_FONT_SCALING_HAS_BEEN_CHANGED,
+        Settings.Secure.BERRY_BLACK_THEME
     };
 }
