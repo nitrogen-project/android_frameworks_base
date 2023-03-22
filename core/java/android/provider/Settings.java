@@ -5662,6 +5662,7 @@ public final class Settings {
          * Whether to scramble a pin unlock layout
          * @hide
          */
+        @Readable
         public static final String LOCKSCREEN_PIN_SCRAMBLE_LAYOUT =
                 "lockscreen_scramble_pin_layout";
 
@@ -5669,6 +5670,7 @@ public final class Settings {
          * Whether to use the custom quick unlock screen control
          * @hide
          */
+        @Readable
         public static final String LOCKSCREEN_QUICK_UNLOCK_CONTROL =
                 "lockscreen_quick_unlock_control";
 
@@ -5677,12 +5679,14 @@ public final class Settings {
          *
          * @hide
          */
+        @Readable
         public static final String FINGERPRINT_SUCCESS_VIB = "fingerprint_success_vib";
 
         /**
          * Double tap on lockscreen to sleep
          * @hide
          */
+        @Readable
         public static final String DOUBLE_TAP_SLEEP_LOCKSCREEN =
                 "double_tap_sleep_lockscreen";
 
@@ -5690,6 +5694,7 @@ public final class Settings {
          * Enable statusbar double tap gesture to put device to sleep
          * @hide
          */
+        @Readable
         public static final String DOUBLE_TAP_SLEEP_GESTURE = "double_tap_sleep_gesture";
 
         /** Whether to show ambient or lockscreen if AoD is disabled
@@ -5866,11 +5871,23 @@ public final class Settings {
             PRIVATE_SETTINGS.add(BATTERY_LIGHT_MEDIUM_COLOR);
             PRIVATE_SETTINGS.add(BATTERY_LIGHT_FULL_COLOR);
             PRIVATE_SETTINGS.add(BATTERY_LIGHT_REALLYFULL_COLOR);
+            PRIVATE_SETTINGS.add(TORCH_POWER_BUTTON_GESTURE);
+            PRIVATE_SETTINGS.add(LOCKSCREEN_BATTERY_INFO);
             PRIVATE_SETTINGS.add(VIBRATE_ON_CONNECT);
             PRIVATE_SETTINGS.add(VIBRATE_ON_CALLWAITING);
             PRIVATE_SETTINGS.add(VIBRATE_ON_DISCONNECT);
+            PRIVATE_SETTINGS.add(VOLUME_ROCKER_WAKE);
+            PRIVATE_SETTINGS.add(VOLUME_BUTTON_MUSIC_CONTROL);
             PRIVATE_SETTINGS.add(HEADS_UP_STOPLIST_VALUES);
             PRIVATE_SETTINGS.add(HEADS_UP_BLACKLIST_VALUES);
+            PRIVATE_SETTINGS.add(SCREENSHOT_SOUND);
+            PRIVATE_SETTINGS.add(LOCKSCREEN_PIN_SCRAMBLE_LAYOUT);
+            PRIVATE_SETTINGS.add(LOCKSCREEN_QUICK_UNLOCK_CONTROL);
+            PRIVATE_SETTINGS.add(SHOW_VOLTE_ICON);
+            PRIVATE_SETTINGS.add(VOLTE_ICON_STYLE);
+            PRIVATE_SETTINGS.add(VOWIFI_ICON);
+            PRIVATE_SETTINGS.add(VOWIFI_ICON_STYLE);
+            PRIVATE_SETTINGS.add(FINGERPRINT_SUCCESS_VIB);
             PRIVATE_SETTINGS.add(DOUBLE_TAP_SLEEP_LOCKSCREEN);
             PRIVATE_SETTINGS.add(DOUBLE_TAP_SLEEP_GESTURE);
             PRIVATE_SETTINGS.add(AMBIENT_WAKE_GESTURES);
@@ -10902,6 +10919,7 @@ public final class Settings {
          * default: 0
          * @hide
          */
+        @Readable
         public static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
 
         /**
@@ -11278,6 +11296,7 @@ public final class Settings {
          * 2 = Quick statusbar
          * @hide
          */
+        @Readable
         public static final String NETWORK_TRAFFIC_LOCATION = "network_traffic_location";
 
         /**
@@ -11287,48 +11306,56 @@ public final class Settings {
          * 2 = Display down-stream traffic only
          * @hide
          */
+        @Readable
         public static final String NETWORK_TRAFFIC_MODE = "network_traffic_mode";
 
         /**
          * Whether or not to hide the network traffic indicator when there is no activity
          * @hide
          */
+        @Readable
         public static final String NETWORK_TRAFFIC_AUTOHIDE = "network_traffic_autohide";
 
         /**
          * Threshold below which network traffic would be hidden
          * @hide
          */
+        @Readable
         public static final String NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD = "network_traffic_autohide_threshold";
 
         /**
          * Measurement unit preference for network traffic
          * @hide
          */
+        @Readable
         public static final String NETWORK_TRAFFIC_UNITS = "network_traffic_units";
 
         /**
          * Whether or not to show measurement units in the network traffic indiciator
          * @hide
          */
+        @Readable
         public static final String NETWORK_TRAFFIC_SHOW_UNITS = "network_traffic_show_units";
 
         /**
          * Specify refresh duration for network traffic
          * @hide
          */
+        @Readable
         public static final String NETWORK_TRAFFIC_REFRESH_INTERVAL = "network_traffic_refresh_interval";
 
         /**
          * Whether to hide arrows for network traffic
          * @hide
          */
+        @Readable
         public static final String NETWORK_TRAFFIC_HIDEARROW = "network_traffic_hidearrow";
 
         /**
          * Face Unlock Method
          * @hide
          */
+        @Readable
         public static final String FACE_UNLOCK_METHOD = "face_unlock_method";
 
         /**
