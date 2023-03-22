@@ -39,6 +39,7 @@ import com.android.systemui.demomode.DemoModeController;
 import com.android.systemui.dump.DumpManager;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.StatusIconDisplayable;
+import com.android.systemui.statusbar.phone.PhoneStatusBarPolicy.NetworkTrafficState;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy.CallIndicatorIconState;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy.MobileIconState;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy.WifiIconState;
@@ -362,6 +363,24 @@ public class StatusBarIconControllerImpl implements Tunable,
     // Override for *both* CommandQueue.Callbacks AND StatusBarIconController.
     // TODO(b/265307726): Pull out the CommandQueue callbacks into a member variable to
     //  differentiate between those callback methods and StatusBarIconController methods.
+
+    @Override
+    public void setNetworkTraffic(String slot, NetworkTrafficState state) {
+        if (state == null) {
+            removeIcon(slot, 0);
+            return;
+        }
+
+        StatusBarIconHolder holder = mStatusBarIconList.getIconHolder(slot, 0);
+        if (holder == null) {
+            holder = StatusBarIconHolder.fromNetworkTrafficState(state);
+            setIcon(slot, holder);
+        } else {
+            holder.setNetworkTrafficState(state);
+            handleSet(slot, holder);
+        }
+    }
+
     @Override
     public void setIcon(String slot, StatusBarIcon icon) {
         String slotName = createExternalSlotName(slot);

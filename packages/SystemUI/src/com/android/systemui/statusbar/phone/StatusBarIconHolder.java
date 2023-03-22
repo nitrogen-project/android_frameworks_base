@@ -23,6 +23,7 @@ import android.graphics.drawable.Icon;
 import android.os.UserHandle;
 
 import com.android.internal.statusbar.StatusBarIcon;
+import com.android.systemui.statusbar.phone.PhoneStatusBarPolicy.NetworkTrafficState;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy.CallIndicatorIconState;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy.MobileIconState;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy.WifiIconState;
@@ -73,10 +74,14 @@ public class StatusBarIconHolder {
     @Retention(RetentionPolicy.SOURCE)
     @interface IconType {}
 
+    public static final int TYPE_NETWORK_TRAFFIC = 5;
+
     private StatusBarIcon mIcon;
     private WifiIconState mWifiState;
     private MobileIconState mMobileState;
     private @IconType int mType = TYPE_ICON;
+    private NetworkTrafficState mNetworkTrafficState;
+
     private int mTag = 0;
 
     private StatusBarIconHolder() {
@@ -97,6 +102,13 @@ public class StatusBarIconHolder {
         StatusBarIconHolder holder = new StatusBarIconHolder();
         holder.mIcon = new StatusBarIcon(UserHandle.SYSTEM, context.getPackageName(),
                 Icon.createWithResource( context, resId), 0, 0, contentDescription);
+        return holder;
+    }
+
+    public static StatusBarIconHolder fromNetworkTrafficState(NetworkTrafficState state) {
+        StatusBarIconHolder holder = new StatusBarIconHolder();
+        holder.mNetworkTrafficState = state;
+        holder.mType = TYPE_NETWORK_TRAFFIC;
         return holder;
     }
 
@@ -183,6 +195,14 @@ public class StatusBarIconHolder {
         mMobileState = state;
     }
 
+    public NetworkTrafficState getNetworkTrafficState() {
+        return mNetworkTrafficState;
+    }
+
+    public void setNetworkTrafficState(NetworkTrafficState state) {
+        mNetworkTrafficState = state;
+    }
+
     public boolean isVisible() {
         switch (mType) {
             case TYPE_ICON:
@@ -191,6 +211,8 @@ public class StatusBarIconHolder {
                 return mWifiState.visible;
             case TYPE_MOBILE:
                 return mMobileState.visible;
+            case TYPE_NETWORK_TRAFFIC:
+                return mNetworkTrafficState.visible;
             case TYPE_MOBILE_NEW:
             case TYPE_WIFI_NEW:
                 // The new pipeline controls visibilities via the view model and view binder, so
@@ -223,6 +245,10 @@ public class StatusBarIconHolder {
             case TYPE_WIFI_NEW:
                 // The new pipeline controls visibilities via the view model and view binder, so
                 // ignore setVisible.
+                break;
+
+            case TYPE_NETWORK_TRAFFIC:
+                mNetworkTrafficState.visible = visible;
                 break;
         }
     }
