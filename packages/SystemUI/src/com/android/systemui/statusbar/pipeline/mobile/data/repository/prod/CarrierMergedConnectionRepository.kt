@@ -17,6 +17,7 @@
 package com.android.systemui.statusbar.pipeline.mobile.data.repository.prod
 
 import android.telephony.CellSignalStrength.SIGNAL_STRENGTH_NONE_OR_UNKNOWN
+import android.telephony.ims.stub.ImsRegistrationImplBase.REGISTRATION_TECH_NONE
 import android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID
 import android.telephony.TelephonyManager
 import android.util.Log
@@ -175,6 +176,14 @@ class CarrierMergedConnectionRepository(
     override val isAllowedDuringAirplaneMode = MutableStateFlow(true).asStateFlow()
 
     override val dataEnabled: StateFlow<Boolean> = wifiRepository.isWifiEnabled
+
+    override val voiceNetworkType = MutableStateFlow(TelephonyManager.NETWORK_TYPE_UNKNOWN)
+    override val dataNetworkType = MutableStateFlow(TelephonyManager.NETWORK_TYPE_UNKNOWN)
+    override val originNetworkType = MutableStateFlow(TelephonyManager.NETWORK_TYPE_UNKNOWN)
+    override val voiceCapable = MutableStateFlow(false)
+    override val videoCapable = MutableStateFlow(false)
+    override val imsRegistered = MutableStateFlow(false)
+    override val imsRegistrationTech = MutableStateFlow(REGISTRATION_TECH_NONE)
 
     companion object {
         // Carrier merged is never roaming

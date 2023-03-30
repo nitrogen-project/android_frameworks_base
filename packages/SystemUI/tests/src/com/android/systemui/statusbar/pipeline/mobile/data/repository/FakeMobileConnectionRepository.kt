@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.pipeline.mobile.data.repository
 
+import android.telephony.ims.stub.ImsRegistrationImplBase.REGISTRATION_TECH_NONE
 import android.telephony.TelephonyManager.UNKNOWN_CARRIER_ID
 import com.android.systemui.log.table.TableLogBuffer
 import com.android.systemui.statusbar.pipeline.mobile.data.model.DataConnectionState
@@ -59,6 +60,14 @@ class FakeMobileConnectionRepository(
         MutableStateFlow(NetworkNameModel.Default(DEFAULT_NETWORK_NAME))
 
     override val isAllowedDuringAirplaneMode = MutableStateFlow(false)
+
+    override val voiceNetworkType = MutableStateFlow(0)
+    override val dataNetworkType = MutableStateFlow(0)
+    override val originNetworkType = MutableStateFlow(0)
+    override val voiceCapable = MutableStateFlow(false)
+    override val videoCapable = MutableStateFlow(false)
+    override val imsRegistered = MutableStateFlow(false)
+    override val imsRegistrationTech = MutableStateFlow(REGISTRATION_TECH_NONE)
 
     fun setDataEnabled(enabled: Boolean) {
         _dataEnabled.value = enabled

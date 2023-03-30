@@ -45,6 +45,7 @@ public class TelephonyIcons {
     public static final int ICON_5G = R.drawable.ic_5g_mobiledata;
     public static final int ICON_5G_PLUS = R.drawable.ic_5g_plus_mobiledata;
     public static final int ICON_CWF = R.drawable.ic_carrier_wifi;
+    public static final int ICON_VOWIFI = R.drawable.ic_vowifi;
 
     public static final MobileIconGroup CARRIER_NETWORK_CHANGE = new MobileIconGroup(
             "CARRIER_NETWORK_CHANGE",
@@ -169,6 +170,11 @@ public class TelephonyIcons {
             R.string.data_connection_carrier_wifi,
             TelephonyIcons.ICON_CWF
     );
+
+    public static final MobileIconGroup VOWIFI = new MobileIconGroup(
+            "VoWIFI",
+            0,
+            TelephonyIcons.ICON_VOWIFI);
 
     // When adding a new MobileIconGroup, check if the dataContentDescription has to be filtered
     // in QSCarrier#hasValidTypeContentDescription

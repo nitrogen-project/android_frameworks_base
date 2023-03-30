@@ -18,6 +18,7 @@ package com.android.systemui.statusbar.pipeline.mobile.domain.interactor
 
 import com.android.settingslib.mobile.TelephonyIcons
 import com.android.systemui.log.table.TableLogBuffer
+import com.android.systemui.statusbar.pipeline.mobile.data.model.MobileIconCustomizationMode
 import com.android.systemui.statusbar.pipeline.mobile.data.model.NetworkNameModel
 import com.android.systemui.statusbar.pipeline.mobile.domain.model.NetworkTypeIconModel
 import com.android.systemui.statusbar.pipeline.mobile.domain.model.SignalIconModel
@@ -74,6 +75,15 @@ class FakeMobileIconInteractor(
                 carrierNetworkChange = false,
             )
         )
+
+    private val _imsInfo = MutableStateFlow(MobileIconCustomizationMode())
+    override val imsInfo = _imsInfo
+
+    private val _showVolteIcon = MutableStateFlow(false)
+    override val showVolteIcon = _showVolteIcon
+
+    private val _showVowifiIcon = MutableStateFlow(false)
+    override val showVowifiIcon = _showVowifiIcon
 
     fun setIsDataEnabled(enabled: Boolean) {
         _isDataEnabled.value = enabled

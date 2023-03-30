@@ -19,6 +19,7 @@ package com.android.systemui.statusbar.pipeline.mobile.data.repository.demo
 import android.telephony.CellSignalStrength
 import android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID
 import android.telephony.TelephonyManager
+import android.telephony.ims.stub.ImsRegistrationImplBase.REGISTRATION_TECH_NONE
 import com.android.systemui.log.table.TableLogBuffer
 import com.android.systemui.log.table.logDiffsForTable
 import com.android.systemui.statusbar.pipeline.mobile.data.model.DataConnectionState
@@ -190,6 +191,14 @@ class DemoMobileConnectionRepository(
         MutableStateFlow(NetworkNameModel.SubscriptionDerived(DEMO_CARRIER_NAME))
 
     override val isAllowedDuringAirplaneMode = MutableStateFlow(false)
+
+    override val voiceNetworkType = MutableStateFlow(TelephonyManager.NETWORK_TYPE_UNKNOWN)
+    override val dataNetworkType = MutableStateFlow(TelephonyManager.NETWORK_TYPE_UNKNOWN)
+    override val originNetworkType = MutableStateFlow(TelephonyManager.NETWORK_TYPE_UNKNOWN)
+    override val voiceCapable = MutableStateFlow(false)
+    override val videoCapable = MutableStateFlow(false)
+    override val imsRegistered = MutableStateFlow(false)
+    override val imsRegistrationTech = MutableStateFlow(REGISTRATION_TECH_NONE)
 
     /**
      * Process a new demo mobile event. Note that [resolvedNetworkType] must be passed in separately
