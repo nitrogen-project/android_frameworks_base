@@ -16,10 +16,19 @@
 
 package com.android.systemui.statusbar.pipeline.mobile.data.repository.prod
 
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.telephony.CellSignalStrength.SIGNAL_STRENGTH_NONE_OR_UNKNOWN
 import android.telephony.CellSignalStrengthCdma
+import android.telephony.ims.ImsException
+import android.telephony.ims.ImsMmTelManager
+import android.telephony.ims.ImsReasonInfo
+import android.telephony.ims.ImsRegistrationAttributes
+import android.telephony.ims.ImsStateCallback
+import android.telephony.ims.feature.MmTelFeature.MmTelCapabilities
+import android.telephony.ims.RegistrationManager
+import android.telephony.ims.stub.ImsRegistrationImplBase.REGISTRATION_TECH_NONE
 import android.telephony.ServiceState
 import android.telephony.SignalStrength
 import android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID
@@ -32,6 +41,7 @@ import android.telephony.TelephonyManager.ERI_ON
 import android.telephony.TelephonyManager.EXTRA_SUBSCRIPTION_ID
 import android.telephony.TelephonyManager.NETWORK_TYPE_UNKNOWN
 import android.telephony.TelephonyManager.UNKNOWN_CARRIER_ID
+import android.util.Log
 import com.android.settingslib.Utils
 import com.android.systemui.broadcast.BroadcastDispatcher
 import com.android.systemui.dagger.qualifiers.Application
@@ -66,6 +76,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.stateIn
@@ -77,6 +88,7 @@ import kotlinx.coroutines.flow.stateIn
 @Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
 @OptIn(ExperimentalCoroutinesApi::class)
 class MobileConnectionRepositoryImpl(
+    private val context: Context,
     override val subId: Int,
     defaultNetworkName: NetworkNameModel,
     networkNameSeparator: String,
@@ -97,6 +109,11 @@ class MobileConnectionRepositoryImpl(
             )
         }
     }
+
+    private val tag: String = MobileConnectionRepositoryImpl::class.java.simpleName
+    private val imsMmTelManager: ImsMmTelManager = ImsMmTelManager.createForSubscriptionId(subId)
+    private var registrationCallback: RegistrationManager.RegistrationCallback? = null
+    private var capabilityCallback: ImsMmTelManager.CapabilityCallback? = null
 
     /**
      * This flow defines the single shared connection to system_server via TelephonyCallback. Any
@@ -168,9 +185,39 @@ class MobileConnectionRepositoryImpl(
                             trySend(CallbackEvent.OnDataEnabledChanged(enabled))
                         }
                     }
+
+                val imsStateCallback =
+                    object : ImsStateCallback() {
+                        override fun onAvailable() {
+                            registerCapabilityAndRegistrationCallback()
+                        }
+
+                        override fun onUnavailable(reason: Int) {
+                            unregisterCapabilityAndRegistrationCallback()
+                        }
+
+                        override fun onError() {
+                            unregisterCapabilityAndRegistrationCallback()
+                        }
+                    }
+
                 telephonyManager.registerTelephonyCallback(bgDispatcher.asExecutor(), callback)
-                awaitClose { telephonyManager.unregisterTelephonyCallback(callback) }
+                try {
+                    imsMmTelManager.registerImsStateCallback(context.mainExecutor, imsStateCallback)
+                } catch (exception: ImsException) {
+                    Log.e(tag, "failed to call registerImsStateCallback ", exception)
+                }
+                awaitClose {
+                    telephonyManager.unregisterTelephonyCallback(callback)
+                    try {
+                        imsMmTelManager.unregisterImsStateCallback(imsStateCallback)
+                    } catch (exception: Exception) {
+                        Log.e(tag, "failed to call unregister ims callback ", exception)
+                    }
+                    unregisterCapabilityAndRegistrationCallback()
+                }
             }
+
             .scan(initial = initial) { state, event -> state.applyEvent(event) }
             .stateIn(scope = scope, started = SharingStarted.WhileSubscribed(), initial)
     }
@@ -331,10 +378,99 @@ class MobileConnectionRepositoryImpl(
             .stateIn(scope, SharingStarted.WhileSubscribed(), initial)
     }
 
+    override val voiceNetworkType: StateFlow<Int> =
+        callbackEvents
+            .mapNotNull { it.onServiceStateChanged }
+            .map { it.serviceState.voiceNetworkType }
+            .stateIn(scope, SharingStarted.WhileSubscribed(), NETWORK_TYPE_UNKNOWN)
+
+    override val dataNetworkType: StateFlow<Int> =
+        callbackEvents
+            .mapNotNull { it.onServiceStateChanged }
+            .map { it.serviceState.dataNetworkType }
+            .stateIn(scope, SharingStarted.WhileSubscribed(), NETWORK_TYPE_UNKNOWN)
+
+    override val originNetworkType: StateFlow<Int> =
+        callbackEvents
+            .mapNotNull { it.onDisplayInfoChanged }
+            .map { it.telephonyDisplayInfo.networkType }
+            .stateIn(scope, SharingStarted.WhileSubscribed(), NETWORK_TYPE_UNKNOWN)
+
+    private fun registerCapabilityAndRegistrationCallback() {
+        if (registrationCallback == null) {
+            registrationCallback =
+                object : RegistrationManager.RegistrationCallback() {
+                    override fun onRegistered(attributes: ImsRegistrationAttributes) {
+                        imsRegistered.value = true
+                        imsRegistrationTech.value = attributes.getRegistrationTechnology()
+                    }
+
+                    override fun onUnregistered(info: ImsReasonInfo) {
+                        imsRegistered.value = false
+                        imsRegistrationTech.value = REGISTRATION_TECH_NONE
+                    }
+                }
+        }
+
+        if (capabilityCallback == null) {
+            capabilityCallback =
+                object : ImsMmTelManager.CapabilityCallback() {
+                    override fun onCapabilitiesStatusChanged(config: MmTelCapabilities) {
+                        voiceCapable.value = config.isCapable(
+                            MmTelCapabilities.CAPABILITY_TYPE_VOICE)
+                        videoCapable.value = config.isCapable(
+                            MmTelCapabilities.CAPABILITY_TYPE_VIDEO)
+                    }
+                }
+        }
+
+        try {
+            imsMmTelManager.registerImsRegistrationCallback(
+                context.mainExecutor, registrationCallback)
+            imsMmTelManager.registerMmTelCapabilityCallback(
+                context.mainExecutor, capabilityCallback)
+        } catch (e: ImsException) {
+            Log.e(tag, "failed to call register ims callback ", e)
+        }
+    }
+
+    private fun unregisterCapabilityAndRegistrationCallback() {
+        try {
+            capabilityCallback?.let {
+                imsMmTelManager.unregisterMmTelCapabilityCallback(it)
+            }
+            registrationCallback?.let {
+                imsMmTelManager.unregisterImsRegistrationCallback(it)
+            }
+        } catch (exception: Exception) {
+            Log.e(tag, " failed to call unregister ims callback ", exception)
+
+        }
+        capabilityCallback = null
+        registrationCallback = null
+        imsRegistered.value = false
+        imsRegistrationTech.value = REGISTRATION_TECH_NONE
+        voiceCapable.value = false
+        videoCapable.value = false
+    }
+
+    override val voiceCapable: MutableStateFlow<Boolean> =
+        MutableStateFlow<Boolean>(false)
+
+    override val videoCapable: MutableStateFlow<Boolean> =
+        MutableStateFlow<Boolean>(false)
+
+    override val imsRegistered: MutableStateFlow<Boolean> =
+        MutableStateFlow<Boolean>(false)
+
+    override val imsRegistrationTech: MutableStateFlow<Int> =
+        MutableStateFlow<Int>(REGISTRATION_TECH_NONE)
+
     class Factory
     @Inject
     constructor(
         private val broadcastDispatcher: BroadcastDispatcher,
+        private val context: Context,
         private val telephonyManager: TelephonyManager,
         private val logger: MobileInputLogger,
         private val carrierConfigRepository: CarrierConfigRepository,
@@ -349,6 +485,7 @@ class MobileConnectionRepositoryImpl(
             networkNameSeparator: String,
         ): MobileConnectionRepository {
             return MobileConnectionRepositoryImpl(
+                context,
                 subId,
                 defaultNetworkName,
                 networkNameSeparator,

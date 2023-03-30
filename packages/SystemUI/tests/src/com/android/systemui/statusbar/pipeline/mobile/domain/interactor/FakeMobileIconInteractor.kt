@@ -19,6 +19,7 @@ package com.android.systemui.statusbar.pipeline.mobile.domain.interactor
 import android.telephony.CellSignalStrength
 import com.android.settingslib.mobile.TelephonyIcons
 import com.android.systemui.log.table.TableLogBuffer
+import com.android.systemui.statusbar.pipeline.mobile.data.model.MobileIconCustomizationMode
 import com.android.systemui.statusbar.pipeline.mobile.data.model.NetworkNameModel
 import com.android.systemui.statusbar.pipeline.mobile.data.repository.MobileConnectionRepository.Companion.DEFAULT_NUM_LEVELS
 import com.android.systemui.statusbar.pipeline.mobile.domain.model.NetworkTypeIconModel
@@ -76,6 +77,15 @@ class FakeMobileIconInteractor(
     override val numberOfLevels = _numberOfLevels
 
     override val isForceHidden = MutableStateFlow(false)
+
+    private val _imsInfo = MutableStateFlow(MobileIconCustomizationMode())
+    override val imsInfo = _imsInfo
+
+    private val _showVolteIcon = MutableStateFlow(false)
+    override val showVolteIcon = _showVolteIcon
+
+    private val _showVowifiIcon = MutableStateFlow(false)
+    override val showVowifiIcon = _showVowifiIcon
 
     fun setIsEmergencyOnly(emergency: Boolean) {
         _isEmergencyOnly.value = emergency

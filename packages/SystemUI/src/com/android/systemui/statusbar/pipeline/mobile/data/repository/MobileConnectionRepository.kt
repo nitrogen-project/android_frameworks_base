@@ -118,6 +118,14 @@ interface MobileConnectionRepository {
     /** The service provider name for this network connection, or the default name */
     val networkName: StateFlow<NetworkNameModel>
 
+    val voiceNetworkType: StateFlow<Int>
+    val dataNetworkType: StateFlow<Int>
+    val originNetworkType: StateFlow<Int>
+    val voiceCapable: StateFlow<Boolean>
+    val videoCapable: StateFlow<Boolean>
+    val imsRegistered: StateFlow<Boolean>
+    val imsRegistrationTech: StateFlow<Int>
+
     companion object {
         /** The default number of levels to use for [numberOfLevels]. */
         const val DEFAULT_NUM_LEVELS = 4

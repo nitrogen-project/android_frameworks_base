@@ -26,6 +26,7 @@ import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.log.table.TableLogBuffer
 import com.android.systemui.log.table.logDiffsForTable
 import com.android.systemui.statusbar.pipeline.dagger.MobileSummaryLog
+import com.android.systemui.statusbar.pipeline.mobile.data.model.MobileIconCustomizationMode
 import com.android.systemui.statusbar.pipeline.mobile.data.model.SubscriptionModel
 import com.android.systemui.statusbar.pipeline.mobile.data.repository.MobileConnectionRepository
 import com.android.systemui.statusbar.pipeline.mobile.data.repository.MobileConnectionsRepository
@@ -90,6 +91,10 @@ interface MobileIconsInteractor {
 
     /** True if we're configured to force-hide the mobile icons and false otherwise. */
     val isForceHidden: Flow<Boolean>
+
+    val showVolteIcon: StateFlow<Boolean>
+
+    val showVowifiIcon: StateFlow<Boolean>
 
     /**
      * Vends out a [MobileIconInteractor] tracking the [MobileConnectionRepository] for the given
@@ -291,6 +296,16 @@ constructor(
             .map { it.contains(ConnectivitySlot.MOBILE) }
             .stateIn(scope, SharingStarted.WhileSubscribed(), false)
 
+    override val showVolteIcon: StateFlow<Boolean> =
+        mobileConnectionsRepo.defaultDataSubRatConfig
+            .mapLatest { it.showVolteIcon }
+            .stateIn(scope, SharingStarted.WhileSubscribed(), false)
+
+    override val showVowifiIcon: StateFlow<Boolean> =
+        mobileConnectionsRepo.defaultDataSubRatConfig
+            .mapLatest { it.showVowifiIcon }
+            .stateIn(scope, SharingStarted.WhileSubscribed(), false)
+
     /** Vends out new [MobileIconInteractor] for a particular subId */
     override fun createMobileConnectionInteractorForSubId(subId: Int): MobileIconInteractor =
         MobileIconInteractorImpl(
@@ -304,6 +319,8 @@ constructor(
             isDefaultConnectionFailed,
             isForceHidden,
             mobileConnectionsRepo.getRepoForSubId(subId),
+            showVolteIcon,
+            showVowifiIcon,
             context,
         )
 

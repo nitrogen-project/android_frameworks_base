@@ -217,6 +217,8 @@ public class MobileMappings {
         public boolean hideLtePlus = false;
         public boolean hspaDataDistinguishable;
         public boolean alwaysShowDataRatIcon = false;
+        public boolean showVolteIcon = false;
+        public boolean showVowifiIcon = false;
 
         /**
          * Reads the latest configs.
@@ -249,6 +251,10 @@ public class MobileMappings {
                 config.hideLtePlus = b.getBoolean(
                         CarrierConfigManager.KEY_HIDE_LTE_PLUS_DATA_ICON_BOOL);
             }
+
+            config.showVolteIcon = res.getBoolean(R.bool.config_display_volte);
+            config.showVowifiIcon = res.getBoolean(R.bool.config_display_vowifi);
+
             return config;
         }
 
