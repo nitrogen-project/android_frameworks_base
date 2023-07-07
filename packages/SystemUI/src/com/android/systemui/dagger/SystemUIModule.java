@@ -64,6 +64,7 @@ import com.android.systemui.mediaprojection.taskswitcher.MediaProjectionTaskSwit
 import com.android.systemui.model.SysUiState;
 import com.android.systemui.motiontool.MotionToolModule;
 import com.android.systemui.navigationbar.NavigationBarComponent;
+import com.android.systemui.nitrogen.NitrogenOSModule;
 import com.android.systemui.notetask.NoteTaskModule;
 import com.android.systemui.people.PeopleModule;
 import com.android.systemui.plugins.BcSmartspaceConfigPlugin;
@@ -215,7 +216,8 @@ import javax.inject.Named;
             UserModule.class,
             UtilModule.class,
             NoteTaskModule.class,
-            WalletModule.class
+            WalletModule.class,
+            NitrogenOSModule.class
         },
         subcomponents = {
             CentralSurfacesComponent.class,
