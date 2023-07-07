@@ -62,6 +62,7 @@ import com.android.systemui.mediaprojection.appselector.MediaProjectionModule;
 import com.android.systemui.model.SysUiState;
 import com.android.systemui.motiontool.MotionToolModule;
 import com.android.systemui.navigationbar.NavigationBarComponent;
+import com.android.systemui.nitrogen.NitrogenOSModule;
 import com.android.systemui.notetask.NoteTaskModule;
 import com.android.systemui.people.PeopleModule;
 import com.android.systemui.plugins.BcSmartspaceConfigPlugin;
@@ -179,6 +180,7 @@ import javax.inject.Named;
             LogModule.class,
             MediaProjectionModule.class,
             MotionToolModule.class,
+            NitrogenOSModule.class,
             PeopleHubModule.class,
             PeopleModule.class,
             PluginModule.class,
