@@ -61,7 +61,7 @@ public class BatteryStatus {
     public final int maxChargingWattage;
     public final boolean present;
     public final Optional<Boolean> incompatibleCharger;
-    public final int temperature;
+    public final float temperature;
 
     public static BatteryStatus create(Context context, boolean incompatibleCharger) {
         final Intent batteryChangedIntent = BatteryUtils.getBatteryIntent(context);
@@ -71,7 +71,7 @@ public class BatteryStatus {
 
     public BatteryStatus(int status, int level, int plugged, int chargingStatus,
             int maxChargingWattage, boolean present, int maxChargingCurrent, int maxChargingVoltage,
-            int temperature) {
+            float temperature) {
         this.status = status;
         this.level = level;
         this.plugged = plugged;
@@ -100,6 +100,8 @@ public class BatteryStatus {
                 CHARGING_POLICY_DEFAULT);
         present = batteryChangedIntent.getBooleanExtra(EXTRA_PRESENT, true);
         temperature = batteryChangedIntent.getIntExtra(EXTRA_TEMPERATURE, -1);
+
+
         this.incompatibleCharger = incompatibleCharger;
 
         final int maxChargingMicroAmp =
