@@ -165,7 +165,7 @@ public final class BcSmartSpaceUtil {
             }
         }
 
-        public void startPendingIntent(PendingIntent pendingIntent, boolean z) {
+        public void startPendingIntent(View v, PendingIntent pendingIntent, boolean z) {
             try {
                 pendingIntent.send();
             } catch (PendingIntent.CanceledException e) {
