@@ -21,7 +21,6 @@ public final class GmsInfo {
     // Package names for GMS apps
     public static final String PACKAGE_GMS = "com.google.android.gms";
     public static final String PACKAGE_GSF = "com.google.android.gsf";
-    public static final String PACKAGE_PLAY_STORE = "com.android.vending";
 
     // Shared user ID for GMS and GSF
     public static final String SHARED_USER_ID = "com.google.uid.shared";
