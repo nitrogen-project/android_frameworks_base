@@ -80,7 +80,7 @@ public final class AttestationHooks {
 
     public static void onEngineGetCertificateChain() {
         // Check stack for SafetyNet
-        if (sIsGms && isCallerSafetyNet()) {
+        if (isCallerSafetyNet()) {
             throw new UnsupportedOperationException();
         }
     }
