@@ -926,6 +926,16 @@ interface IActivityManager {
     int[] getUidFrozenState(in int[] uids);
 
     /**
+     * Notify AMS about binder transactions to frozen apps.
+     *
+     * @param debugPid The binder transaction sender
+     * @param code The binder transaction code
+     * @param flags The binder transaction flags
+     * @param err The binder transaction error
+     */
+    oneway void frozenBinderTransactionDetected(int debugPid, int code, int flags, int err);
+
+    /**
      *  Should disable touch if three fingers to screen shot is active?
      */
     boolean isSwipeToScreenshotGestureActive();

@@ -5437,7 +5437,20 @@ public class ActivityManagerService extends IActivityManager.Stub
                 intent = new Intent(Intent.ACTION_MAIN);
             }
             try {
-                target.send(code, intent, resolvedType, allowlistToken, null,
+                if (allowlistToken != null) {
+                    final int callingUid = Binder.getCallingUid();
+                    final String packageName;
+                    final long token = Binder.clearCallingIdentity();
+                    try {
+                        packageName = AppGlobals.getPackageManager().getNameForUid(callingUid);
+                    } finally {
+                        Binder.restoreCallingIdentity(token);
+                    }
+                    Slog.wtf(TAG, "Send a non-null allowlistToken to a non-PI target."
+                            + " Calling package: " + packageName + "; intent: " + intent
+                            + "; options: " + options);
+                }
+                target.send(code, intent, resolvedType, null, null,
                         requiredPermission, options);
             } catch (RemoteException e) {
             }
@@ -20117,7 +20130,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         final long token = Binder.clearCallingIdentity();
 
         try {
-            return mOomAdjuster.mCachedAppOptimizer.isFreezerSupported();
+            return CachedAppOptimizer.isFreezerSupported();
         } finally {
             Binder.restoreCallingIdentity(token);
         }
@@ -20277,5 +20290,22 @@ public class ActivityManagerService extends IActivityManager.Stub
         synchronized (this) {
             return mIsSwipeToScrenshotEnabled && SystemProperties.getBoolean("sys.android.screenshot", false);
         }
+    }
+
+    /**
+     * Deal with binder transactions to frozen apps.
+     *
+     * @param debugPid The binder transaction sender
+     * @param code The binder transaction code
+     * @param flags The binder transaction flags
+     * @param err The binder transaction error
+     */
+    @Override
+    public void frozenBinderTransactionDetected(int debugPid, int code, int flags, int err) {
+        final ProcessRecord app;
+        synchronized (mPidsSelfLocked) {
+            app = mPidsSelfLocked.get(debugPid);
+        }
+        mOomAdjuster.mCachedAppOptimizer.binderError(debugPid, app, code, flags, err);
     }
 }
