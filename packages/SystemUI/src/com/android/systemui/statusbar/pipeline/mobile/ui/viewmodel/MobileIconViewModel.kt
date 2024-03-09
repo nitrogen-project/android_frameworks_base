@@ -21,8 +21,10 @@ import com.android.settingslib.AccessibilityContentDescriptions.PHONE_SIGNAL_STR
 import com.android.settingslib.mobile.TelephonyIcons
 import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
+import com.android.systemui.flags.FeatureFlagsClassic
+import com.android.systemui.flags.Flags.NEW_NETWORK_SLICE_UI
 import com.android.systemui.log.table.logDiffsForTable
-import com.android.systemui.R
+import com.android.systemui.res.R
 import com.android.systemui.statusbar.pipeline.airplane.domain.interactor.AirplaneModeInteractor
 import com.android.systemui.statusbar.pipeline.mobile.domain.interactor.MobileIconInteractor
 import com.android.systemui.statusbar.pipeline.mobile.domain.interactor.MobileIconsInteractor
@@ -50,6 +52,8 @@ interface MobileIconViewModelCommon {
     val roaming: Flow<Boolean>
     /** The RAT icon (LTE, 3G, 5G, etc) to be displayed. Null if we shouldn't show anything */
     val networkTypeIcon: Flow<Icon.Resource?>
+    /** The slice attribution. Drawn as a background layer */
+    val networkTypeBackground: StateFlow<Icon.Resource?>
     val activityInVisible: Flow<Boolean>
     val activityOutVisible: Flow<Boolean>
     val activityContainerVisible: Flow<Boolean>
@@ -71,12 +75,12 @@ interface MobileIconViewModelCommon {
  */
 @Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
 @OptIn(ExperimentalCoroutinesApi::class)
-class MobileIconViewModel
-constructor(
+class MobileIconViewModel(
     override val subscriptionId: Int,
     iconInteractor: MobileIconInteractor,
     airplaneModeInteractor: AirplaneModeInteractor,
     constants: ConnectivityConstants,
+    flags: FeatureFlagsClassic,
     scope: CoroutineScope,
 ) : MobileIconViewModelCommon {
     override val isVisible: StateFlow<Boolean> =
@@ -159,6 +163,20 @@ constructor(
                 }
             }
             .distinctUntilChanged()
+            .stateIn(scope, SharingStarted.WhileSubscribed(), null)
+
+    override val networkTypeBackground =
+        if (!flags.isEnabled(NEW_NETWORK_SLICE_UI)) {
+                flowOf(null)
+            } else {
+                iconInteractor.showSliceAttribution.map {
+                    if (it) {
+                        Icon.Resource(R.drawable.mobile_network_type_background, null)
+                    } else {
+                        null
+                    }
+                }
+            }
             .stateIn(scope, SharingStarted.WhileSubscribed(), null)
 
     override val roaming: StateFlow<Boolean> =

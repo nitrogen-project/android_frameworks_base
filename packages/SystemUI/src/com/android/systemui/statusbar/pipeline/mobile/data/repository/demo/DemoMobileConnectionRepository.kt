@@ -199,6 +199,9 @@ class DemoMobileConnectionRepository(
     override val videoCapable = MutableStateFlow(false)
     override val imsRegistered = MutableStateFlow(false)
     override val imsRegistrationTech = MutableStateFlow(REGISTRATION_TECH_NONE)
+    override val hasPrioritizedNetworkCapabilities = MutableStateFlow(false)
+
+    override suspend fun isInEcmMode(): Boolean = false
 
     /**
      * Process a new demo mobile event. Note that [resolvedNetworkType] must be passed in separately
@@ -234,6 +237,7 @@ class DemoMobileConnectionRepository(
         _resolvedNetworkType.value = resolvedNetworkType
 
         isAllowedDuringAirplaneMode.value = false
+        hasPrioritizedNetworkCapabilities.value = event.slice
     }
 
     fun processCarrierMergedEvent(event: FakeWifiEventModel.CarrierMerged) {
@@ -259,6 +263,7 @@ class DemoMobileConnectionRepository(
         _isGsm.value = false
         _carrierNetworkChangeActive.value = false
         isAllowedDuringAirplaneMode.value = true
+        hasPrioritizedNetworkCapabilities.value = false
     }
 
     companion object {

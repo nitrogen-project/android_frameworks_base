@@ -21,10 +21,10 @@ import android.annotation.Nullable;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Insets;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.Pair;
 import android.view.DisplayCutout;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,7 +37,7 @@ import android.widget.LinearLayout;
 import com.android.internal.policy.SystemBarUtils;
 import com.android.systemui.Dependency;
 import com.android.systemui.Gefingerpoken;
-import com.android.systemui.R;
+import com.android.systemui.res.R;
 import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
 import com.android.systemui.statusbar.phone.userswitcher.StatusBarUserSwitcherContainer;
@@ -285,13 +285,12 @@ public class PhoneStatusBarView extends FrameLayout {
     }
 
     private void updateSafeInsets() {
-        Pair<Integer, Integer> insets = mContentInsetsProvider
+        Insets insets = mContentInsetsProvider
                 .getStatusBarContentInsetsForCurrentRotation();
-
         setPadding(
-                insets.first,
-                getPaddingTop(),
-                insets.second,
+                insets.left,
+                insets.top,
+                insets.right,
                 getPaddingBottom());
     }
 }

@@ -16,6 +16,9 @@
 
 package com.android.systemui.statusbar.notification.interruption;
 
+import static android.provider.Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED;
+import static android.provider.Settings.Global.HEADS_UP_OFF;
+
 import static com.android.systemui.statusbar.StatusBarState.SHADE;
 import static com.android.systemui.statusbar.notification.interruption.NotificationInterruptStateProviderImpl.NotificationInterruptEvent.FSI_SUPPRESSED_NO_HUN_OR_KEYGUARD;
 import static com.android.systemui.statusbar.notification.interruption.NotificationInterruptStateProviderImpl.NotificationInterruptEvent.FSI_SUPPRESSED_SUPPRESSIVE_BUBBLE_METADATA;
@@ -50,8 +53,12 @@ import com.android.systemui.statusbar.StatusBarState;
 import com.android.systemui.statusbar.notification.NotifPipelineFlags;
 import com.android.systemui.statusbar.notification.collection.NotificationEntry;
 import com.android.systemui.statusbar.policy.BatteryController;
+import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.HeadsUpManager;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
+import com.android.systemui.util.EventLog;
+import com.android.systemui.util.settings.GlobalSettings;
+import com.android.systemui.util.time.SystemClock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +88,10 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
     private final KeyguardNotificationVisibilityProvider mKeyguardNotificationVisibilityProvider;
     private final UiEventLogger mUiEventLogger;
     private final UserTracker mUserTracker;
+    private final DeviceProvisionedController mDeviceProvisionedController;
+    private final SystemClock mSystemClock;
+    private final GlobalSettings mGlobalSettings;
+    private final EventLog mEventLog;
 
     ActivityManager mAm;
     private ArrayList<String> mStoplist = new ArrayList<String>();
@@ -132,8 +143,11 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
             NotifPipelineFlags flags,
             KeyguardNotificationVisibilityProvider keyguardNotificationVisibilityProvider,
             UiEventLogger uiEventLogger,
-            UserTracker userTracker) {
-
+            UserTracker userTracker,
+            DeviceProvisionedController deviceProvisionedController,
+            SystemClock systemClock,
+            GlobalSettings globalSettings,
+            EventLog eventLog) {
         mContext = context;
         mContentResolver = contentResolver;
         mPowerManager = powerManager;
@@ -147,18 +161,21 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
         mKeyguardNotificationVisibilityProvider = keyguardNotificationVisibilityProvider;
         mUiEventLogger = uiEventLogger;
         mUserTracker = userTracker;
+        mDeviceProvisionedController = deviceProvisionedController;
+        mSystemClock = systemClock;
+        mGlobalSettings = globalSettings;
+        mEventLog = eventLog;
         mAm = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
         setHeadsUpStoplist();
         setHeadsUpBlacklist();
+
         ContentObserver headsUpObserver = new ContentObserver(mainHandler) {
             @Override
             public void onChange(boolean selfChange) {
-                boolean wasUsing = mUseHeadsUp;
-                mUseHeadsUp = ENABLE_HEADS_UP
-                        && Settings.Global.HEADS_UP_OFF != Settings.Global.getInt(
-                        mContentResolver,
-                        Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED,
-                        Settings.Global.HEADS_UP_OFF);
+                final boolean wasUsing = mUseHeadsUp;
+                final boolean settingEnabled = HEADS_UP_OFF
+                        != mGlobalSettings.getInt(HEADS_UP_NOTIFICATIONS_ENABLED, HEADS_UP_OFF);
+                mUseHeadsUp = ENABLE_HEADS_UP && settingEnabled;
                 mLogger.logHeadsUpFeatureChanged(mUseHeadsUp);
                 if (wasUsing != mUseHeadsUp) {
                     if (!mUseHeadsUp) {
@@ -170,12 +187,12 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
         };
 
         if (ENABLE_HEADS_UP) {
-            mContentResolver.registerContentObserver(
-                    Settings.Global.getUriFor(Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED),
+            mGlobalSettings.registerContentObserver(
+                    mGlobalSettings.getUriFor(HEADS_UP_NOTIFICATIONS_ENABLED),
                     true,
                     headsUpObserver);
-            mContentResolver.registerContentObserver(
-                    Settings.Global.getUriFor(SETTING_HEADS_UP_TICKER), true,
+            mGlobalSettings.registerContentObserver(
+                    mGlobalSettings.getUriFor(SETTING_HEADS_UP_TICKER), true,
                     headsUpObserver);
         }
         headsUpObserver.onChange(true); // set up
@@ -184,6 +201,11 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
     @Override
     public void addSuppressor(NotificationInterruptSuppressor suppressor) {
         mSuppressors.add(suppressor);
+    }
+
+    @Override
+    public void removeSuppressor(NotificationInterruptSuppressor suppressor) {
+        mSuppressors.remove(suppressor);
     }
 
     @Override
@@ -200,6 +222,11 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
 
         if (!entry.canBubble()) {
             mLogger.logNoBubbleNotAllowed(entry);
+            return false;
+        }
+
+        if (entry.getRanking().isSuspended()) {
+            mLogger.logSuspendedAppBubble(entry);
             return false;
         }
 
@@ -350,6 +377,12 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
             }
         }
 
+        // The device is not provisioned, launch FSI.
+        if (!mDeviceProvisionedController.isDeviceProvisioned()) {
+            return getDecisionGivenSuppression(FullScreenIntentDecision.FSI_NOT_PROVISIONED,
+                    suppressedByDND);
+        }
+
         // Detect the case determined by b/231322873 to launch FSI while device is in use,
         // as blocked by the correct implementation, and report the event.
         return getDecisionGivenSuppression(FullScreenIntentDecision.NO_FSI_NO_HUN_OR_KEYGUARD,
@@ -366,7 +399,7 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
                 // explicitly prevent logging for this (frequent) case
                 return;
             case NO_FSI_SUPPRESSIVE_GROUP_ALERT_BEHAVIOR:
-                android.util.EventLog.writeEvent(0x534e4554, "231322873", uid,
+                mEventLog.writeEvent(0x534e4554, "231322873", uid,
                         "groupAlertBehavior");
                 mUiEventLogger.log(FSI_SUPPRESSED_SUPPRESSIVE_GROUP_ALERT_BEHAVIOR, uid,
                         packageName);
@@ -374,7 +407,7 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
                         decision + ": GroupAlertBehavior will prevent HUN");
                 return;
             case NO_FSI_SUPPRESSIVE_BUBBLE_METADATA:
-                android.util.EventLog.writeEvent(0x534e4554, "274759612", uid,
+                mEventLog.writeEvent(0x534e4554, "274759612", uid,
                         "bubbleMetadata");
                 mUiEventLogger.log(FSI_SUPPRESSED_SUPPRESSIVE_BUBBLE_METADATA, uid,
                         packageName);
@@ -382,7 +415,7 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
                         decision + ": BubbleMetadata may prevent HUN");
                 return;
             case NO_FSI_NO_HUN_OR_KEYGUARD:
-                android.util.EventLog.writeEvent(0x534e4554, "231322873", uid,
+                mEventLog.writeEvent(0x534e4554, "231322873", uid,
                         "no hun or keyguard");
                 mUiEventLogger.log(FSI_SUPPRESSED_NO_HUN_OR_KEYGUARD, uid, packageName);
                 mLogger.logNoFullscreenWarning(entry,
@@ -561,7 +594,7 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
 
         if (entry.getRanking().getLockscreenVisibilityOverride()
                 == Notification.VISIBILITY_PRIVATE) {
-            if (log) mLogger.logNoPulsingNotificationHidden(entry);
+            if (log) mLogger.logNoPulsingNotificationHiddenOverride(entry);
             return false;
         }
 
@@ -592,7 +625,7 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
         }
 
         if (mKeyguardNotificationVisibilityProvider.shouldHideNotification(entry)) {
-            if (log) mLogger.keyguardHideNotification(entry);
+            if (log) mLogger.logNoAlertingNotificationHidden(entry);
             return false;
         }
 
@@ -654,7 +687,7 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
         }
 
         final long when = notification.when;
-        final long now = System.currentTimeMillis();
+        final long now = mSystemClock.currentTimeMillis();
         final long age = now - when;
 
         if (age < MAX_HUN_WHEN_AGE_MS) {

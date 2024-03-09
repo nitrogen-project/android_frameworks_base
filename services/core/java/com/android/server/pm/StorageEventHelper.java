@@ -48,11 +48,11 @@ import android.util.Log;
 import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
+import com.android.internal.pm.pkg.parsing.ParsingPackageUtils;
 import com.android.internal.policy.AttributeCache;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.pm.pkg.AndroidPackage;
 import com.android.server.pm.pkg.PackageStateInternal;
-import com.android.server.pm.pkg.parsing.ParsingPackageUtils;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -148,7 +148,6 @@ public final class StorageEventHelper extends StorageEventListener {
 
         final Settings.VersionInfo ver;
         final List<? extends PackageStateInternal> packages;
-        final InstallPackageHelper installPackageHelper = new InstallPackageHelper(mPm);
         synchronized (mPm.mLock) {
             ver = mPm.mSettings.findOrCreateVersion(volumeUuid);
             packages = mPm.mSettings.getVolumePackagesLPr(volumeUuid);
@@ -156,11 +155,12 @@ public final class StorageEventHelper extends StorageEventListener {
 
         for (PackageStateInternal ps : packages) {
             freezers.add(mPm.freezePackage(ps.getPackageName(), UserHandle.USER_ALL,
-                    "loadPrivatePackagesInner", ApplicationExitInfo.REASON_OTHER));
+                    "loadPrivatePackagesInner", ApplicationExitInfo.REASON_OTHER,
+                    null /* request */));
             synchronized (mPm.mInstallLock) {
                 final AndroidPackage pkg;
                 try {
-                    pkg = installPackageHelper.initPackageTracedLI(
+                    pkg = mPm.initPackageTracedLI(
                             ps.getPath(), parseFlags, SCAN_INITIAL);
                     loaded.add(pkg);
 
@@ -184,7 +184,7 @@ public final class StorageEventHelper extends StorageEventListener {
                 StorageManagerInternal.class);
         for (UserInfo user : mPm.mUserManager.getUsers(false /* includeDying */)) {
             final int flags;
-            if (StorageManager.isUserKeyUnlocked(user.id)
+            if (StorageManager.isCeStorageUnlocked(user.id)
                     && smInternal.isCeStoragePrepared(user.id)) {
                 flags = StorageManager.FLAG_STORAGE_DE | StorageManager.FLAG_STORAGE_CE;
             } else if (umInternal.isUserRunning(user.id)) {
@@ -228,7 +228,8 @@ public final class StorageEventHelper extends StorageEventListener {
         }
 
         if (DEBUG_INSTALL) Slog.d(TAG, "Loaded packages " + loaded);
-        sendResourcesChangedBroadcast(true /* mediaStatus */, false /* replacing */, loaded);
+        mBroadcastHelper.sendResourcesChangedBroadcastAndNotify(mPm.snapshotComputer(),
+                true /* mediaStatus */, false /* replacing */, loaded);
         synchronized (mLoadedVolumes) {
             mLoadedVolumes.add(vol.getId());
         }
@@ -256,13 +257,12 @@ public final class StorageEventHelper extends StorageEventListener {
 
                     final AndroidPackage pkg = ps.getPkg();
                     final int deleteFlags = PackageManager.DELETE_KEEP_DATA;
-                    final PackageRemovedInfo outInfo = new PackageRemovedInfo(mPm);
 
                     try (PackageFreezer freezer = mPm.freezePackageForDelete(ps.getPackageName(),
                              UserHandle.USER_ALL, deleteFlags,
                             "unloadPrivatePackagesInner", ApplicationExitInfo.REASON_OTHER)) {
                         if (mDeletePackageHelper.deletePackageLIF(ps.getPackageName(), null, false,
-                                userIds, deleteFlags, outInfo, false)) {
+                                userIds, deleteFlags, new PackageRemovedInfo(), false)) {
                             unloaded.add(pkg);
                         } else {
                             Slog.w(TAG, "Failed to unload " + ps.getPath());
@@ -280,7 +280,8 @@ public final class StorageEventHelper extends StorageEventListener {
         }
 
         if (DEBUG_INSTALL) Slog.d(TAG, "Unloaded packages " + unloaded);
-        sendResourcesChangedBroadcast(false /* mediaStatus */, false /* replacing */, unloaded);
+        mBroadcastHelper.sendResourcesChangedBroadcastAndNotify(mPm.snapshotComputer(),
+                false /* mediaStatus */, false /* replacing */, unloaded);
         synchronized (mLoadedVolumes) {
             mLoadedVolumes.remove(vol.getId());
         }
@@ -293,20 +294,6 @@ public final class StorageEventHelper extends StorageEventListener {
             System.gc();
             System.runFinalization();
         }
-    }
-
-    private void sendResourcesChangedBroadcast(boolean mediaStatus, boolean replacing,
-            ArrayList<AndroidPackage> packages) {
-        final int size = packages.size();
-        final String[] packageNames = new String[size];
-        final int[] packageUids = new int[size];
-        for (int i = 0; i < size; i++) {
-            final AndroidPackage pkg = packages.get(i);
-            packageNames[i] = pkg.getPackageName();
-            packageUids[i] = pkg.getUid();
-        }
-        mBroadcastHelper.sendResourcesChangedBroadcast(mPm::snapshotComputer, mediaStatus,
-                replacing, packageNames, packageUids);
     }
 
     /**
