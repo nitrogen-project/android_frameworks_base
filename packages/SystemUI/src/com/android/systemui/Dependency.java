@@ -59,6 +59,7 @@ import com.android.systemui.statusbar.phone.SystemUIDialogManager;
 import com.android.systemui.statusbar.policy.BluetoothController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.FlashlightController;
+import com.android.systemui.statusbar.policy.ZenModeController;
 import com.android.systemui.tuner.TunablePadding.TunablePaddingService;
 import com.android.systemui.tuner.TunerService;
 
@@ -172,6 +173,7 @@ public class Dependency {
     @Inject Lazy<SystemUIDialogManager> mSystemUIDialogManagerLazy;
     @Inject Lazy<DialogLaunchAnimator> mDialogLaunchAnimatorLazy;
     @Inject Lazy<UserTracker> mUserTrackerLazy;
+    @Inject Lazy<ZenModeController> mZenModeController;
 
     @Inject
     public Dependency() {
@@ -226,6 +228,7 @@ public class Dependency {
         mProviders.put(SystemUIDialogManager.class, mSystemUIDialogManagerLazy::get);
         mProviders.put(DialogLaunchAnimator.class, mDialogLaunchAnimatorLazy::get);
         mProviders.put(UserTracker.class, mUserTrackerLazy::get);
+        mProviders.put(ZenModeController.class, mZenModeController::get);
 
         Dependency.setInstance(this);
     }
