@@ -107,8 +107,6 @@ open class KeyguardBypassController : Dumpable, StackScrollAlgorithm.BypassContr
             notifyListeners()
         }
 
-    var bypassEnabledBiometric: Boolean = false
-
     var bouncerShowing: Boolean = false
     var altBouncerShowing: Boolean = false
     var launchingAffordance: Boolean = false
@@ -165,7 +163,7 @@ open class KeyguardBypassController : Dumpable, StackScrollAlgorithm.BypassContr
                 com.android.internal.R.bool.config_faceAuthDismissesKeyguard)) 1 else 0
 
         tunerService.addTunable({ key, _ ->
-            bypassEnabledBiometric = tunerService.getValue(key, dismissByDefault) != 0
+            bypassEnabled = tunerService.getValue(key, dismissByDefault) != 0
         }, Settings.Secure.FACE_UNLOCK_DISMISSES_KEYGUARD)
 
         lockscreenUserManager.addUserChangedListener(
@@ -202,8 +200,8 @@ open class KeyguardBypassController : Dumpable, StackScrollAlgorithm.BypassContr
         biometricSourceType: BiometricSourceType,
         isStrongBiometric: Boolean
     ): Boolean {
-        if (bypassEnabledBiometric) {
-            val can = biometricSourceType != BiometricSourceType.FACE || canBypass()
+        if (biometricSourceType == BiometricSourceType.FACE && bypassEnabled) {
+            val can = canBypass()
             if (!can && (isPulseExpanding || qsExpanded)) {
                 pendingUnlock = PendingUnlock(biometricSourceType, isStrongBiometric)
             }
@@ -227,7 +225,7 @@ open class KeyguardBypassController : Dumpable, StackScrollAlgorithm.BypassContr
      * If keyguard can be dismissed because of bypass.
      */
     fun canBypass(): Boolean {
-        if (bypassEnabledBiometric) {
+        if (bypassEnabled) {
             return when {
                 bouncerShowing -> true
                 altBouncerShowing -> true
@@ -260,7 +258,6 @@ open class KeyguardBypassController : Dumpable, StackScrollAlgorithm.BypassContr
             pw.println("  mPendingUnlock: $pendingUnlock")
         }
         pw.println("  bypassEnabled: $bypassEnabled")
-        pw.println("  bypassEnabledBiometric: $bypassEnabledBiometric")
         pw.println("  canBypass: ${canBypass()}")
         pw.println("  bouncerShowing: $bouncerShowing")
         pw.println("  altBouncerShowing: $altBouncerShowing")
