@@ -903,7 +903,8 @@ public class ScreenshotController {
     private void playCameraSoundIfNeeded() {
         if (mScreenshotSoundController == null) return;
         // the controller is not-null only on the default display controller
-        mScreenshotSoundController.playCameraSound();
+        if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.SCREENSHOT_SOUND, 1) == 1)
+            mScreenshotSoundController.playCameraSound();
     }
 
     /**
