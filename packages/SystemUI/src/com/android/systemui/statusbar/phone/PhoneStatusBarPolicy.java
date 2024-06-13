@@ -22,6 +22,7 @@ import android.annotation.Nullable;
 import android.app.ActivityTaskManager;
 import android.app.AlarmManager;
 import android.app.AlarmManager.AlarmClockInfo;
+import android.app.NotificationManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -393,7 +394,7 @@ public class PhoneStatusBarPolicy
     }
 
     @Override
-    public void onConfigChanged(ZenModeConfig config) {
+    public void onConsolidatedPolicyChanged(NotificationManager.Policy policy) {
         updateVolumeZen();
     }
 
@@ -422,7 +423,7 @@ public class PhoneStatusBarPolicy
     private NfcAdapter getAdapter() {
         if (mAdapter == null) {
             try {
-                mAdapter = NfcAdapter.getNfcAdapter(mContext);
+                mAdapter = NfcAdapter.getDefaultAdapter(mContext);
             } catch (UnsupportedOperationException e) {
                 mAdapter = null;
             }

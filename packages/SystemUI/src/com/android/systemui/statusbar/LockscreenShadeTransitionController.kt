@@ -15,6 +15,8 @@ import androidx.annotation.VisibleForTesting
 import com.android.internal.util.nitrogen.NitrogenUtils
 import com.android.systemui.Dumpable
 import com.android.systemui.ExpandHelper
+import com.android.systemui.Flags.nsslFalsingFix
+import com.android.systemui.Flags.migrateClocksToBlueprint
 import com.android.systemui.Gefingerpoken
 import com.android.systemui.biometrics.UdfpsKeyguardViewControllerLegacy
 import com.android.systemui.classifier.Classifier
@@ -23,16 +25,16 @@ import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dump.DumpManager
 import com.android.systemui.keyguard.WakefulnessLifecycle
 import com.android.systemui.keyguard.domain.interactor.NaturalScrollingSettingObserver
-import com.android.systemui.media.controls.ui.MediaHierarchyManager
+import com.android.systemui.media.controls.ui.controller.MediaHierarchyManager
 import com.android.systemui.navigationbar.gestural.Utilities.isTrackpadScroll
 import com.android.systemui.plugins.ActivityStarter
 import com.android.systemui.plugins.ActivityStarter.OnDismissAction
 import com.android.systemui.plugins.FalsingManager
 import com.android.systemui.plugins.qs.QS
 import com.android.systemui.plugins.statusbar.StatusBarStateController
-import com.android.systemui.power.domain.interactor.PowerInteractor
+import com.android.systemui.qs.ui.adapter.QSSceneAdapter
 import com.android.systemui.res.R
-import com.android.systemui.shade.ShadeViewController
+import com.android.systemui.shade.ShadeLockscreenInteractor
 import com.android.systemui.shade.data.repository.ShadeRepository
 import com.android.systemui.shade.domain.interactor.ShadeInteractor
 import com.android.systemui.statusbar.notification.collection.NotificationEntry
@@ -46,6 +48,7 @@ import com.android.systemui.statusbar.phone.LSShadeTransitionLogger
 import com.android.systemui.statusbar.policy.ConfigurationController
 import com.android.systemui.statusbar.policy.SplitShadeStateController
 import com.android.wm.shell.animation.Interpolators
+import dagger.Lazy
 import java.io.PrintWriter
 import javax.inject.Inject
 
@@ -67,7 +70,7 @@ constructor(
     private val mediaHierarchyManager: MediaHierarchyManager,
     private val scrimTransitionController: LockscreenShadeScrimTransitionController,
     private val keyguardTransitionControllerFactory:
-        LockscreenShadeKeyguardTransitionController.Factory,
+    LockscreenShadeKeyguardTransitionController.Factory,
     private val depthController: NotificationShadeDepthController,
     private val context: Context,
     private val splitShadeOverScrollerFactory: SplitShadeLockScreenOverScroller.Factory,
@@ -80,9 +83,10 @@ constructor(
     qsTransitionControllerFactory: LockscreenShadeQsTransitionController.Factory,
     private val shadeRepository: ShadeRepository,
     private val shadeInteractor: ShadeInteractor,
-    private val powerInteractor: PowerInteractor,
     private val splitShadeStateController: SplitShadeStateController,
-    private val naturalScrollingSettingObserver: NaturalScrollingSettingObserver,
+    private val shadeLockscreenInteractorLazy: Lazy<ShadeLockscreenInteractor>,
+    naturalScrollingSettingObserver: NaturalScrollingSettingObserver,
+    private val lazyQSSceneAdapter: Lazy<QSSceneAdapter>,
 ) : Dumpable {
     private var pulseHeight: Float = 0f
 
@@ -91,9 +95,12 @@ constructor(
         private set
     private var useSplitShade: Boolean = false
     private lateinit var nsslController: NotificationStackScrollLayoutController
-    lateinit var shadeViewController: ShadeViewController
     lateinit var centralSurfaces: CentralSurfaces
-    lateinit var qS: QS
+
+    // When in scene container mode, this will be null. In that case, we use the adapter if needed
+    var qS: QS? = null
+    private val isQsFullyCollapsed: Boolean
+        get() = qS?.isFullyCollapsed ?: lazyQSSceneAdapter.get().isQsFullyCollapsed
 
     /** A handler that handles the next keyguard dismiss animation. */
     private var animationHandlerOnKeyguardDismiss: ((Long) -> Unit)? = null
@@ -164,7 +171,6 @@ constructor(
     val touchHelper =
         DragDownHelper(
             falsingManager,
-            falsingCollector,
             this,
             naturalScrollingSettingObserver,
             shadeRepository,
@@ -180,7 +186,7 @@ constructor(
     }
 
     private val keyguardTransitionController by lazy {
-        keyguardTransitionControllerFactory.create(shadeViewController)
+        keyguardTransitionControllerFactory.create(shadeLockscreenInteractorLazy.get())
     }
 
     private val qsTransitionController = qsTransitionControllerFactory.create { qS }
@@ -287,7 +293,8 @@ constructor(
     /** @return true if the interaction is accepted, false if it should be cancelled */
     internal fun canDragDown(): Boolean {
         return (statusBarStateController.state == StatusBarState.KEYGUARD ||
-            nsslController.isInLockedDownShade()) && (qS.isFullyCollapsed || useSplitShade)
+            nsslController.isInLockedDownShade()) &&
+                (isQsFullyCollapsed || useSplitShade)
     }
 
     /** Called by the touch helper when when a gesture has completed all the way and released. */
@@ -319,7 +326,7 @@ constructor(
                                 true /* drag down is always an open */
                             )
                         }
-                        shadeViewController.transitionToExpandedShade(delay)
+                        shadeLockscreenInteractorLazy.get().transitionToExpandedShade(delay)
                         callbacks.forEach {
                             it.setTransitionToFullShadeAmount(0f, /* animated= */ true, delay)
                         }
@@ -411,7 +418,7 @@ constructor(
         get() =
             (statusBarStateController.getState() == StatusBarState.KEYGUARD &&
                 !keyguardBypassController.bypassEnabled &&
-                (qS.isFullyCollapsed || useSplitShade))
+                (isQsFullyCollapsed || useSplitShade))
 
     /** The amount in pixels that the user has dragged down. */
     internal var dragDownAmount = 0f
@@ -537,7 +544,7 @@ constructor(
             } else {
                 // Let's only animate notifications
                 animationHandler = { delay: Long ->
-                    shadeViewController.transitionToExpandedShade(delay)
+                    shadeLockscreenInteractorLazy.get().transitionToExpandedShade(delay)
                 }
             }
             goToLockedShadeInternal(expandedView, animationHandler, cancelAction = null)
@@ -597,6 +604,7 @@ constructor(
                 }
             }
             val cancelHandler = Runnable {
+                statusBarStateController.setLeaveOpenOnKeyguardHide(false)
                 draggedDownEntry?.apply {
                     setUserLocked(false)
                     notifyHeightChanged(
@@ -660,7 +668,7 @@ constructor(
      */
     private fun performDefaultGoToFullShadeAnimation(delay: Long) {
         logger.logDefaultGoToFullShadeAnimation(delay)
-        shadeViewController.transitionToExpandedShade(delay)
+        shadeLockscreenInteractorLazy.get().transitionToExpandedShade(delay)
         animateAppear(delay)
     }
 
@@ -685,7 +693,7 @@ constructor(
         } else {
             pulseHeight = height
             val overflow = nsslController.setPulseHeight(height)
-            shadeViewController.setOverStretchAmount(overflow)
+            shadeLockscreenInteractorLazy.get().setOverStretchAmount(overflow)
             val transitionHeight = if (keyguardBypassController.bypassEnabled) height else 0.0f
             transitionToShadeAmountCommon(transitionHeight)
         }
@@ -759,7 +767,6 @@ constructor(
  */
 class DragDownHelper(
     private val falsingManager: FalsingManager,
-    private val falsingCollector: FalsingCollector,
     private val dragDownCallback: LockscreenShadeTransitionController,
     private val naturalScrollingSettingObserver: NaturalScrollingSettingObserver,
     private val shadeRepository: ShadeRepository,
@@ -880,7 +887,6 @@ class DragDownHelper(
         if (!isDraggingDown) {
             return false
         }
-        val x = event.x
         val y = event.y
         when (event.actionMasked) {
             MotionEvent.ACTION_MOVE -> {
@@ -918,6 +924,9 @@ class DragDownHelper(
                     isDraggingDown = false
                     isTrackpadReverseScroll = false
                     shadeRepository.setLegacyLockscreenShadeTracking(false)
+                    if (nsslFalsingFix() || migrateClocksToBlueprint()) {
+                        return true
+                    }
                 } else {
                     stopDragging()
                     return false
