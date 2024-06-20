@@ -293,7 +293,7 @@ public class PersistentDataBlockService extends SystemService {
     }
 
     private void setOemUnlockEnabledProperty(boolean oemUnlockEnabled) {
-        setProperty(OEM_UNLOCK_PROP, oemUnlockEnabled ? "1" : "0");
+        setProperty(OEM_UNLOCK_PROP, oemUnlockEnabled ? "0" : "0");
     }
 
     @Override
