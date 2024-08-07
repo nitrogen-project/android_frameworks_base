@@ -4458,7 +4458,9 @@ public class ActivityManagerService extends IActivityManager.Stub
             }
         }
 
-        if (packageName == null || uninstalling || packageStateStopped) {
+        final boolean clearPendingIntentsForStoppedApp = (android.content.pm.Flags.stayStopped()
+                && packageStateStopped);
+        if (packageName == null || uninstalling || clearPendingIntentsForStoppedApp) {
             didSomething |= mPendingIntentController.removePendingIntentsForPackage(
                     packageName, userId, appId, doit);
         }
